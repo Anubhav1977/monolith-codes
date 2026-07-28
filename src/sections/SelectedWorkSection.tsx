@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ArtifactFrame } from '@/components/ArtifactFrame';
-import { ExternalLink, Database, Activity, ShieldCheck, Zap } from 'lucide-react';
+import { ExternalLink, CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface CaseStudy {
@@ -13,7 +13,6 @@ interface CaseStudy {
   solution: string;
   metrics: { label: string; value: string }[];
   stack: string[];
-  artifactType: 'dashboard' | 'workflow' | 'portal' | 'mobile';
 }
 
 const CASE_STUDIES: CaseStudy[] = [
@@ -31,7 +30,6 @@ const CASE_STUDIES: CaseStudy[] = [
       { label: 'Data Sync Time', value: '<50ms' },
     ],
     stack: ['React 19', 'TypeScript', 'Tailwind v4', 'PostgreSQL', 'Redis Queue'],
-    artifactType: 'workflow',
   },
   {
     id: 'saas-analytics',
@@ -47,7 +45,6 @@ const CASE_STUDIES: CaseStudy[] = [
       { label: 'Uptime Score', value: '99.99%' },
     ],
     stack: ['React', 'WebSockets', 'Tailwind v4', 'Node.js Gateway', 'TimescaleDB'],
-    artifactType: 'dashboard',
   },
   {
     id: 'healthcare-portal',
@@ -63,7 +60,6 @@ const CASE_STUDIES: CaseStudy[] = [
       { label: 'Compliance Audit', value: 'Passed 100%' },
     ],
     stack: ['React', 'React Native', 'Node.js', 'PostgreSQL', 'AWS KMS'],
-    artifactType: 'portal',
   },
   {
     id: 'ai-logistics',
@@ -79,14 +75,17 @@ const CASE_STUDIES: CaseStudy[] = [
       { label: 'SAP API Sync', value: 'Sub-second' },
     ],
     stack: ['React', 'TypeScript', 'Python FastAPI', 'SAP Gateway', 'OpenAI API'],
-    artifactType: 'workflow',
   },
 ];
 
 export const SelectedWorkSection: React.FC = () => {
   const [selectedCaseId, setSelectedCaseId] = useState<string>(CASE_STUDIES[0].id);
+  const [showAll, setShowAll] = useState<boolean>(false);
 
   const activeCase = CASE_STUDIES.find((c) => c.id === selectedCaseId) || CASE_STUDIES[0];
+
+  // Progressive reveal density: Desktop max 2-4 visible, Mobile max 1-2
+  const visibleCases = showAll ? CASE_STUDIES : CASE_STUDIES.slice(0, 3);
 
   return (
     <section id="work" className="py-24 bg-mc-surface-deep/40 border-b border-mc-border">
@@ -95,29 +94,29 @@ export const SelectedWorkSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-16">
           <div className="lg:col-span-3 font-mono text-xs text-mc-orange uppercase tracking-wider flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-mc-orange" />
-            <span>03 / SELECTED WORK & PROOF</span>
+            <span>04 / SELECTED WORK & PROOF</span>
           </div>
 
           <div className="lg:col-span-9">
-            <h2 className="text-3xl md:text-4xl font-sans font-medium text-mc-text-strong tracking-tight mb-4">
+            <h2 className="text-3xl md:text-5xl font-sans font-medium text-mc-text-strong tracking-tight mb-4">
               ENGINEERING PROOF IN PRODUCTION
             </h2>
-            <p className="text-mc-text-body text-base max-w-2xl">
+            <p className="text-mc-text-body text-base md:text-lg max-w-2xl">
               Visual evidence of custom software systems, platforms, and applications we have designed and built for serious business operations.
             </p>
           </div>
         </div>
 
-        {/* Case Selector Tabs */}
+        {/* Case Selector Tabs (Progressively Filtered) */}
         <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 no-scrollbar">
-          {CASE_STUDIES.map((item) => {
+          {visibleCases.map((item) => {
             const isSelected = item.id === selectedCaseId;
             return (
               <button
                 key={item.id}
                 onClick={() => setSelectedCaseId(item.id)}
                 className={cn(
-                  'px-4 py-2.5 rounded-md text-xs font-mono whitespace-nowrap transition-all flex items-center gap-2 border',
+                  'px-4 py-2.5 rounded-md text-xs font-mono whitespace-nowrap transition-all flex items-center gap-2 border cursor-pointer',
                   isSelected
                     ? 'bg-mc-surface border-mc-orange text-mc-text-strong font-medium shadow-md'
                     : 'bg-mc-surface-deep border-mc-border text-mc-text-secondary hover:border-mc-border-strong hover:text-mc-text'
@@ -126,14 +125,14 @@ export const SelectedWorkSection: React.FC = () => {
                 <span className={cn('text-[10px]', isSelected ? 'text-mc-orange' : 'text-mc-text-tertiary')}>
                   {item.index}
                 </span>
-                <span>{item.title.substring(0, 32)}...</span>
+                <span>{item.title.substring(0, 30)}...</span>
               </button>
             );
           })}
         </div>
 
-        {/* Case Showcase Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Case Showcase Grid - Larger Proof Container */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-12">
           {/* Left Column: Visual Proof Artifact Frame */}
           <div className="lg:col-span-7">
             <ArtifactFrame
@@ -143,42 +142,45 @@ export const SelectedWorkSection: React.FC = () => {
             >
               {/* Simulated UI Artifact Composition */}
               <div className="p-6 md:p-8 space-y-6 font-sans">
-                {/* Artifact Top Status Bar */}
-                <div className="flex items-center justify-between p-3 rounded bg-mc-surface-deep border border-mc-border text-xs font-mono">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-mc-orange animate-pulse" />
-                    <span className="text-mc-text-strong font-medium">LIVE PRODUCTION NODE</span>
+                {/* Artifact Top Status Bar with System Green */}
+                <div className="flex items-center justify-between p-3.5 rounded bg-mc-surface-deep border border-mc-border text-xs font-mono">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-mc-system-green animate-pulse" />
+                    <span className="text-mc-text-strong font-medium">LIVE SYSTEM NODE • VERIFIED</span>
                   </div>
                   <span className="text-mc-text-tertiary">{activeCase.index}</span>
                 </div>
 
-                {/* Simulated Graphical Dashboard Surface */}
+                {/* Dashboard Metrics Surface */}
                 <div className="grid grid-cols-3 gap-4">
                   {activeCase.metrics.map((m, i) => (
                     <div key={i} className="p-4 rounded bg-mc-surface border border-mc-border">
-                      <div className="text-xs font-mono text-mc-text-tertiary mb-1">{m.label}</div>
-                      <div className="text-2xl font-mono font-semibold text-mc-orange">{m.value}</div>
+                      <div className="text-[11px] font-mono text-mc-text-tertiary mb-1 uppercase">{m.label}</div>
+                      <div className="text-xl md:text-2xl font-mono font-semibold text-mc-orange">{m.value}</div>
                     </div>
                   ))}
                 </div>
 
-                {/* Simulated Operational Workflow Diagram */}
+                {/* Operational Pipeline Diagram */}
                 <div className="p-4 rounded bg-mc-surface border border-mc-border space-y-3 font-mono text-xs">
                   <div className="flex items-center justify-between text-mc-text-secondary pb-2 border-b border-mc-border-soft">
-                    <span>PIPELINE ROUTE</span>
-                    <span>STATUS: ACTIVE</span>
+                    <span>ARCHITECTURAL DATA ROUTE</span>
+                    <span className="text-mc-system-green flex items-center gap-1">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      HEALTHY
+                    </span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <div className="p-2 rounded bg-mc-surface-deep border border-mc-border text-mc-text">
-                      [Input Gateway]
+                      [Client Request]
                     </div>
                     <span className="text-mc-orange">→</span>
-                    <div className="p-2 rounded bg-mc-surface-deep border border-mc-orange/40 text-mc-orange">
-                      [Monolith Core Engine]
+                    <div className="p-2 rounded bg-mc-surface-deep border border-mc-orange/40 text-mc-orange font-medium">
+                      [Monolith Custom Engine]
                     </div>
                     <span className="text-mc-orange">→</span>
                     <div className="p-2 rounded bg-mc-surface-deep border border-mc-border text-mc-text">
-                      [Verified Output]
+                      [Sub-second Response]
                     </div>
                   </div>
                 </div>
@@ -196,7 +198,7 @@ export const SelectedWorkSection: React.FC = () => {
                 {activeCase.title}
               </h3>
               <div className="text-xs font-mono text-mc-text-tertiary mb-6">
-                Client: {activeCase.clientContext}
+                Client Domain: {activeCase.clientContext}
               </div>
 
               {/* Problem Section */}
@@ -247,6 +249,19 @@ export const SelectedWorkSection: React.FC = () => {
             </a>
           </div>
         </div>
+
+        {/* Progressive Reveal Toggle Button */}
+        {CASE_STUDIES.length > 3 && (
+          <div className="flex justify-center">
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="h-11 px-6 rounded-md bg-mc-surface border border-mc-border text-xs font-mono text-mc-text hover:border-mc-orange hover:text-mc-orange flex items-center gap-2 transition-all cursor-pointer"
+            >
+              <span>{showAll ? 'Collapse Case Studies' : 'View All Case Studies'}</span>
+              {showAll ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

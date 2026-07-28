@@ -12,7 +12,7 @@ export const InquirySection: React.FC = () => {
             <div>
               <div className="font-mono text-xs text-mc-orange uppercase tracking-wider flex items-center gap-2 mb-3">
                 <span className="w-2 h-2 rounded-full bg-mc-orange" />
-                <span>08 / START A PROJECT</span>
+                <span>09 / START A PROJECT</span>
               </div>
               <h2 className="text-3xl md:text-5xl font-sans font-medium text-mc-text-strong tracking-tight mb-4">
                 LET'S BUILD YOUR SOFTWARE SYSTEM.

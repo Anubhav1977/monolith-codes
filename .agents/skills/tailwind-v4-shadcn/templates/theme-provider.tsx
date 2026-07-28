@@ -30,8 +30,8 @@ export function ThemeProvider({
     // Try localStorage first, fall back to sessionStorage, then default
     try {
       return (localStorage.getItem(storageKey) as Theme) ||
-             (sessionStorage.getItem(storageKey) as Theme) ||
-             defaultTheme
+        (sessionStorage.getItem(storageKey) as Theme) ||
+        defaultTheme
     } catch (e) {
       // Storage unavailable (incognito/privacy mode) - use default
       return defaultTheme

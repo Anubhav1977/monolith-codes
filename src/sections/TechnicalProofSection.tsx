@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CodeWindow } from '@/components/CodeWindow';
-import { Eye, Code2, Cpu, CheckCircle } from 'lucide-react';
+import { Eye, Code2, Cpu, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export const TechnicalProofSection: React.FC = () => {
@@ -48,7 +48,7 @@ export const TechnicalProofSection: React.FC = () => {
               <button
                 onClick={() => setActiveTab('scan')}
                 className={cn(
-                  'px-4 py-2 text-xs font-mono rounded-md flex items-center gap-2 transition-all',
+                  'px-4 py-2 text-xs font-mono rounded-md flex items-center gap-2 transition-all cursor-pointer',
                   activeTab === 'scan'
                     ? 'bg-mc-orange text-mc-bg font-semibold shadow-md'
                     : 'text-mc-text-secondary hover:text-mc-text'
@@ -61,7 +61,7 @@ export const TechnicalProofSection: React.FC = () => {
               <button
                 onClick={() => setActiveTab('inspect')}
                 className={cn(
-                  'px-4 py-2 text-xs font-mono rounded-md flex items-center gap-2 transition-all',
+                  'px-4 py-2 text-xs font-mono rounded-md flex items-center gap-2 transition-all cursor-pointer',
                   activeTab === 'inspect'
                     ? 'bg-mc-orange text-mc-bg font-semibold shadow-md'
                     : 'text-mc-text-secondary hover:text-mc-text'
@@ -86,7 +86,7 @@ export const TechnicalProofSection: React.FC = () => {
                 Every request entering the application is strictly validated at runtime to eliminate invalid input bugs before hitting your database.
               </p>
               <div className="p-3 rounded bg-mc-surface-deep border border-mc-border font-mono text-xs text-mc-text-secondary flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-mc-orange" />
+                <CheckCircle2 className="w-4 h-4 text-mc-system-green shrink-0" />
                 <span>Zero runtime schema mismatch errors</span>
               </div>
             </div>
@@ -100,7 +100,7 @@ export const TechnicalProofSection: React.FC = () => {
                 Optimized database indexes and asynchronous worker queues keep core user workflows fast and responsive even during high usage.
               </p>
               <div className="p-3 rounded bg-mc-surface-deep border border-mc-border font-mono text-xs text-mc-text-secondary flex items-center gap-2">
-                <Cpu className="w-4 h-4 text-mc-orange" />
+                <Cpu className="w-4 h-4 text-mc-system-green shrink-0" />
                 <span>Sub-second API target verified</span>
               </div>
             </div>
@@ -114,7 +114,7 @@ export const TechnicalProofSection: React.FC = () => {
                 Clean, documented, component-driven codebase built to be handed over or scaled seamlessly by your internal engineering team.
               </p>
               <div className="p-3 rounded bg-mc-surface-deep border border-mc-border font-mono text-xs text-mc-text-secondary flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-mc-orange" />
+                <CheckCircle2 className="w-4 h-4 text-mc-system-green shrink-0" />
                 <span>100% Typed TypeScript & clean APIs</span>
               </div>
             </div>
@@ -141,7 +141,10 @@ export const TechnicalProofSection: React.FC = () => {
               </div>
 
               <div className="p-4 rounded bg-mc-surface-deep border border-mc-border font-mono text-xs space-y-2">
-                <div className="text-mc-orange">BENCHMARK METRICS:</div>
+                <div className="text-mc-system-green font-medium flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>BENCHMARK METRICS (HEALTHY):</span>
+                </div>
                 <div className="text-mc-text-secondary">Concurrency Limit: 500 req/sec</div>
                 <div className="text-mc-text-secondary">Avg Latency: 14.2ms</div>
                 <div className="text-mc-text-secondary">Memory Footprint: 32MB</div>
