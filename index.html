@@ -1,42 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/assets/brand/monolith-mark.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MONOLITH CODES — Software Engineering Studio</title>
-    <meta name="description" content="We engineer digital systems that move business. Premium custom web applications, SaaS platforms, ERP/CRM systems, mobile apps, and business workflow software." />
-    <meta name="theme-color" content="#080A0C" />
-    
-    <!-- Open Graph / SEO -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="MONOLITH CODES — Software Engineering Studio" />
-    <meta property="og:description" content="High-performance custom web applications, SaaS products, mobile apps, ERP/CRM platforms, and workflow automation engineered for serious business scale." />
-    <meta property="og:image" content="/assets/brand/monolith-mark.png" />
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&family=Lora:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/monolith-mark.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MONOLITH CODES-Software Engineering Studio</title>
+  <meta name="description"
+    content="We engineer digital systems that move business. Premium custom web applications, SaaS platforms, ERP/CRM systems, mobile apps, and business workflow software." />
+  <meta name="theme-color" content="#080A0C" />
 
-    <!-- Anti-Flash Theme Script -->
-    <script>
-      (function() {
-        try {
-          var stored = localStorage.getItem('monolith_theme');
-          var theme = stored || 'system';
-          var resolved = theme;
-          if (theme === 'system') {
-            resolved = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-          }
-          document.documentElement.setAttribute('data-theme', resolved);
-          document.documentElement.style.colorScheme = resolved;
-        } catch (e) {}
-      })();
-    </script>
-  </head>
-  <body class="bg-mc-bg text-mc-text antialiased selection:bg-mc-orange selection:text-mc-bg">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  <!-- Open Graph / SEO -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="MONOLITH CODES — Software Engineering Studio" />
+  <meta property="og:description"
+    content="High-performance custom web applications, SaaS products, mobile apps, ERP/CRM platforms, and workflow automation engineered for serious business scale." />
+  <meta property="og:image" content="/assets/brand/monolith-mark.png" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&family=Lora:ital,wght@1,400;1,500;1,600&display=swap"
+    rel="stylesheet">
+
+  <!-- Anti-Flash Theme Script -->
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('monolith_theme');
+        var theme = stored || 'system';
+        var resolved = theme;
+        if (theme === 'system') {
+          resolved = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        }
+        document.documentElement.setAttribute('data-theme', resolved);
+        document.documentElement.style.colorScheme = resolved;
+      } catch (e) { }
+    })();
+  </script>
+</head>
+
+<body class="bg-mc-bg text-mc-text antialiased selection:bg-mc-orange selection:text-mc-bg">
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

@@ -1,20 +1,27 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { useReducedMotion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 interface BrandLockupProps {
   variant?: 'horizontal' | 'stacked' | 'mark-only' | 'wordmark';
   className?: string;
   size?: 'sm' | 'md' | 'lg';
+  /** Enables the navigation's one-shot monolith installation interaction. */
   interactiveHover?: boolean;
 }
+
+const DUST_PARTICLES = [0, 1, 2, 3];
 
 export const BrandLockup: React.FC<BrandLockupProps> = ({
   variant = 'horizontal',
   className,
   size = 'md',
-  interactiveHover = true,
+  interactiveHover = false,
 }) => {
+  const [isInstalling, setIsInstalling] = useState(false);
+  const playedForCurrentHover = useRef(false);
+  const shouldReduceMotion = useReducedMotion();
+
   const markSizes = {
     sm: 'h-6 w-auto',
     md: 'h-8 w-auto',
@@ -33,11 +40,29 @@ export const BrandLockup: React.FC<BrandLockupProps> = ({
     lg: 'text-[11px] tracking-widest',
   };
 
+  const startInstallation = (event: React.PointerEvent<HTMLDivElement>) => {
+    // Touch devices have no stable hover state; preserve a quiet, reliable logo there.
+    if (
+      !interactiveHover ||
+      shouldReduceMotion ||
+      event.pointerType !== 'mouse' ||
+      playedForCurrentHover.current ||
+      isInstalling
+    ) {
+      return;
+    }
+
+    playedForCurrentHover.current = true;
+    setIsInstalling(true);
+  };
+
+  const resetHoverCycle = () => {
+    playedForCurrentHover.current = false;
+  };
+
   if (variant === 'mark-only') {
     return (
-      <motion.img
-        whileHover={interactiveHover ? { scale: 1.12, rotate: 2 } : undefined}
-        transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+      <img
         src="/assets/brand/monolith-mark.png"
         alt="MONOLITH CODES"
         className={cn(markSizes[size], 'object-contain', className)}
@@ -59,61 +84,47 @@ export const BrandLockup: React.FC<BrandLockupProps> = ({
   }
 
   return (
-    <motion.div
-      initial="initial"
-      whileHover="hover"
+    <div
       className={cn(
-        'flex items-center gap-3 select-none group cursor-pointer',
+        'mc-brand-lockup flex items-center gap-3 select-none',
+        interactiveHover && 'cursor-pointer',
         variant === 'stacked' && 'flex-col items-start gap-2',
+        isInstalling && 'mc-brand-lockup--installing',
         className
       )}
+      onPointerEnter={startInstallation}
+      onPointerLeave={resetHoverCycle}
+      onAnimationEnd={(event) => {
+        if (event.animationName === 'mc-brand-settle') setIsInstalling(false);
+      }}
     >
-      {/* Brand Icon Mark with Pop & Glow Animation */}
-      <motion.div
-        variants={{
-          initial: { scale: 1, filter: 'drop-shadow(0 0 0px rgba(255,107,0,0))' },
-          hover: {
-            scale: 1.15,
-            rotate: [0, -3, 3, 0],
-            filter: 'drop-shadow(0 0 12px rgba(255,107,0,0.5))',
-          },
-        }}
-        transition={{ type: 'spring', stiffness: 350, damping: 18 }}
-        className="shrink-0 relative"
-      >
-        <img
-          src="/assets/brand/monolith-mark.png"
-          alt="MONOLITH CODES Mark"
-          className={cn(markSizes[size], 'object-contain')}
-        />
-      </motion.div>
+      <div className="mc-brand-mark shrink-0 relative" aria-hidden="true">
+        <span className="mc-brand-glow" />
+        <span className="mc-brand-shadow" />
+        <span className="mc-brand-shockwave" />
+        {DUST_PARTICLES.map((particle) => (
+          <span key={particle} className={`mc-brand-dust mc-brand-dust--${particle + 1}`} />
+        ))}
+        <div className="mc-brand-mark-shell relative">
+          <img
+            src="/assets/brand/monolith-mark.png"
+            alt=""
+            className={cn(markSizes[size], 'object-contain')}
+          />
+        </div>
+      </div>
 
-      {/* Wordmark Text with Smooth Rightward Slide & Stagger Animation */}
-      <motion.div
-        variants={{
-          initial: { x: 0, opacity: 0.95 },
-          hover: { x: 4, opacity: 1 },
-        }}
-        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        className="flex flex-col justify-center leading-none"
-      >
+      <div className="mc-brand-copy flex flex-col justify-center leading-none">
         <span className={cn('font-medium text-mc-text-strong font-sans flex items-center gap-1', titleSizes[size])}>
-          <span>MONOLITH</span>
-          <motion.span
-            variants={{
-              initial: { color: 'var(--mc-orange)' },
-              hover: { color: '#FF9A1F', scale: 1.05 },
-            }}
-            className="font-semibold text-mc-orange inline-block"
-          >
+          <span className="mc-brand-title-word mc-brand-title-word--monolith">MONOLITH</span>
+          <span className="mc-brand-title-word mc-brand-title-word--codes font-semibold text-mc-orange">
             CODES
-          </motion.span>
+          </span>
         </span>
-
-        <span className={cn('font-mono text-mc-text-tertiary uppercase mt-0.5 group-hover:text-mc-text-secondary transition-colors', tagSizes[size])}>
+        <span className={cn('mc-brand-subtitle font-mono text-mc-text-tertiary uppercase mt-0.5', tagSizes[size])}>
           SOFTWARE ENGINEERING STUDIO
         </span>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 };

@@ -140,8 +140,8 @@ export const Footer: React.FC = () => {
       font-sans
       font-black
       tracking-[-0.08em]
-      text-[clamp(1.5rem,3vw,4rem)]
-      text-mc-text-strong/10 dark:text-white/10
+      text-[clamp(4.5rem,13vw,13rem)]
+      text-mc-text-strong/8
       transition-all
       duration-500
       group-hover:text-mc-orange/15

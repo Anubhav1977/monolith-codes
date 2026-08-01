@@ -87,8 +87,8 @@ export const Navigation: React.FC = () => {
     >
       <div className="max-w-[1360px] mx-auto h-full px-6 md:px-10 flex items-center justify-between">
         {/* Left: Brand Logo */}
-        <a href="#" className="flex items-center hover:opacity-90 transition-opacity">
-          <BrandLockup variant="horizontal" size="md" />
+        <a href="#" className="flex items-center" aria-label="MONOLITH CODES — home">
+          <BrandLockup variant="horizontal" size="md" interactiveHover />
         </a>
 
         {/* Center: Desktop Nav Links with Dropdowns */}
