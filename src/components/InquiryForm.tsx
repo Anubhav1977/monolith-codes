@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, CheckCircle2, AlertCircle, Loader2, Globe } from 'lucide-react';
+import { Send, CheckCircle2, AlertCircle, Loader2, Globe, Check, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface FormState {
@@ -7,7 +7,7 @@ interface FormState {
   email: string;
   phone: string;
   company: string;
-  projectType: string;
+  selectedCategories: string[]; // Multi-selection chips
   budget: string;
   timeline: string;
   description: string;
@@ -21,11 +21,11 @@ interface TouchedState {
   description?: boolean;
 }
 
-const PROJECT_TYPES = [
-  'Web & Digital Experiences',
-  'Custom Software & Platform',
+const CATEGORY_OPTIONS = [
   'SaaS Product Engineering',
+  'Custom Software & Platform',
   'Mobile Application',
+  'Web & Digital Experiences',
   'ERP / CRM & Internal Portal',
   'API & System Integration',
 ];
@@ -69,7 +69,7 @@ function detectIsIndia(): boolean {
 export const InquiryForm: React.FC = () => {
   const [currency, setCurrency] = useState<'USD' | 'INR'>('USD');
 
-  // Auto-detect location on initial load
+  // Auto-detect visitor location on initial mount
   useEffect(() => {
     if (detectIsIndia()) {
       setCurrency('INR');
@@ -83,14 +83,14 @@ export const InquiryForm: React.FC = () => {
     email: '',
     phone: '',
     company: '',
-    projectType: PROJECT_TYPES[0],
+    selectedCategories: [CATEGORY_OPTIONS[1]], // Default multi-selection
     budget: budgetOptions[1],
     timeline: '1-2 Months',
     description: '',
     website: '', // Honeypot field
   });
 
-  // Update budget selection when currency switches if not manually set
+  // Handle Currency Toggle
   const handleCurrencyChange = (newCurrency: 'USD' | 'INR') => {
     setCurrency(newCurrency);
     const newOptions = newCurrency === 'INR' ? BUDGET_RANGES_INR : BUDGET_RANGES_USD;
@@ -100,11 +100,31 @@ export const InquiryForm: React.FC = () => {
     }));
   };
 
+  // Toggle Category Multi-Selection
+  const toggleCategory = (category: string) => {
+    setFormData((prev) => {
+      const exists = prev.selectedCategories.includes(category);
+      if (exists) {
+        // Allow unchecking if at least 1 remains selected
+        if (prev.selectedCategories.length === 1) return prev;
+        return {
+          ...prev,
+          selectedCategories: prev.selectedCategories.filter((c) => c !== category),
+        };
+      } else {
+        return {
+          ...prev,
+          selectedCategories: [...prev.selectedCategories, category],
+        };
+      }
+    });
+  };
+
   const [touched, setTouched] = useState<TouchedState>({});
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Form render time token for anti-spam check
+  // Form render timestamp token for bot timing check
   const formRenderTimeRef = useRef<string>(Date.now().toString());
 
   const handleBlur = (field: keyof TouchedState) => {
@@ -117,13 +137,12 @@ export const InquiryForm: React.FC = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Mark field as touched on change
     if (name in touched) {
       setTouched((prev) => ({ ...prev, [name]: true }));
     }
   };
 
-  // Field validation helpers
+  // Field validation status
   const isNameValid = formData.name.trim().length >= 2;
   const isEmailValid = validateEmail(formData.email);
   const isPhoneValid = validatePhone(formData.phone);
@@ -133,7 +152,6 @@ export const InquiryForm: React.FC = () => {
     e.preventDefault();
     setErrorMessage('');
 
-    // Mark all required fields touched on submit attempt
     setTouched({
       name: true,
       email: true,
@@ -157,6 +175,7 @@ export const InquiryForm: React.FC = () => {
         },
         body: JSON.stringify({
           ...formData,
+          projectType: formData.selectedCategories.join(', '), // Format multi-selected categories for server
           _formRenderTime: formRenderTimeRef.current,
         }),
       });
@@ -181,7 +200,7 @@ export const InquiryForm: React.FC = () => {
 
   if (status === 'success') {
     return (
-      <div className="p-8 rounded-lg border border-mc-border bg-mc-surface text-center animate-in fade-in zoom-in-95 duration-200">
+      <div className="p-6 sm:p-8 rounded-xl border border-mc-border bg-mc-surface text-center animate-in fade-in zoom-in-95 duration-200">
         <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-mc-orange-10 border border-mc-orange text-mc-orange flex items-center justify-center">
           <CheckCircle2 className="w-6 h-6" />
         </div>
@@ -189,16 +208,15 @@ export const InquiryForm: React.FC = () => {
           Inquiry Received
         </h3>
         <p className="text-mc-text-body text-sm max-w-md mx-auto mb-6">
-          Thank you, <span className="text-mc-text-strong font-medium">{formData.name}</span>. A confirmation email has been sent to <span className="text-mc-text-strong font-medium">{formData.email}</span>. Our senior software engineering team has queued your inquiry for architect review.
+          Thank you, <span className="text-mc-text-strong font-medium">{formData.name}</span>. A confirmation email has been sent to <span className="text-mc-text-strong font-medium">{formData.email}</span>. Our lead software engineering team has queued your inquiry for architect review.
         </p>
 
-        <div className="p-4 rounded bg-mc-surface-deep border border-mc-border text-left max-w-md mx-auto mb-6 font-mono text-xs text-mc-text-secondary">
-          <div className="text-mc-orange mb-1">RECORD SUMMARY:</div>
-          <div>Requirement: {formData.projectType}</div>
+        <div className="p-4 rounded-lg bg-mc-surface-deep border border-mc-border text-left max-w-md mx-auto mb-6 font-mono text-xs text-mc-text-secondary">
+          <div className="text-mc-orange mb-1 font-semibold">RECORD SUMMARY:</div>
+          <div>Requirements: {formData.selectedCategories.join(', ')}</div>
           <div>Estimated Budget: {formData.budget}</div>
           <div>Timeline: {formData.timeline}</div>
           <div>Work Email: {formData.email}</div>
-          {formData.phone && <div>Phone: {formData.phone}</div>}
           {formData.company && <div>Company: {formData.company}</div>}
         </div>
 
@@ -211,7 +229,7 @@ export const InquiryForm: React.FC = () => {
               email: '',
               phone: '',
               company: '',
-              projectType: PROJECT_TYPES[0],
+              selectedCategories: [CATEGORY_OPTIONS[1], CATEGORY_OPTIONS[2]],
               budget: budgetOptions[1],
               timeline: '1-2 Months',
               description: '',
@@ -219,7 +237,7 @@ export const InquiryForm: React.FC = () => {
             });
             formRenderTimeRef.current = Date.now().toString();
           }}
-          className="px-5 py-2.5 text-xs font-mono rounded bg-mc-surface-deep border border-mc-border text-mc-text hover:border-mc-border-strong transition-colors"
+          className="px-5 py-2.5 text-xs font-mono rounded-lg bg-mc-surface-deep border border-mc-border text-mc-text hover:border-mc-border-strong transition-colors"
         >
           Submit Another Inquiry
         </button>
@@ -228,7 +246,7 @@ export const InquiryForm: React.FC = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="p-6 md:p-8 rounded-lg border border-mc-border bg-mc-surface space-y-6">
+    <form onSubmit={handleSubmit} className="p-5 sm:p-8 rounded-xl border border-mc-border bg-mc-surface space-y-5 sm:space-y-6 shadow-xl">
       {/* Honeypot field for anti-spam bot capture (hidden from real users) */}
       <input
         type="text"
@@ -242,174 +260,92 @@ export const InquiryForm: React.FC = () => {
       />
 
       {status === 'error' && (
-        <div className="p-3.5 rounded bg-mc-orange-10 border border-mc-orange text-mc-orange text-xs font-mono flex items-center gap-2.5">
+        <div className="p-3.5 rounded-lg bg-mc-orange-10 border border-mc-orange text-mc-orange text-xs font-mono flex items-center gap-2.5">
           <AlertCircle className="w-4 h-4 shrink-0" />
           <span>{errorMessage}</span>
         </div>
       )}
 
-      {/* Row 1: Name & Work Email */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Name Field */}
+      {/* Row 1: Email & Full Name */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+        {/* Email Input */}
         <div>
-          <div className="flex justify-between items-center mb-2">
-            <label htmlFor="name" className="block text-xs font-mono text-mc-text-secondary uppercase">
-              Your Name <span className="text-mc-orange">*</span>
-            </label>
-            {touched.name && (
-              <span className="text-[11px] font-mono flex items-center gap-1">
-                {isNameValid ? (
-                  <span className="text-emerald-400 flex items-center gap-0.5"><CheckCircle2 className="w-3 h-3" /> Valid</span>
-                ) : (
-                  <span className="text-rose-400 flex items-center gap-0.5"><AlertCircle className="w-3 h-3" /> Min 2 characters</span>
-                )}
-              </span>
-            )}
-          </div>
-          <div className="relative">
-            <input
-              id="name"
-              name="name"
-              type="text"
-              required
-              value={formData.name}
-              onChange={handleChange}
-              onBlur={() => handleBlur('name')}
-              placeholder="Jane Doe"
-              className={cn(
-                'w-full h-12 px-4 rounded-[6px] bg-mc-surface-deep border text-mc-text placeholder-mc-text-tertiary transition-all outline-none',
-                touched.name && isNameValid && 'border-emerald-500/80 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/20 bg-emerald-950/10',
-                touched.name && !isNameValid && 'border-rose-500 focus:border-rose-500 focus:ring-1 focus:ring-rose-500/20 bg-rose-950/10',
-                !touched.name && 'border-mc-border focus:border-mc-orange focus:ring-1 focus:ring-mc-orange'
-              )}
-            />
-          </div>
-        </div>
-
-        {/* Work Email Field */}
-        <div>
-          <div className="flex justify-between items-center mb-2">
+          <div className="flex justify-between items-center mb-1.5">
             <label htmlFor="email" className="block text-xs font-mono text-mc-text-secondary uppercase">
               Work Email <span className="text-mc-orange">*</span>
             </label>
             {touched.email && (
-              <span className="text-[11px] font-mono flex items-center gap-1">
+              <span className="text-[11px] font-mono">
                 {isEmailValid ? (
                   <span className="text-emerald-400 flex items-center gap-0.5"><CheckCircle2 className="w-3 h-3" /> Valid</span>
                 ) : (
-                  <span className="text-rose-400 flex items-center gap-0.5"><AlertCircle className="w-3 h-3" /> Invalid email address</span>
+                  <span className="text-rose-400 flex items-center gap-0.5"><AlertCircle className="w-3 h-3" /> Invalid email</span>
                 )}
               </span>
             )}
           </div>
-          <div className="relative">
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-              onBlur={() => handleBlur('email')}
-              placeholder="jane@company.com"
-              className={cn(
-                'w-full h-12 px-4 rounded-[6px] bg-mc-surface-deep border text-mc-text placeholder-mc-text-tertiary transition-all outline-none',
-                touched.email && isEmailValid && 'border-emerald-500/80 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/20 bg-emerald-950/10',
-                touched.email && !isEmailValid && 'border-rose-500 focus:border-rose-500 focus:ring-1 focus:ring-rose-500/20 bg-rose-950/10',
-                !touched.email && 'border-mc-border focus:border-mc-orange focus:ring-1 focus:ring-mc-orange'
-              )}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Row 2: Company & Phone */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label htmlFor="company" className="block text-xs font-mono text-mc-text-secondary uppercase mb-2">
-            Company / Organization
-          </label>
           <input
-            id="company"
-            name="company"
-            type="text"
-            value={formData.company}
+            id="email"
+            name="email"
+            type="email"
+            required
+            value={formData.email}
             onChange={handleChange}
-            placeholder="Acme Corp"
-            className="w-full h-12 px-4 rounded-[6px] bg-mc-surface-deep border border-mc-border text-mc-text placeholder-mc-text-tertiary focus:border-mc-orange focus:ring-1 focus:ring-mc-orange transition-all"
+            onBlur={() => handleBlur('email')}
+            placeholder="jane@company.com"
+            className={cn(
+              'w-full h-11 sm:h-12 px-4 rounded-lg bg-mc-surface-deep border text-sm text-mc-text placeholder-mc-text-tertiary transition-all outline-none',
+              touched.email && isEmailValid && 'border-emerald-500/80 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/20 bg-emerald-950/10',
+              touched.email && !isEmailValid && 'border-rose-500 focus:border-rose-500 focus:ring-1 focus:ring-rose-500/20 bg-rose-950/10',
+              !touched.email && 'border-mc-border focus:border-mc-orange focus:ring-1 focus:ring-mc-orange'
+            )}
           />
         </div>
 
+        {/* Full Name Input */}
         <div>
-          <div className="flex justify-between items-center mb-2">
-            <label htmlFor="phone" className="block text-xs font-mono text-mc-text-secondary uppercase">
-              Phone Number <span className="text-mc-text-tertiary">(Optional)</span>
+          <div className="flex justify-between items-center mb-1.5">
+            <label htmlFor="name" className="block text-xs font-mono text-mc-text-secondary uppercase">
+              Full Name <span className="text-mc-orange">*</span>
             </label>
-            {touched.phone && formData.phone.trim() !== '' && (
+            {touched.name && (
               <span className="text-[11px] font-mono">
-                {isPhoneValid ? (
+                {isNameValid ? (
                   <span className="text-emerald-400 flex items-center gap-0.5"><CheckCircle2 className="w-3 h-3" /> Valid</span>
                 ) : (
-                  <span className="text-rose-400 flex items-center gap-0.5"><AlertCircle className="w-3 h-3" /> Invalid phone</span>
+                  <span className="text-rose-400 flex items-center gap-0.5"><AlertCircle className="w-3 h-3" /> Min 2 chars</span>
                 )}
               </span>
             )}
           </div>
           <input
-            id="phone"
-            name="phone"
-            type="tel"
-            value={formData.phone}
+            id="name"
+            name="name"
+            type="text"
+            required
+            value={formData.name}
             onChange={handleChange}
-            onBlur={() => handleBlur('phone')}
-            placeholder="+1 (555) 000-0000 / +91 98765 43210"
+            onBlur={() => handleBlur('name')}
+            placeholder="Jane Doe"
             className={cn(
-              'w-full h-12 px-4 rounded-[6px] bg-mc-surface-deep border text-mc-text placeholder-mc-text-tertiary transition-all outline-none',
-              touched.phone && formData.phone.trim() !== '' && isPhoneValid && 'border-emerald-500/80 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/20 bg-emerald-950/10',
-              touched.phone && formData.phone.trim() !== '' && !isPhoneValid && 'border-rose-500 focus:border-rose-500 focus:ring-1 focus:ring-rose-500/20 bg-rose-950/10',
-              (!touched.phone || formData.phone.trim() === '') && 'border-mc-border focus:border-mc-orange focus:ring-1 focus:ring-mc-orange'
+              'w-full h-11 sm:h-12 px-4 rounded-lg bg-mc-surface-deep border text-sm text-mc-text placeholder-mc-text-tertiary transition-all outline-none',
+              touched.name && isNameValid && 'border-emerald-500/80 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/20 bg-emerald-950/10',
+              touched.name && !isNameValid && 'border-rose-500 focus:border-rose-500 focus:ring-1 focus:ring-rose-500/20 bg-rose-950/10',
+              !touched.name && 'border-mc-border focus:border-mc-orange focus:ring-1 focus:ring-mc-orange'
             )}
           />
         </div>
       </div>
 
-      {/* Target System Category (Interactive Chips Selector) */}
-      <div>
-        <label className="block text-xs font-mono text-mc-text-secondary uppercase mb-3">
-          Select Primary Requirement / System Category <span className="text-mc-orange">*</span>
-        </label>
-        <div className="flex flex-wrap gap-2.5">
-          {PROJECT_TYPES.map((type) => {
-            const isSelected = formData.projectType === type;
-            return (
-              <button
-                type="button"
-                key={type}
-                onClick={() => setFormData((prev) => ({ ...prev, projectType: type }))}
-                className={cn(
-                  'px-3.5 py-2 text-xs font-mono rounded-[5px] border transition-all flex items-center gap-1.5',
-                  isSelected
-                    ? 'bg-mc-orange-10 border-mc-orange text-mc-orange font-medium shadow-sm'
-                    : 'bg-mc-surface-deep border-mc-border text-mc-text-secondary hover:border-mc-border-strong hover:text-mc-text'
-                )}
-              >
-                {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-mc-orange" />}
-                {type}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Row 3: Budget Range (with Currency Switcher) & Timeline */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Budget with USD / INR Currency Switcher */}
+      {/* Row 2: Project Budget (with USD/INR currency selector) & Timeline / Company */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+        {/* Project Budget */}
         <div>
-          <div className="flex justify-between items-center mb-2">
+          <div className="flex justify-between items-center mb-1.5">
             <label htmlFor="budget" className="block text-xs font-mono text-mc-text-secondary uppercase">
-              Estimated Budget
+              Project Budget
             </label>
-            {/* Currency Selector Buttons */}
+            {/* Currency Selector */}
             <div className="flex items-center gap-1 bg-mc-surface-deep p-0.5 rounded border border-mc-border">
               <button
                 type="button"
@@ -442,7 +378,7 @@ export const InquiryForm: React.FC = () => {
             name="budget"
             value={formData.budget}
             onChange={handleChange}
-            className="w-full h-12 px-4 rounded-[6px] bg-mc-surface-deep border border-mc-border text-mc-text focus:border-mc-orange focus:ring-1 focus:ring-mc-orange transition-all"
+            className="w-full h-11 sm:h-12 px-4 rounded-lg bg-mc-surface-deep border border-mc-border text-sm text-mc-text focus:border-mc-orange focus:ring-1 focus:ring-mc-orange transition-all"
           >
             {budgetOptions.map((range) => (
               <option key={range} value={range}>
@@ -452,9 +388,9 @@ export const InquiryForm: React.FC = () => {
           </select>
         </div>
 
-        {/* Timeline */}
+        {/* Timeline / Target Launch */}
         <div>
-          <label htmlFor="timeline" className="block text-xs font-mono text-mc-text-secondary uppercase mb-2">
+          <label htmlFor="timeline" className="block text-xs font-mono text-mc-text-secondary uppercase mb-1.5">
             Target Timeline
           </label>
           <input
@@ -463,24 +399,24 @@ export const InquiryForm: React.FC = () => {
             type="text"
             value={formData.timeline}
             onChange={handleChange}
-            placeholder="e.g. 2-3 Months, Q3 launch"
-            className="w-full h-12 px-4 rounded-[6px] bg-mc-surface-deep border border-mc-border text-mc-text placeholder-mc-text-tertiary focus:border-mc-orange focus:ring-1 focus:ring-mc-orange transition-all"
+            placeholder="e.g. 1-2 Months, Q3 launch"
+            className="w-full h-11 sm:h-12 px-4 rounded-lg bg-mc-surface-deep border border-mc-border text-sm text-mc-text placeholder-mc-text-tertiary focus:border-mc-orange focus:ring-1 focus:ring-mc-orange transition-all"
           />
         </div>
       </div>
 
-      {/* Row 4: Description / Project Overview */}
+      {/* Row 3: Description / Goals */}
       <div>
-        <div className="flex justify-between items-center mb-2">
+        <div className="flex justify-between items-center mb-1.5">
           <label htmlFor="description" className="block text-xs font-mono text-mc-text-secondary uppercase">
-            Project Overview & Workflow Requirements <span className="text-mc-orange">*</span>
+            Tell us about your product and goals <span className="text-mc-orange">*</span>
           </label>
           {touched.description && (
-            <span className="text-[11px] font-mono flex items-center gap-1">
+            <span className="text-[11px] font-mono">
               {isDescriptionValid ? (
                 <span className="text-emerald-400 flex items-center gap-0.5"><CheckCircle2 className="w-3 h-3" /> Valid</span>
               ) : (
-                <span className="text-rose-400 flex items-center gap-0.5"><AlertCircle className="w-3 h-3" /> Min 10 characters</span>
+                <span className="text-rose-400 flex items-center gap-0.5"><AlertCircle className="w-3 h-3" /> Min 10 chars</span>
               )}
             </span>
           )}
@@ -489,13 +425,13 @@ export const InquiryForm: React.FC = () => {
           id="description"
           name="description"
           required
-          rows={4}
+          rows={3}
           value={formData.description}
           onChange={handleChange}
           onBlur={() => handleBlur('description')}
-          placeholder="Describe what you want to build, existing systems to integrate, key user roles, or key business outcomes..."
+          placeholder="Describe your product idea, key features to build, target user roles, or key business outcomes..."
           className={cn(
-            'w-full p-4 rounded-[6px] bg-mc-surface-deep border text-mc-text placeholder-mc-text-tertiary transition-all outline-none min-h-[120px]',
+            'w-full p-3.5 sm:p-4 rounded-lg bg-mc-surface-deep border text-sm text-mc-text placeholder-mc-text-tertiary transition-all outline-none min-h-[100px] sm:min-h-[110px]',
             touched.description && isDescriptionValid && 'border-emerald-500/80 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/20 bg-emerald-950/10',
             touched.description && !isDescriptionValid && 'border-rose-500 focus:border-rose-500 focus:ring-1 focus:ring-rose-500/20 bg-rose-950/10',
             !touched.description && 'border-mc-border focus:border-mc-orange focus:ring-1 focus:ring-mc-orange'
@@ -503,30 +439,76 @@ export const InquiryForm: React.FC = () => {
         />
       </div>
 
-      {/* Submit Button */}
-      <button
-        type="submit"
-        disabled={status === 'submitting'}
-        className={cn(
-          'w-full h-12 text-sm font-sans font-semibold rounded-[6px] bg-mc-orange text-mc-bg hover:bg-mc-orange-highlight active:bg-mc-orange-dark flex items-center justify-center gap-2 transition-all shadow-md',
-          status === 'submitting' && 'opacity-70 cursor-not-allowed'
-        )}
-      >
-        {status === 'submitting' ? (
-          <>
-            <Loader2 className="w-4 h-4 animate-spin" />
-            <span>Processing Inquiry...</span>
-          </>
-        ) : (
-          <>
-            <span>Submit Project Inquiry</span>
-            <Send className="w-4 h-4" />
-          </>
-        )}
-      </button>
+      {/* Row 4: How can we help you? (Multi-Select Category Chips) */}
+      <div>
+        <div className="flex items-center justify-between mb-2.5">
+          <label className="block text-xs font-mono text-mc-text-secondary uppercase">
+            How can we help you? <span className="text-mc-text-tertiary font-normal">(Select Multiple)</span>
+          </label>
+          <span className="text-[11px] font-mono text-mc-orange">
+            {formData.selectedCategories.length} Selected
+          </span>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {CATEGORY_OPTIONS.map((category) => {
+            const isSelected = formData.selectedCategories.includes(category);
+            return (
+              <button
+                type="button"
+                key={category}
+                onClick={() => toggleCategory(category)}
+                className={cn(
+                  'px-3 py-1.5 sm:px-3.5 sm:py-2 text-xs font-mono rounded-lg border transition-all flex items-center gap-1.5 active:scale-95 touch-manipulation',
+                  isSelected
+                    ? 'bg-mc-orange-10 border-mc-orange text-mc-orange font-semibold shadow-sm'
+                    : 'bg-mc-surface-deep border-mc-border text-mc-text-secondary hover:border-mc-border-strong hover:text-mc-text'
+                )}
+              >
+                {isSelected ? (
+                  <Check className="w-3.5 h-3.5 text-mc-orange shrink-0" />
+                ) : (
+                  <span className="w-1.5 h-1.5 rounded-full bg-mc-text-tertiary shrink-0" />
+                )}
+                <span>{category}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
-      <div className="text-center font-mono text-[11px] text-mc-text-tertiary">
-        Direct technical review • Non-disclosure agreement guaranteed
+      {/* Row 5: Action Row (Primary Button + Prefer Email link) */}
+      <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <button
+          type="submit"
+          disabled={status === 'submitting'}
+          className={cn(
+            'w-full sm:w-auto px-7 h-12 text-sm font-sans font-semibold rounded-lg bg-mc-orange text-mc-bg hover:bg-mc-orange-highlight active:bg-mc-orange-dark flex items-center justify-center gap-2 transition-all shadow-md shrink-0',
+            status === 'submitting' && 'opacity-70 cursor-not-allowed'
+          )}
+        >
+          {status === 'submitting' ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              <span>Sending Message...</span>
+            </>
+          ) : (
+            <>
+              <span>Send Message</span>
+              <Send className="w-4 h-4" />
+            </>
+          )}
+        </button>
+
+        {/* Prefer email link */}
+        <div className="text-xs font-mono text-mc-text-tertiary text-center sm:text-right">
+          Prefer email?{' '}
+          <a
+            href="mailto:studio@monolithcodes.com"
+            className="text-mc-text-strong underline underline-offset-4 hover:text-mc-orange transition-colors"
+          >
+            studio@monolithcodes.com
+          </a>
+        </div>
       </div>
     </form>
   );

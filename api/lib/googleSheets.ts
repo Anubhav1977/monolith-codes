@@ -57,7 +57,7 @@ export async function appendToGoogleSheet(data: InquiryRowData): Promise<{ succe
 
     await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: 'Sheet1!A:K',
+      range: 'Website Inquiries!A:K',
       valueInputOption: 'USER_ENTERED',
       insertDataOption: 'INSERT_ROWS',
       requestBody: {
