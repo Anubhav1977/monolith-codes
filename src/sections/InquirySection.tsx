@@ -91,7 +91,7 @@ export const InquirySection: React.FC = () => {
 
               {/* Call Booking Button */}
               <a
-                href="mailto:studio@monolithcodes.com?subject=Schedule%2030-Min%20Architecture%20Call"
+                href="https://cal.com/monolithcodes/project-discussion"
                 className="w-full py-3 px-4 rounded-lg bg-mc-orange text-mc-bg font-sans font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 hover:bg-mc-orange-highlight active:bg-mc-orange-dark transition-all shadow-md group"
               >
                 <Calendar className="w-4 h-4" />
