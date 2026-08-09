@@ -61,7 +61,7 @@ export const InquirySection: React.FC = () => {
                     Direct Email Contact
                   </h4>
                   <p className="text-xs font-mono text-mc-text-secondary mt-0.5">
-                    inquiry@monolithcodes.com
+                    studio@monolithcodes.com
                   </p>
                 </div>
               </div>

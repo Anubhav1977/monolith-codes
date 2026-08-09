@@ -27,3 +27,13 @@ npm run preview
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS v4 + Custom Tokens
 - **Icons & Motion**: Lucide React + Framer Motion
+- **Backend Serverless**: Vercel Serverless Functions (`/api/inquiry.ts`)
+- **Integrations**: Google Sheets API (v4) + Nodemailer (Dual Transactional Email Dispatch)
+
+## 📩 Lead Capture Setup & Integration
+
+The inquiry form features a production-ready serverless workflow with Google Sheets persistence, anti-spam honeypot filtering, server-side validation, and dual email dispatch (prospect confirmation + team alert).
+
+For full setup steps, Google Cloud Service Account configuration, free SMTP integration, and environment variables reference, see:
+👉 [INQUIRY_SETUP.md](file:///d:/My%20Company/MonolithCodes/INQUIRY_SETUP.md)
+
