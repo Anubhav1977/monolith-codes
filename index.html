@@ -1,28 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/assets/brand/monolith-mark.png" />
+
+  <!-- Primary -->
+  <link rel="icon" type="image/png" href="/assets/brand/monolith-mark.png" />
+  <link rel="canonical" href="https://monolithcodes.com/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MONOLITH CODES-Software Engineering Studio</title>
-  <meta name="description"
-    content="We engineer digital systems that move business. Premium custom web applications, SaaS platforms, ERP/CRM systems, mobile apps, and business workflow software." />
   <meta name="theme-color" content="#080A0C" />
 
-  <!-- Open Graph / SEO -->
+  <title>MONOLITH CODES | Custom Software Engineering Studio</title>
+
+  <meta name="description"
+    content="MONOLITH CODES engineers custom websites, web applications, SaaS platforms, mobile apps, ERP and CRM systems, and business software tailored to how your business works." />
+
+  <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="MONOLITH CODES — Software Engineering Studio" />
+  <meta property="og:url" content="https://monolithcodes.com/" />
+  <meta property="og:site_name" content="MONOLITH CODES" />
+  <meta property="og:title" content="MONOLITH CODES | Custom Software Engineering Studio" />
   <meta property="og:description"
-    content="High-performance custom web applications, SaaS products, mobile apps, ERP/CRM platforms, and workflow automation engineered for serious business scale." />
-  <meta property="og:image" content="/assets/brand/monolith-mark.png" />
+    content="Custom websites, applications, SaaS, mobile apps, ERP/CRM systems, and business software engineered around how your business works." />
+  <meta property="og:image" content="https://monolithcodes.com/assets/brand/monolith-mark.png" />
+  <meta property="og:image:alt" content="MONOLITH CODES" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="MONOLITH CODES | Custom Software Engineering Studio" />
+  <meta name="twitter:description"
+    content="Custom websites, applications, SaaS, mobile apps, ERP/CRM systems, and business software engineered around how your business works." />
+  <meta name="twitter:image" content="https://monolithcodes.com/assets/brand/monolith-mark.png" />
 
   <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&family=Lora:ital,wght@1,400;1,500;1,600&display=swap"
-    rel="stylesheet">
+    rel="stylesheet" />
 
   <!-- Anti-Flash Theme Script -->
   <script>
@@ -31,9 +44,13 @@
         var stored = localStorage.getItem('monolith_theme');
         var theme = stored || 'system';
         var resolved = theme;
+
         if (theme === 'system') {
-          resolved = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          resolved = window.matchMedia('(prefers-color-scheme: light)').matches
+            ? 'light'
+            : 'dark';
         }
+
         document.documentElement.setAttribute('data-theme', resolved);
         document.documentElement.style.colorScheme = resolved;
       } catch (e) { }

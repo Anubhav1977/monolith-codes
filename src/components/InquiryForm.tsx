@@ -349,7 +349,7 @@ export const InquiryForm: React.FC = () => {
             <div className="flex items-center gap-1 bg-mc-surface-deep p-0.5 rounded border border-mc-border">
               <button
                 type="button"
-                onClick={() => handleCurrencyChange('INR')}
+                onClick={() => handleCurrencyChange('USD')}
                 className={cn(
                   'px-2 py-0.5 text-[10px] font-mono rounded transition-all',
                   currency === 'USD'
