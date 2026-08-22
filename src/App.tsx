@@ -10,6 +10,7 @@ import { CapabilitiesSection } from '@/sections/CapabilitiesSection';
 import { TechnicalProofSection } from '@/sections/TechnicalProofSection';
 import { ProcessSection } from '@/sections/ProcessSection';
 import { PricingSection } from '@/sections/PricingSection';
+import { TeamSection } from '@/sections/TeamSection';
 import { FaqSection } from '@/sections/FaqSection';
 import { EditorialSection } from '@/sections/EditorialSection';
 import { InquirySection } from '@/sections/InquirySection';
@@ -73,6 +74,9 @@ export const App: React.FC = () => {
 
           {/* 08 Pricing & Tiers (Launch, Grow, Build) */}
           <PricingSection />
+
+          {/* 08 The People Behind The Systems */}
+          <TeamSection />
 
           {/* 09 Frequently Asked Questions */}
           <FaqSection />
