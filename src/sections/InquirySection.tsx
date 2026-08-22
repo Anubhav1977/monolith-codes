@@ -63,7 +63,7 @@ export const InquirySection: React.FC = () => {
                 {/* Founder Photo */}
                 <div className="relative shrink-0">
                   <img
-                    src="/assets/faces/founder_pp.png"
+                    src="/assets/faces/cofounder_pp.png"
                     alt="Founder & Lead Architect"
                     className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover object-[center_12%] border border-mc-border shadow-md"
                     onError={(e) => {
@@ -77,14 +77,14 @@ export const InquirySection: React.FC = () => {
                 {/* Founder Details */}
                 <div>
                   <h4 className="text-base font-sans font-semibold text-mc-text-strong leading-tight">
-                    Anubhav Garg (Lead Software Architect)
+                    Ankit Kumar (Co-Founder)
                   </h4>
                   <p className="text-xs font-mono text-mc-text-secondary mt-0.5">
-                    Founder & Engineering Director
+                    Co-Founder & Business Director
                   </p>
                   <div className="flex items-center gap-1.5 mt-1 text-[11px] font-mono text-mc-orange">
                     <ShieldCheck className="w-3.5 h-3.5" />
-                    <span>Direct Technical Consultation</span>
+                    <span>Direct Business Consultation</span>
                   </div>
                 </div>
               </div>
