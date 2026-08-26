@@ -66,6 +66,27 @@ export const Navigation: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen]);
+
   const scrollToInquiry = () => {
     setMobileMenuOpen(false);
     setActiveDropdown(null);
@@ -79,13 +100,13 @@ export const Navigation: React.FC = () => {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-40 h-[72px] transition-all duration-240 border-b border-transparent',
+        'fixed top-0 left-0 right-0 z-50 h-[72px] transition-all duration-240 border-b border-transparent',
         isScrolled
           ? 'bg-mc-bg/90 backdrop-blur-md border-mc-border shadow-lg'
           : 'bg-transparent'
       )}
     >
-      <div className="max-w-[1360px] mx-auto h-full px-6 md:px-10 flex items-center justify-between">
+      <div className="max-w-[1360px] mx-auto h-full px-4 sm:px-6 md:px-10 flex items-center justify-between">
         {/* Left: Brand Logo */}
         <a href="#" className="flex items-center" aria-label="MONOLITH CODES — home">
           <BrandLockup variant="horizontal" size="md" interactiveHover />
@@ -182,7 +203,9 @@ export const Navigation: React.FC = () => {
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle Navigation Menu"
-            className="p-2 rounded-md bg-mc-surface border border-mc-border text-mc-text hover:text-mc-orange transition-colors"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu-drawer"
+            className="p-2 rounded-md bg-mc-surface border border-mc-border text-mc-text hover:text-mc-orange transition-colors cursor-pointer"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -191,8 +214,11 @@ export const Navigation: React.FC = () => {
 
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-[72px] bottom-0 bg-mc-bg/98 backdrop-blur-xl border-t border-mc-border flex flex-col p-6 overflow-y-auto z-50">
-          <nav className="flex flex-col gap-2 my-auto">
+        <div
+          id="mobile-menu-drawer"
+          className="lg:hidden fixed inset-x-0 top-[72px] h-[calc(100dvh-72px)] bg-mc-bg/98 backdrop-blur-xl border-t border-mc-border flex flex-col p-5 sm:p-6 overflow-y-auto overscroll-contain z-50"
+        >
+          <nav className="flex flex-col gap-2 py-2 flex-1">
             {NAV_GROUPS.map((group, idx) => {
               if (group.children) {
                 const isExpanded = expandedMobileGroup === group.label;

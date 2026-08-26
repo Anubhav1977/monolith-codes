@@ -288,14 +288,14 @@ export const ProductStackSection: React.FC = () => {
         </motion.div>
 
         {/* Sticky Stacking Cards Container */}
-        <div className="space-y-24 sm:space-y-32 lg:space-y-40 pb-14 relative">
+        <div className="space-y-16 sm:space-y-24 lg:space-y-40 pb-14 relative">
           {STACK_ITEMS.map((item, index) => (
             <div
               key={item.id}
               style={{
-                top: `calc(72px + ${index * 12}px)`,
+                top: `calc(72px + ${index * 10}px)`,
               }}
-              className="sticky z-10"
+              className="sticky z-10 transform-gpu"
             >
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
@@ -303,7 +303,7 @@ export const ProductStackSection: React.FC = () => {
                 viewport={{ once: true, amount: 0.05 }}
                 transition={{ duration: 0.3, delay: 0.05 }}
                 className={cn(
-                  'rounded-2xl border border-mc-border/80 bg-mc-surface/95 p-5 sm:p-8 md:p-10 shadow-2xl backdrop-blur-xl',
+                  'rounded-2xl border border-mc-border/80 bg-mc-surface lg:bg-mc-surface/95 p-5 sm:p-8 md:p-10 shadow-2xl backdrop-blur-none lg:backdrop-blur-xl transform-gpu',
                   'transition-all duration-300 hover:border-mc-orange/40',
                   'relative overflow-hidden group'
                 )}
@@ -339,7 +339,7 @@ export const ProductStackSection: React.FC = () => {
                     {/* Features Row / Pipeline Flow */}
                     <div className="pt-2">
                       {item.isFlow ? (
-                        <div className="grid grid-cols-4 gap-2 items-start relative">
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 items-start relative">
                           {item.features.map((feat, idx) => (
                             <div key={idx} className="space-y-1.5 text-left relative group/step">
                               <div className="flex items-center gap-1.5">
@@ -379,12 +379,12 @@ export const ProductStackSection: React.FC = () => {
                     </div>
 
                     {/* Left Bottom Target Sprint / Ownership Metadata */}
-                    <div className="pt-6 border-t border-mc-border/60 flex items-center gap-6 font-mono text-[11px] uppercase tracking-wider">
+                    <div className="pt-6 border-t border-mc-border/60 flex flex-wrap items-center gap-3 sm:gap-6 font-mono text-[11px] uppercase tracking-wider">
                       <div className="flex items-center gap-2">
                         <span className="text-mc-text-tertiary">TARGET SPRINT</span>
                         <span className="text-mc-text-strong font-semibold">4 – 12 WEEKS</span>
                       </div>
-                      <span className="text-mc-border">|</span>
+                      <span className="text-mc-border hidden sm:inline">|</span>
                       <div className="flex items-center gap-2">
                         <span className="text-mc-text-tertiary">OWNERSHIP</span>
                         <span className="text-mc-text-strong font-semibold">100% IP HANDOFF</span>
@@ -398,7 +398,7 @@ export const ProductStackSection: React.FC = () => {
                       <img
                         src={item.image}
                         alt={item.fullTitle}
-                        className="w-full h-auto max-h-[300px] object-contain transition-transform duration-500 group-hover/img:scale-105 filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.6)]"
+                        className="w-full h-auto max-h-[220px] sm:max-h-[300px] object-contain transition-transform duration-500 group-hover/img:scale-105 filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.6)]"
                       />
                     </div>
                   </div>
@@ -441,7 +441,7 @@ export const ProductStackSection: React.FC = () => {
                     </div>
 
                     {/* Right Bottom Action Link */}
-                    <div className="pt-2 flex justify-start lg:justify-end">
+                    <div className="pt-4 pb-1 flex justify-start lg:justify-end">
                       <button
                         onClick={scrollToInquiry}
                         className="group inline-flex items-center gap-2 font-sans text-xs sm:text-sm font-medium text-mc-text-strong hover:text-mc-orange transition-colors cursor-pointer"
@@ -463,7 +463,7 @@ export const ProductStackSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-20px' }}
           transition={{ duration: 0.4 }}
-          className="rounded-xl border border-mc-border bg-mc-surface p-5 sm:p-6 backdrop-blur-xl shadow-xl hover:border-mc-border-strong transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+          className="mt-12 sm:mt-16 lg:mt-32 rounded-xl border border-mc-border bg-mc-surface p-5 sm:p-6 backdrop-blur-xl shadow-xl hover:border-mc-border-strong transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative z-20"
         >
           <div className="flex items-center gap-4">
             <div className="p-3 rounded-xl bg-mc-surface-deep border border-mc-border text-mc-orange shrink-0">
