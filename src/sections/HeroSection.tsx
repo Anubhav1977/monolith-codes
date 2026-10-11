@@ -78,8 +78,8 @@ export const HeroSection: React.FC = () => {
             variants={itemVariants}
             className="hero-headline font-sans font-medium tracking-tight leading-[1.02] mb-5 max-w-[640px]"
           >
-            <span className="text-mc-text-strong block">Your business is unique.</span>
-            <span className="text-mc-orange block">Your software should be too.</span>
+            <span className="text-mc-text-strong block">YOUR BUSINESS IS UNIQUE.</span>
+            <span className="text-mc-orange block">YOUR SOFTWARE SHOULD BE TOO.</span>
           </motion.h1>
 
           {/* Supporting copy */}
