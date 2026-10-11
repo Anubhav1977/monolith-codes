@@ -6,16 +6,14 @@ import {
   Printer,
   Mail,
   ChevronRight,
-  ExternalLink,
   Lock,
-  Building2,
-  AlertTriangle,
-  CheckCircle2,
   Scale,
   Ban,
   Layers,
-  HelpCircle,
-  Globe
+  Globe,
+  List,
+  X,
+  ChevronDown
 } from 'lucide-react';
 import { BrandLockup } from '@/components/BrandLockup';
 import { ThemeToggle } from '@/components/ThemeToggle';
@@ -23,11 +21,13 @@ import { cn } from '@/lib/utils';
 
 interface TermsOfUseProps {
   onBackToHome?: () => void;
+
   onNavigateToPrivacy?: () => void;
 }
 
 export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBackToHome, onNavigateToPrivacy }) => {
   const [activeSection, setActiveSection] = useState<string>('terms-01');
+  const [mobileTocOpen, setMobileTocOpen] = useState<boolean>(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -57,6 +57,29 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBackToHome, onNavigate
     return () => observer.disconnect();
   }, []);
 
+  // Lock background scrolling when mobile TOC is open
+  useEffect(() => {
+    if (mobileTocOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileTocOpen]);
+
+  // Handle Escape key to close mobile TOC
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileTocOpen) {
+        setMobileTocOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileTocOpen]);
+
   const handlePrint = () => {
     window.print();
   };
@@ -77,12 +100,23 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBackToHome, onNavigate
     { id: 'terms-13', title: '13. Related Policies & Contact', tag: 'Contact' },
   ];
 
+  const currentNav = navItems.find((item) => item.id === activeSection) || navItems[0];
+
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+      setActiveSection(id);
+      setMobileTocOpen(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-mc-bg text-mc-text selection:bg-mc-orange selection:text-mc-bg">
-      {/* Top Utility Header */}
+      {/* Top Utility Header — Fully Mobile Responsive */}
       <header className="sticky top-0 z-50 bg-mc-bg/95 backdrop-blur-md border-b border-mc-border print:hidden">
-        <div className="max-w-[1280px] mx-auto px-6 md:px-10 h-18 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-6">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-10 h-16 sm:h-18 flex items-center justify-between gap-2 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-6 min-w-0">
             <button
               onClick={() => {
                 if (onBackToHome) {
@@ -91,14 +125,15 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBackToHome, onNavigate
                   window.location.hash = '';
                 }
               }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-mc-border bg-mc-surface hover:bg-mc-surface-hover text-mc-text-body hover:text-mc-text-strong text-xs font-mono transition-colors cursor-pointer group"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-mc-border bg-mc-surface hover:bg-mc-surface-hover text-mc-text-body hover:text-mc-text-strong text-xs font-mono transition-colors cursor-pointer group shrink-0"
               aria-label="Return to Monolith Codes Homepage"
             >
-              <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform text-mc-orange" />
-              <span>Back to Studio</span>
+              <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform text-mc-orange shrink-0" />
+              <span className="hidden sm:inline">Back to Studio</span>
+              <span className="sm:hidden text-xs">Back</span>
             </button>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
               <a
                 href="#"
                 onClick={(e) => {
@@ -109,18 +144,29 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBackToHome, onNavigate
                     window.location.hash = '';
                   }
                 }}
-                className="flex items-center cursor-pointer group"
+                className="flex items-center cursor-pointer group shrink-0"
                 aria-label="MONOLITH CODES — Return to Homepage"
               >
                 <BrandLockup variant="horizontal" size="sm" interactiveHover />
               </a>
-              <span className="hidden md:inline-block text-[11px] font-mono px-2 py-0.5 rounded bg-mc-surface border border-mc-border text-mc-text-tertiary">
+              <span className="hidden md:inline-block text-[11px] font-mono px-2 py-0.5 rounded bg-mc-surface border border-mc-border text-mc-text-tertiary shrink-0">
                 LEGAL // TERMS
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+            {/* Mobile TOC Button */}
+            <button
+              onClick={() => setMobileTocOpen((prev) => !prev)}
+              className="lg:hidden inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-mc-border bg-mc-surface hover:bg-mc-surface-hover text-mc-text-strong text-xs font-mono transition-colors cursor-pointer"
+              aria-label={mobileTocOpen ? 'Close Table of Contents' : 'Open Table of Contents'}
+              aria-expanded={mobileTocOpen}
+            >
+              <List className="w-3.5 h-3.5 text-mc-orange" />
+              <span className="text-[11px] font-medium hidden xs:inline">Index</span>
+            </button>
+
             <button
               onClick={handlePrint}
               className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-mc-border bg-mc-surface hover:bg-mc-surface-hover text-mc-text-body text-xs font-mono transition-colors cursor-pointer"
@@ -130,12 +176,22 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBackToHome, onNavigate
               <span>Print / PDF</span>
             </button>
 
+            {/* Email link: Full text on sm+, icon button on mobile */}
             <a
               href="mailto:studio@monolithcodes.com?subject=Terms%20of%20Use%20Inquiry"
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-mc-orange-10 border border-mc-orange-28 text-mc-orange hover:bg-mc-orange hover:text-mc-bg text-xs font-mono font-medium transition-colors"
+              className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-mc-orange-10 border border-mc-orange-28 text-mc-orange hover:bg-mc-orange hover:text-mc-bg text-xs font-mono font-medium transition-colors"
+              title="Contact studio@monolithcodes.com"
             >
               <Mail className="w-3.5 h-3.5" />
               <span>studio@monolithcodes.com</span>
+            </a>
+            <a
+              href="mailto:studio@monolithcodes.com?subject=Terms%20of%20Use%20Inquiry"
+              className="sm:hidden p-2 rounded-lg bg-mc-orange-10 border border-mc-orange-28 text-mc-orange hover:bg-mc-orange hover:text-mc-bg transition-colors"
+              aria-label="Email studio@monolithcodes.com"
+              title="studio@monolithcodes.com"
+            >
+              <Mail className="w-3.5 h-3.5" />
             </a>
 
             <ThemeToggle />
@@ -143,8 +199,104 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBackToHome, onNavigate
         </div>
       </header>
 
+      {/* Sticky Mobile Sub-Navbar for Quick Section Navigation */}
+      <div className="lg:hidden sticky top-16 z-30 bg-mc-bg/95 backdrop-blur-md border-b border-mc-border px-4 py-2.5 flex items-center justify-between text-xs font-mono">
+        <div className="flex items-center gap-2 min-w-0 pr-2">
+          <span className="w-2 h-2 rounded-full bg-mc-orange shrink-0 animate-pulse" />
+          <span className="truncate text-mc-text-strong font-medium text-[11px] sm:text-xs">
+            {currentNav.title}
+          </span>
+        </div>
+        <button
+          onClick={() => setMobileTocOpen(true)}
+          className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-mc-surface border border-mc-border text-mc-orange hover:bg-mc-surface-hover transition-colors shrink-0 cursor-pointer"
+        >
+          <List className="w-3.5 h-3.5" />
+          <span className="text-[11px] font-medium">Sections</span>
+          <ChevronDown className="w-3 h-3 text-mc-text-tertiary" />
+        </button>
+      </div>
+
+      {/* Mobile Table of Contents Modal Drawer */}
+      {mobileTocOpen && (
+        <div className="lg:hidden fixed inset-0 z-50 flex flex-col justify-end">
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity"
+            onClick={() => setMobileTocOpen(false)}
+            aria-hidden="true"
+          />
+
+          {/* Drawer Sheet */}
+          <div className="relative w-full max-h-[85vh] bg-mc-surface-deep border-t border-mc-border rounded-t-2xl shadow-2xl flex flex-col z-10 animate-in slide-in-from-bottom duration-200">
+            {/* Drawer Header */}
+            <div className="flex items-center justify-between px-5 py-4 border-b border-mc-border">
+              <div className="flex items-center gap-2">
+                <FileText className="w-4 h-4 text-mc-orange" />
+                <span className="font-mono text-xs font-semibold text-mc-text-strong uppercase tracking-wider">
+                  Terms Navigation
+                </span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-mc-surface border border-mc-border text-mc-text-tertiary">
+                  13 Sections
+                </span>
+              </div>
+              <button
+                onClick={() => setMobileTocOpen(false)}
+                className="p-1.5 rounded-lg border border-mc-border bg-mc-surface hover:bg-mc-surface-hover text-mc-text-secondary hover:text-mc-text-strong transition-colors cursor-pointer"
+                aria-label="Close Table of Contents"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Scrollable Section Links */}
+            <div className="overflow-y-auto px-4 py-3 space-y-1 divide-y divide-mc-border/30 max-h-[55vh]">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={cn(
+                    'w-full text-left flex items-center justify-between p-3 rounded-xl transition-colors cursor-pointer pt-3',
+                    activeSection === item.id
+                      ? 'bg-mc-orange-10 text-mc-orange font-semibold border border-mc-orange-28'
+                      : 'text-mc-text-secondary hover:text-mc-text-strong hover:bg-mc-surface'
+                  )}
+                >
+                  <div className="flex items-center gap-2.5 min-w-0 pr-2">
+                    <span
+                      className={cn(
+                        'w-1.5 h-1.5 rounded-full shrink-0',
+                        activeSection === item.id ? 'bg-mc-orange' : 'bg-mc-text-tertiary'
+                      )}
+                    />
+                    <span className="text-xs font-sans truncate">{item.title}</span>
+                  </div>
+                  <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-mc-surface border border-mc-border text-mc-text-tertiary shrink-0">
+                    {item.tag}
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            {/* Drawer Footer Contact Bar */}
+            <div className="p-4 border-t border-mc-border bg-mc-surface flex items-center justify-between gap-3 text-xs font-mono">
+              <div className="truncate">
+                <span className="text-mc-text-tertiary text-[10px] block">DIRECT INQUIRIES</span>
+                <span className="text-mc-text-strong font-medium truncate">studio@monolithcodes.com</span>
+              </div>
+              <a
+                href="mailto:studio@monolithcodes.com?subject=Website%20Terms%20Inquiry"
+                className="px-3 py-1.5 rounded-lg bg-mc-orange text-mc-bg font-sans font-semibold text-xs hover:bg-mc-orange-highlight transition-colors shrink-0"
+              >
+                Email Studio
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Main Terms Layout */}
-      <main className="max-w-[1280px] mx-auto px-6 md:px-10 py-16 md:py-24">
+      <main className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-10 py-10 sm:py-16 md:py-24">
         {/* Document Hero */}
         <div className="mb-20 pb-16 border-b border-mc-border">
           <div className="flex flex-wrap items-center gap-3 mb-6">
@@ -217,8 +369,8 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBackToHome, onNavigate
 
         {/* Layout Grid with Sticky Sidebar */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Sticky Table of Contents (Desktop) */}
-          <aside className="lg:col-span-4 sticky top-24 space-y-6 print:hidden">
+          {/* Sticky Table of Contents (Desktop Only - hidden on mobile) */}
+          <aside className="hidden lg:block lg:col-span-4 sticky top-24 space-y-6 print:hidden">
             <div className="p-6 rounded-xl bg-mc-surface border border-mc-border space-y-4">
               <div className="font-mono text-xs text-mc-orange uppercase tracking-wider flex items-center gap-2">
                 <FileText className="w-3.5 h-3.5" />
@@ -615,6 +767,30 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBackToHome, onNavigate
                 </div>
               </div>
             </section>
+
+            {/* Mobile Privacy Policy Cross-Link Card (Visible on mobile only) */}
+            <div className="lg:hidden p-5 rounded-xl bg-mc-surface border border-mc-border space-y-3">
+              <div className="text-xs font-mono text-mc-text-strong flex items-center gap-2">
+                <Shield className="w-4 h-4 text-mc-orange" />
+                <span>Looking for Privacy &amp; Data Governance?</span>
+              </div>
+              <p className="text-xs sm:text-sm font-sans text-mc-text-secondary leading-relaxed">
+                For information regarding data collection standards, 12-month lead retention, and our sub-processors, view our Data Governance Policy.
+              </p>
+              <button
+                onClick={() => {
+                  if (onNavigateToPrivacy) {
+                    onNavigateToPrivacy();
+                  } else {
+                    window.location.hash = '#privacy';
+                  }
+                }}
+                className="w-full py-2.5 px-3 rounded-lg bg-mc-surface-deep border border-mc-border hover:border-mc-orange text-xs font-mono text-mc-orange flex items-center justify-center gap-2 transition-colors font-medium cursor-pointer"
+              >
+                <span>View Privacy Policy</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
 
           </div>
         </div>
