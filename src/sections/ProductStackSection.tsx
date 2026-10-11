@@ -463,7 +463,7 @@ export const ProductStackSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-20px' }}
           transition={{ duration: 0.4 }}
-          className="mt-12 sm:mt-16 lg:mt-32 rounded-xl border border-mc-border bg-mc-surface p-5 sm:p-6 backdrop-blur-xl shadow-xl hover:border-mc-border-strong transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative z-20"
+          className="rounded-xl border border-mc-border bg-mc-surface p-5 sm:p-6 backdrop-blur-xl shadow-xl hover:border-mc-border-strong transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative z-20"
         >
           <div className="flex items-center gap-4">
             <div className="p-3 rounded-xl bg-mc-surface-deep border border-mc-border text-mc-orange shrink-0">
