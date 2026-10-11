@@ -310,95 +310,65 @@ export const ProcessSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Commercial & Delivery Transparency Standards (Payment, Delivery, Revisions, Maintenance) */}
-        <div className="p-8 sm:p-10 rounded-2xl bg-mc-surface border border-mc-border space-y-8">
+        {/* Clear Terms. No Surprises. — Transparent 2x2 Commercial Overview */}
+        <div className="p-6 sm:p-8 rounded-2xl bg-mc-surface border border-mc-border space-y-6">
           <div>
-            <div className="font-mono text-xs text-mc-orange uppercase tracking-wider mb-2 flex items-center gap-2">
+            <div className="font-mono text-xs text-mc-orange uppercase tracking-wider mb-1.5 flex items-center gap-2">
               <ShieldCheck className="w-4 h-4" />
-              <span>COMMERCIAL &amp; DELIVERY TRANSPARENCY</span>
+              <span>TRANSPARENCY</span>
             </div>
             <h3 className="text-2xl sm:text-3xl font-sans font-medium text-mc-text-strong tracking-tight">
-              Payment, Delivery &amp; Maintenance Standards
+              Clear Terms. No Surprises.
             </h3>
-            <p className="text-sm text-mc-text-body font-sans mt-2 max-w-3xl leading-relaxed">
-              We define project expectations with structural clarity before writing code. Below is how payment arrangements, delivery estimates, revisions, and post-launch maintenance are managed.
+            <p className="text-sm sm:text-base text-mc-text-body font-sans mt-1.5 max-w-2xl leading-relaxed">
+              Scope, pricing, timelines and support are agreed before your project begins.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* 1. Payment Terms */}
-            <div className="p-6 rounded-xl bg-mc-surface-deep border border-mc-border space-y-3">
-              <div className="flex items-center gap-2 font-mono text-xs text-mc-orange font-semibold">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+            {/* Card 1 — PAYMENT */}
+            <div className="p-5 sm:p-6 rounded-xl bg-mc-surface-deep border border-mc-border space-y-2.5">
+              <div className="flex items-center gap-2 font-mono text-xs text-mc-orange font-semibold tracking-wider">
                 <CreditCard className="w-4 h-4" />
-                <span>PAYMENT ARRANGEMENTS</span>
+                <span>PAYMENT</span>
               </div>
               <p className="text-sm font-sans text-mc-text-body leading-relaxed">
-                Payment terms are defined in your project proposal before work begins. Depending on the project, payments may be structured around an initial payment and agreed delivery milestones. The proposal will outline the applicable amounts, payment dates and conditions.
+                Your proposal clearly outlines the initial payment, milestones and due dates. Work begins once the scope is approved and the agreed initial payment is received.
               </p>
-              <div className="text-xs text-mc-text-secondary font-mono pt-1">
-                &bull; Development begins after the scope is approved and the agreed initial payment is received.
-              </div>
             </div>
 
-            {/* 2. Delivery Timelines */}
-            <div className="p-6 rounded-xl bg-mc-surface-deep border border-mc-border space-y-3">
-              <div className="flex items-center gap-2 font-mono text-xs text-mc-orange font-semibold">
+            {/* Card 2 — DELIVERY */}
+            <div className="p-5 sm:p-6 rounded-xl bg-mc-surface-deep border border-mc-border space-y-2.5">
+              <div className="flex items-center gap-2 font-mono text-xs text-mc-orange font-semibold tracking-wider">
                 <Clock className="w-4 h-4" />
-                <span>DELIVERY TIMELINES</span>
+                <span>DELIVERY</span>
               </div>
               <p className="text-sm font-sans text-mc-text-body leading-relaxed">
-                Estimated delivery timelines are provided with each package or proposal. The schedule depends on the agreed scope, timely receipt of content and access, client feedback, approvals and any third-party dependencies. Changes to scope may affect the timeline and will be communicated before proceeding.
+                We agree on deliverables and target timelines before development. Milestones may be adjusted if requirements, client inputs or external dependencies change.
               </p>
-              <div className="text-xs text-mc-text-secondary font-mono pt-1">
-                &bull; Milestones and target delivery dates are recorded in your Statement of Work (SOW).
-              </div>
             </div>
 
-            {/* 3. Revisions & Scope Boundaries */}
-            <div className="p-6 rounded-xl bg-mc-surface-deep border border-mc-border space-y-3">
-              <div className="flex items-center gap-2 font-mono text-xs text-mc-orange font-semibold">
+            {/* Card 3 — SCOPE & REVISIONS */}
+            <div className="p-5 sm:p-6 rounded-xl bg-mc-surface-deep border border-mc-border space-y-2.5">
+              <div className="flex items-center gap-2 font-mono text-xs text-mc-orange font-semibold tracking-wider">
                 <RefreshCw className="w-4 h-4" />
-                <span>REVISIONS &amp; SCOPE CHANGES</span>
+                <span>SCOPE &amp; REVISIONS</span>
               </div>
               <p className="text-sm font-sans text-mc-text-body leading-relaxed">
-                Your proposal specifies the deliverables, included revisions and project boundaries. Requests outside the agreed scope will be assessed for their cost and timeline impact and approved before the additional work begins.
+                Your proposal defines what's included and the revisions available. Additional requirements are discussed and approved before any extra work begins.
               </p>
-              <div className="text-xs text-mc-text-secondary font-mono pt-1">
-                &bull; Revisions are defined separately from new features, new pages, or architectural changes.
-              </div>
             </div>
 
-            {/* 4. Warranty vs. Maintenance Distinction */}
-            <div className="p-6 rounded-xl bg-mc-surface-deep border border-mc-border space-y-3">
-              <div className="flex items-center gap-2 font-mono text-xs text-mc-orange font-semibold">
-                <Layers className="w-4 h-4" />
-                <span>WARRANTY VS. MAINTENANCE</span>
+            {/* Card 4 — POST-LAUNCH SUPPORT */}
+            <div className="p-5 sm:p-6 rounded-xl bg-mc-surface-deep border border-mc-border space-y-2.5">
+              <div className="flex items-center gap-2 font-mono text-xs text-mc-orange font-semibold tracking-wider">
+                <ShieldCheck className="w-4 h-4" />
+                <span>POST-LAUNCH SUPPORT</span>
               </div>
-              <div className="space-y-2 text-xs font-sans text-mc-text-body">
-                <div>
-                  <strong className="text-mc-text-strong font-medium">Warranty:</strong> Correction of covered defects in delivered work during the agreed hypercare period.
-                </div>
-                <div>
-                  <strong className="text-mc-text-strong font-medium">Maintenance:</strong> Ongoing updates, monitoring, security patches, and technical assistance under a separate agreement.
-                </div>
-                <div>
-                  <strong className="text-mc-text-strong font-medium">Additional Development:</strong> New features, integrations, or modules outside the initial scope.
-                </div>
-              </div>
+              <p className="text-sm font-sans text-mc-text-body leading-relaxed">
+                We provide the agreed defect-fix support after launch. Ongoing maintenance, updates and new features are scoped separately when needed.
+              </p>
             </div>
-          </div>
-
-          <div className="p-4 rounded-xl bg-mc-surface-deep/60 border border-mc-border-soft flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-mono text-mc-text-tertiary">
-            <div>
-              HAVE QUESTIONS ABOUT PROJECT STRUCTURE?
-            </div>
-            <a
-              href="mailto:studio@monolithcodes.com?subject=Project%20Structure%20Inquiry"
-              className="text-mc-orange hover:underline font-medium flex items-center gap-1.5"
-            >
-              <span>Speak directly with our engineering team: studio@monolithcodes.com</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </a>
           </div>
         </div>
       </div>
