@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X } from 'lucide-react';
 
 export const WhatsAppButton: React.FC = () => {
-  const [showTooltip, setShowTooltip] = useState(true);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const openWhatsApp = () => {
     const phoneNumber = '9560693524'; // 
@@ -48,20 +48,16 @@ export const WhatsAppButton: React.FC = () => {
       {/* Floating Action Button */}
       <motion.button
         onClick={openWhatsApp}
-        whileHover={{ scale: 1.1, rotate: 3 }}
+        onMouseEnter={() => setShowTooltip(true)}
+        onMouseLeave={() => setShowTooltip(false)}
+        onFocus={() => setShowTooltip(true)}
+        onBlur={() => setShowTooltip(false)}
+        whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.92 }}
         className="relative group p-4 rounded-full bg-[#25D366] text-white shadow-2xl flex items-center justify-center cursor-pointer transition-shadow hover:shadow-[#25D366]/40"
         aria-label="Contact us on WhatsApp"
       >
-        {/* Pulse Aura */}
-        <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-30 pointer-events-none" />
-
         <MessageCircle className="w-6 h-6 fill-current relative z-10" />
-
-        {/* Hover Label Badge */}
-        <span className="absolute right-full mr-3 px-3 py-1.5 rounded-md bg-mc-surface border border-mc-border text-mc-text-strong font-mono text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity shadow-lg pointer-events-none">
-          Start WhatsApp Chat ↗
-        </span>
       </motion.button>
     </div>
   );
