@@ -21,11 +21,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         return stored;
       }
     } catch (e) {}
-    return 'system';
+    return 'light';
   });
 
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(() => {
-    if (typeof window === 'undefined') return 'dark';
+    if (typeof window === 'undefined') return 'light';
     if (theme === 'system') {
       return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
     }
