@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ArtifactFrame } from '@/components/ArtifactFrame';
-import { CheckCircle2, ArrowRight } from 'lucide-react';
+import { CheckCircle2, ArrowRight, ShieldCheck, Clock, CreditCard, RefreshCw, Layers } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ProcessStage {
@@ -18,116 +18,135 @@ interface ProcessStage {
 const STAGES: ProcessStage[] = [
   {
     step: '01',
-    number: '01 / 06',
-    title: 'UNDERSTAND',
-    summary: 'Deep-dive audit into your business processes, user personas, operational bottlenecks, and ROI goals.',
+    number: '01 / 07',
+    title: 'ENQUIRY & AUDIT',
+    summary: 'Initial enquiry review, requirements discussion, and operational bottleneck evaluation with senior architects.',
     details: [
-      'Workflow mapping & bottleneck analysis',
-      'Technical constraint & integration audit',
-      'Project scope & milestone definition',
+      'Requirements discovery & business process audit',
+      'Technical constraint & integration evaluation',
+      'Initial feasibility & architecture discussion',
     ],
     artifactSnippet: {
       header: 'DISCOVERY_SPEC.md',
       lines: [
-        'REQ.01: Unify warehouse inventory across 4 sites',
-        'REQ.02: Sub-100ms API response target',
-        'REQ.03: Single Sign-On integration with Azure AD',
+        'STAGE: 01_REQUIREMENTS_DISCOVERY',
+        'AUDIT: Multi-location ERP & API latency audit',
+        'TARGET: Sub-100ms response & responsive React UI',
       ],
     },
   },
   {
     step: '02',
-    number: '02 / 06',
-    title: 'ARCHITECT',
-    summary: 'Designing data schemas, API gateways, component structures, and cloud infrastructure pipelines.',
+    number: '02 / 07',
+    title: 'SCOPE & QUOTE',
+    summary: 'Formulating explicit project boundaries, architectural deliverables, milestone roadmaps, and structured quotation.',
     details: [
-      'Database schema & relationship design',
-      'API gateway & middleware routing',
-      'Security, authentication & audit logging strategy',
+      'Granular Statement of Work (SOW) specification',
+      'Architecture blueprints & milestone deliverables',
+      'Applicable quotation & commercial conditions',
     ],
     artifactSnippet: {
-      header: 'SYSTEM_ARCHITECTURE.graph',
+      header: 'PROPOSAL_SCOPE.json',
       lines: [
-        '[Client React Frontend] → [Vite / CDN Edge]',
-        '                    ↳ [FastAPI / Node API Gateway]',
-        '                          ↳ [PostgreSQL + Redis Queue]',
+        'SOW_SPEC: Web Application & Data Gateway',
+        'DELIVERABLES: [Frontend UI, Auth, API, DB Schema]',
+        'MILESTONES: Phase 1 (Core), Phase 2 (Telemetry)',
       ],
     },
   },
   {
     step: '03',
-    number: '03 / 06',
-    title: 'DESIGN',
-    summary: 'Engineering intuitive visual design systems, UI components, responsive layouts, and interactive prototypes.',
+    number: '03 / 07',
+    title: 'APPROVAL & INITIAL PAYMENT',
+    summary: 'Written approval of the project scope and receipt of the agreed initial payment. Development officially begins once both are secured.',
     details: [
-      'Design tokens (Dark, Light, System support)',
-      'High-fidelity interactive UI design',
-      'Accessibility (WCAG 2.2 AA) compliance',
+      'Written scope approval & mutual agreement execution',
+      'Agreed initial payment receipt & sprint scheduling',
+      'Direct communication channel & staging environment setup',
     ],
     artifactSnippet: {
-      header: 'DESIGN_SYSTEM_TOKENS.css',
+      header: 'KICKOFF_CONFIRMATION.log',
       lines: [
-        ':root { --mc-bg: #080A0C; --mc-orange: #FF6B00; }',
-        '[data-theme="light"] { --mc-bg: #F4F3EE; }',
-        '--font-sans: "Geist", sans-serif;',
+        'STATUS: SCOPE_APPROVED_AND_DEPOSIT_CLEARED',
+        'NOTE: Development begins upon agreed initial payment',
+        'SPRINT_CELL: Senior Engineer Pod Activated',
       ],
     },
   },
   {
     step: '04',
-    number: '04 / 06',
-    title: 'ENGINEER',
-    summary: 'Production coding with strict TypeScript, clean component architecture, and automated test coverage.',
+    number: '04 / 07',
+    title: 'DESIGN & BUILD',
+    summary: 'Engineering custom UI component systems and production React/TypeScript code with agreed weekly sprint reviews.',
     details: [
-      '100% typed React & TypeScript codebase',
-      'Optimized state management & data fetching',
-      'Clean modular primitives & component structure',
+      'Bespoke design systems & responsive components',
+      'Production React 19, TypeScript & clean backend logic',
+      'Agreed milestone reviews & live staging previews',
     ],
     artifactSnippet: {
-      header: 'src/components/WorkflowQueue.tsx',
+      header: 'src/components/DataGrid.tsx',
       lines: [
-        'export const QueueItem: React.FC<Props> = ({ data }) => {',
-        '  const { status, dispatch } = useQueueState(data.id);',
-        '  return <Surface active={status === "PENDING"}>...</Surface>;',
+        'export const DataGrid: React.FC<Props> = ({ stream }) => {',
+        '  const { data } = useTelemetry(stream.endpoint);',
+        '  return <Surface elevation="panel">{data}</Surface>;',
         '};',
       ],
     },
   },
   {
     step: '05',
-    number: '05 / 06',
-    title: 'VALIDATE',
-    summary: 'Comprehensive automated unit testing, end-to-end user testing, performance profiling, and security auditing.',
+    number: '05 / 07',
+    title: 'TEST & ACCEPT',
+    summary: 'Rigorous unit testing, Core Web Vitals profiling, security scans, client review, and formal milestone acceptance.',
     details: [
-      'Lighthouse & Core Web Vitals audit',
-      'Cross-browser & responsive mobile verification',
-      'OWASP security & vulnerability scanning',
+      'Automated unit & end-to-end test verification',
+      'Cross-browser & mobile responsive audit',
+      'Client review, user acceptance testing & sign-off',
     ],
     artifactSnippet: {
-      header: 'TEST_MATRIX_REPORT.log',
+      header: 'ACCEPTANCE_MATRIX.log',
       lines: [
-        '✓ Core Web Vitals: LCP 0.8s, CLS 0.00, INP 42ms',
-        '✓ Accessibility Audit: 100% Pass (WCAG 2.2 AA)',
-        '✓ 142 Unit Tests Passed (0 Failures)',
+        '✓ Core Web Vitals: LCP 0.8s, CLS 0.00, INP 38ms',
+        '✓ WCAG 2.2 AA Accessibility: Verified 100%',
+        '✓ Client UAT Review: Milestone Accepted',
       ],
     },
   },
   {
     step: '06',
-    number: '06 / 06',
-    title: 'SHIP + EVOLVE',
-    summary: 'Zero-downtime deployment, continuous monitoring, and ongoing optimization based on real user feedback.',
+    number: '06 / 07',
+    title: 'DEPLOY & HANDOVER',
+    summary: 'Zero-downtime production deployment, domain go-live, and 100% intellectual property & Git repository transfer.',
     details: [
-      'Automated CI/CD deployment pipelines',
-      'Real-time error & telemetry logging',
-      'Iterative feature updates & long-term maintenance',
+      'Automated CI/CD deployment & CDN edge provisioning',
+      '100% IP ownership & Git repository transfer',
+      'Comprehensive system documentation & operational handoff',
     ],
     artifactSnippet: {
       header: 'PRODUCTION_RELEASE.env',
       lines: [
-        'STATUS: PRODUCTION_LIVE (v1.0.0)',
-        'DEPLOYMENT: Edge Global CDN',
-        'HEALTH: 100% Operational',
+        'STATUS: PRODUCTION_LIVE_STABLE',
+        'IP_OWNERSHIP: 100% Transferred to Client',
+        'HANDOVER: Git Repo + Env Docs Released',
+      ],
+    },
+  },
+  {
+    step: '07',
+    number: '07 / 07',
+    title: 'WARRANTY & SUPPORT',
+    summary: 'Agreed post-launch defect warranty period, optional ongoing maintenance retainers, and infrastructure telemetry.',
+    details: [
+      'Covered defect correction during agreed warranty period',
+      'Optional monthly maintenance retainers for continuous monitoring',
+      'Infrastructure updates, security patches & telemetry',
+    ],
+    artifactSnippet: {
+      header: 'SUPPORT_AGREEMENT.spec',
+      lines: [
+        'WARRANTY: 30-Day Defect Correction Coverage',
+        'MAINTENANCE: Optional Monthly Service Retainer',
+        'NEW_FEATURES: Evaluated via Separate SOW',
       ],
     },
   },
@@ -139,26 +158,26 @@ export const ProcessSection: React.FC = () => {
   const currentStage = STAGES[activeStep];
 
   return (
-    <section id="process" className="py-24 border-b border-mc-border">
+    <section id="process" className="py-24 border-b border-mc-border bg-mc-bg">
       <div className="max-w-[1360px] mx-auto px-6 md:px-10">
         {/* Section Header */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-16">
           <div className="lg:col-span-3 font-mono text-xs text-mc-orange uppercase tracking-wider flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-mc-orange" />
-            <span>06 / DELIVERY PROCESS</span>
+            <span>06 / HOW WE WORK</span>
           </div>
 
           <div className="lg:col-span-9">
-            <h2 className="text-3xl md:text-4xl font-sans font-medium text-mc-text-strong tracking-tight mb-4">
-              THE SIGNAL PIPELINE — HOW WE WORK
+            <h2 className="text-3xl md:text-5xl font-sans font-medium text-mc-text-strong tracking-tight mb-4">
+              THE 7-STAGE DELIVERY PIPELINE
             </h2>
-            <p className="text-mc-text-body text-base max-w-2xl">
-              A structured, transparent 6-stage engineering process designed to eliminate project surprises and deliver software that performs reliably beyond launch.
+            <p className="text-mc-text-body text-base md:text-lg max-w-3xl leading-relaxed">
+              A structured, transparent engineering process designed to eliminate project ambiguity. Development officially begins after the scope is approved and the agreed initial payment is received.
             </p>
           </div>
         </div>
 
-        {/* Signal Line Progress Bar */}
+        {/* Signal Stepper Progress Bar */}
         <div className="relative mb-12 hidden md:block">
           {/* Base Neutral Line */}
           <div className="absolute top-1/2 left-0 right-0 h-[2px] bg-mc-border -translate-y-1/2" />
@@ -177,7 +196,7 @@ export const ProcessSection: React.FC = () => {
                   key={s.step}
                   onClick={() => setActiveStep(idx)}
                   className={cn(
-                    'flex flex-col items-center gap-2 p-2 rounded transition-all group',
+                    'flex flex-col items-center gap-2 p-2 rounded transition-all group cursor-pointer',
                     isCurrent ? 'scale-105' : 'opacity-80 hover:opacity-100'
                   )}
                 >
@@ -208,30 +227,30 @@ export const ProcessSection: React.FC = () => {
         </div>
 
         {/* Active Stage Details & Visual Artifact */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-20">
           {/* Left Column: Stage Copy & Deliverables */}
-          <div className="lg:col-span-6 p-6 sm:p-8 rounded-lg border border-mc-border bg-mc-surface flex flex-col justify-between">
+          <div className="lg:col-span-6 p-6 sm:p-8 rounded-xl border border-mc-border bg-mc-surface flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-4">
-                <span className="font-mono text-xs text-mc-orange">{currentStage.number}</span>
-                <span className="px-2.5 py-1 rounded bg-mc-orange-10 border border-mc-orange text-mc-orange font-mono text-xs uppercase">
-                  STAGE {currentStage.step} OF 06
+                <span className="font-mono text-xs text-mc-orange font-medium">{currentStage.number}</span>
+                <span className="px-2.5 py-1 rounded bg-mc-orange-10 border border-mc-orange-28 text-mc-orange font-mono text-xs uppercase font-semibold">
+                  STAGE {currentStage.step} OF 07
                 </span>
               </div>
 
-              <h3 className="text-3xl font-sans font-medium text-mc-text-strong mb-4">
+              <h3 className="text-2xl sm:text-3xl font-sans font-medium text-mc-text-strong mb-4">
                 {currentStage.title}
               </h3>
-              <p className="text-base font-sans text-mc-text-body leading-relaxed mb-6">
+              <p className="text-sm sm:text-base font-sans text-mc-text-body leading-relaxed mb-6">
                 {currentStage.summary}
               </p>
 
               <div className="space-y-3 mb-8">
-                <h4 className="font-mono text-xs text-mc-text-secondary uppercase">
+                <h4 className="font-mono text-xs text-mc-text-secondary uppercase tracking-wider">
                   STAGE DELIVERABLES:
                 </h4>
                 {currentStage.details.map((d, i) => (
-                  <div key={i} className="flex items-center gap-3 text-sm text-mc-text">
+                  <div key={i} className="flex items-center gap-3 text-sm font-sans text-mc-text">
                     <CheckCircle2 className="w-4 h-4 text-mc-orange shrink-0" />
                     <span>{d}</span>
                   </div>
@@ -244,15 +263,15 @@ export const ProcessSection: React.FC = () => {
               <button
                 disabled={activeStep === 0}
                 onClick={() => setActiveStep(Math.max(0, activeStep - 1))}
-                className="px-4 py-2 text-xs font-mono rounded bg-mc-surface-deep border border-mc-border text-mc-text disabled:opacity-40 disabled:cursor-not-allowed hover:border-mc-border-strong transition-colors"
+                className="px-4 py-2 text-xs font-mono rounded-lg bg-mc-surface-deep border border-mc-border text-mc-text disabled:opacity-40 disabled:cursor-not-allowed hover:border-mc-border-strong transition-colors cursor-pointer"
               >
-                ← Previous Stage
+                &larr; Previous Stage
               </button>
 
               <button
                 disabled={activeStep === STAGES.length - 1}
                 onClick={() => setActiveStep(Math.min(STAGES.length - 1, activeStep + 1))}
-                className="px-4 py-2 text-xs font-mono rounded bg-mc-orange text-mc-bg font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:bg-mc-orange-highlight transition-colors flex items-center gap-1"
+                className="px-4 py-2 text-xs font-mono rounded-lg bg-mc-orange text-mc-bg font-semibold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-mc-orange-highlight transition-colors flex items-center gap-1 cursor-pointer"
               >
                 <span>Next Stage</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -269,25 +288,117 @@ export const ProcessSection: React.FC = () => {
             >
               <div className="p-6 font-mono text-xs space-y-4">
                 <div className="text-mc-text-tertiary">
-                  // MONOLITH PIPELINE OUTPUT — {currentStage.title}
+                  // MONOLITH PIPELINE TRACE &bull; {currentStage.title}
                 </div>
 
-                <div className="p-4 rounded bg-mc-surface-deep border border-mc-border space-y-2">
+                <div className="p-4 rounded-lg bg-mc-surface-deep border border-mc-border space-y-2">
                   {currentStage.artifactSnippet.lines.map((line, idx) => (
                     <div key={idx} className="flex items-start gap-3">
-                      <span className="text-mc-orange font-bold">›</span>
-                      <span className="text-mc-text-strong">{line}</span>
+                      <span className="text-mc-orange font-bold">&rsaquo;</span>
+                      <span className="text-mc-text-strong font-mono">{line}</span>
                     </div>
                   ))}
                 </div>
 
-                <div className="p-4 rounded bg-mc-surface border border-mc-border space-y-2 text-mc-text-secondary text-[11px]">
-                  <div>Pipeline Status: VALIDATED</div>
-                  <div>Gate Quality: 100%</div>
-                  <div>Execution Trace: OK</div>
+                <div className="p-4 rounded-lg bg-mc-surface border border-mc-border space-y-1.5 text-mc-text-secondary text-xs">
+                  <div>Pipeline Status: VERIFIED SPECIFICATION</div>
+                  <div>Quality Gate: 100% Pass</div>
+                  <div>Trace Execution: OK</div>
                 </div>
               </div>
             </ArtifactFrame>
+          </div>
+        </div>
+
+        {/* Commercial & Delivery Transparency Standards (Payment, Delivery, Revisions, Maintenance) */}
+        <div className="p-8 sm:p-10 rounded-2xl bg-mc-surface border border-mc-border space-y-8">
+          <div>
+            <div className="font-mono text-xs text-mc-orange uppercase tracking-wider mb-2 flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4" />
+              <span>COMMERCIAL &amp; DELIVERY TRANSPARENCY</span>
+            </div>
+            <h3 className="text-2xl sm:text-3xl font-sans font-medium text-mc-text-strong tracking-tight">
+              Payment, Delivery &amp; Maintenance Standards
+            </h3>
+            <p className="text-sm text-mc-text-body font-sans mt-2 max-w-3xl leading-relaxed">
+              We define project expectations with structural clarity before writing code. Below is how payment arrangements, delivery estimates, revisions, and post-launch maintenance are managed.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* 1. Payment Terms */}
+            <div className="p-6 rounded-xl bg-mc-surface-deep border border-mc-border space-y-3">
+              <div className="flex items-center gap-2 font-mono text-xs text-mc-orange font-semibold">
+                <CreditCard className="w-4 h-4" />
+                <span>PAYMENT ARRANGEMENTS</span>
+              </div>
+              <p className="text-sm font-sans text-mc-text-body leading-relaxed">
+                Payment terms are defined in your project proposal before work begins. Depending on the project, payments may be structured around an initial payment and agreed delivery milestones. The proposal will outline the applicable amounts, payment dates and conditions.
+              </p>
+              <div className="text-xs text-mc-text-secondary font-mono pt-1">
+                &bull; Development begins after the scope is approved and the agreed initial payment is received.
+              </div>
+            </div>
+
+            {/* 2. Delivery Timelines */}
+            <div className="p-6 rounded-xl bg-mc-surface-deep border border-mc-border space-y-3">
+              <div className="flex items-center gap-2 font-mono text-xs text-mc-orange font-semibold">
+                <Clock className="w-4 h-4" />
+                <span>DELIVERY TIMELINES</span>
+              </div>
+              <p className="text-sm font-sans text-mc-text-body leading-relaxed">
+                Estimated delivery timelines are provided with each package or proposal. The schedule depends on the agreed scope, timely receipt of content and access, client feedback, approvals and any third-party dependencies. Changes to scope may affect the timeline and will be communicated before proceeding.
+              </p>
+              <div className="text-xs text-mc-text-secondary font-mono pt-1">
+                &bull; Milestones and target delivery dates are recorded in your Statement of Work (SOW).
+              </div>
+            </div>
+
+            {/* 3. Revisions & Scope Boundaries */}
+            <div className="p-6 rounded-xl bg-mc-surface-deep border border-mc-border space-y-3">
+              <div className="flex items-center gap-2 font-mono text-xs text-mc-orange font-semibold">
+                <RefreshCw className="w-4 h-4" />
+                <span>REVISIONS &amp; SCOPE CHANGES</span>
+              </div>
+              <p className="text-sm font-sans text-mc-text-body leading-relaxed">
+                Your proposal specifies the deliverables, included revisions and project boundaries. Requests outside the agreed scope will be assessed for their cost and timeline impact and approved before the additional work begins.
+              </p>
+              <div className="text-xs text-mc-text-secondary font-mono pt-1">
+                &bull; Revisions are defined separately from new features, new pages, or architectural changes.
+              </div>
+            </div>
+
+            {/* 4. Warranty vs. Maintenance Distinction */}
+            <div className="p-6 rounded-xl bg-mc-surface-deep border border-mc-border space-y-3">
+              <div className="flex items-center gap-2 font-mono text-xs text-mc-orange font-semibold">
+                <Layers className="w-4 h-4" />
+                <span>WARRANTY VS. MAINTENANCE</span>
+              </div>
+              <div className="space-y-2 text-xs font-sans text-mc-text-body">
+                <div>
+                  <strong className="text-mc-text-strong font-medium">Warranty:</strong> Correction of covered defects in delivered work during the agreed hypercare period.
+                </div>
+                <div>
+                  <strong className="text-mc-text-strong font-medium">Maintenance:</strong> Ongoing updates, monitoring, security patches, and technical assistance under a separate agreement.
+                </div>
+                <div>
+                  <strong className="text-mc-text-strong font-medium">Additional Development:</strong> New features, integrations, or modules outside the initial scope.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-4 rounded-xl bg-mc-surface-deep/60 border border-mc-border-soft flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-mono text-mc-text-tertiary">
+            <div>
+              HAVE QUESTIONS ABOUT PROJECT STRUCTURE?
+            </div>
+            <a
+              href="mailto:studio@monolithcodes.com?subject=Project%20Structure%20Inquiry"
+              className="text-mc-orange hover:underline font-medium flex items-center gap-1.5"
+            >
+              <span>Speak directly with our engineering team: studio@monolithcodes.com</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </a>
           </div>
         </div>
       </div>

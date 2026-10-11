@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from '@/context/ThemeContext';
+import { LoadingScreen } from '@/components/LoadingScreen';
 import { Navigation } from '@/components/Navigation';
 import { HeroSection } from '@/sections/HeroSection';
 import { CredibilityRail } from '@/sections/CredibilityRail';
@@ -16,22 +17,82 @@ import { EditorialSection } from '@/sections/EditorialSection';
 import { InquirySection } from '@/sections/InquirySection';
 import { Footer } from '@/sections/Footer';
 import { WhatsAppButton } from '@/components/WhatsAppButton';
+import { PrivacyPolicy } from '@/pages/PrivacyPolicy';
+import { TermsOfUse } from '@/pages/TermsOfUse';
 
 export const App: React.FC = () => {
+  const [currentRoute, setCurrentRoute] = useState<'home' | 'privacy' | 'terms'>(() => {
+    if (typeof window === 'undefined') return 'home';
+    const hash = window.location.hash;
+    if (hash.startsWith('#privacy')) return 'privacy';
+    if (hash.startsWith('#terms')) return 'terms';
+    return 'home';
+  });
+
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash;
+      if (hash.startsWith('#privacy')) {
+        setCurrentRoute('privacy');
+      } else if (hash.startsWith('#terms')) {
+        setCurrentRoute('terms');
+      } else {
+        setCurrentRoute('home');
+      }
+    };
+
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
+
+  const navigateToHome = () => {
+    window.location.hash = '';
+    setCurrentRoute('home');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const navigateToPrivacy = () => {
+    window.location.hash = '#privacy';
+    setCurrentRoute('privacy');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const navigateToTerms = () => {
+    window.location.hash = '#terms';
+    setCurrentRoute('terms');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <ThemeProvider>
-      {/* Accessibility Skip Link */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-mc-orange focus:text-mc-bg focus:font-mono focus:text-xs focus:rounded-md"
-      >
-        Skip to main content
-      </a>
+      {/* First-load brand introduction (only on home) */}
+      {currentRoute === 'home' && <LoadingScreen />}
 
-      <div className="min-h-screen bg-mc-bg text-mc-text selection:bg-mc-orange selection:text-mc-bg relative">
-        <Navigation />
+      {currentRoute === 'privacy' && (
+        <PrivacyPolicy onBackToHome={navigateToHome} />
+      )}
 
-        <main id="main-content">
+      {currentRoute === 'terms' && (
+        <TermsOfUse
+          onBackToHome={navigateToHome}
+          onNavigateToPrivacy={navigateToPrivacy}
+        />
+      )}
+
+      {currentRoute === 'home' && (
+        <>
+          {/* Accessibility Skip Link */}
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-mc-orange focus:text-mc-bg focus:font-mono focus:text-xs focus:rounded-md"
+          >
+            Skip to main content
+          </a>
+
+          <div className="min-h-screen bg-mc-bg text-mc-text selection:bg-mc-orange selection:text-mc-bg relative">
+            <Navigation />
+
+            <main id="main-content">
           {/* 01 Hero */}
           <HeroSection />
 
@@ -91,8 +152,10 @@ export const App: React.FC = () => {
         {/* Floating WhatsApp Engineering Chat */}
         <WhatsAppButton />
       </div>
-    </ThemeProvider>
-  );
+    </>
+  )}
+</ThemeProvider>
+);
 };
 
 export default App;

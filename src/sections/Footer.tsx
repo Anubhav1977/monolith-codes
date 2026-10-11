@@ -12,7 +12,18 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
           {/* Column 1 & 2: Brand Lockup & Studio Directive */}
           <div className="lg:col-span-2 space-y-4">
-            <BrandLockup variant="horizontal" size="lg" />
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.hash = '';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="inline-block cursor-pointer group"
+              aria-label="MONOLITH CODES — Return to Top"
+            >
+              <BrandLockup variant="horizontal" size="lg" interactiveHover />
+            </a>
             <p className="text-sm text-mc-text-secondary max-w-sm leading-relaxed font-sans">
               MONOLITH CODES is a software engineering studio. We engineer custom web applications, SaaS platforms, mobile apps, ERP/CRM systems, and business workflow automation.
             </p>
@@ -37,7 +48,7 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Column 4: Navigation & Method */}
+          {/* Column 4: Studio Navigation */}
           <div className="space-y-3 font-sans text-sm">
             <div className="font-mono text-xs text-mc-orange uppercase tracking-wider mb-2">
               STUDIO NAV
@@ -46,25 +57,43 @@ export const Footer: React.FC = () => {
               <li><a href="#why-custom" className="hover:text-mc-text-strong transition-colors">Why Custom Engineering</a></li>
               <li><a href="#work" className="hover:text-mc-text-strong transition-colors">Selected Work & Proof</a></li>
               <li><a href="#proof" className="hover:text-mc-text-strong transition-colors">Technical Proof</a></li>
-              <li><a href="#process" className="hover:text-mc-text-strong transition-colors">Engineering Process</a></li>
+              <li><a href="#process" className="hover:text-mc-text-strong transition-colors">How We Work (7-Stage)</a></li>
               <li><a href="#pricing" className="hover:text-mc-text-strong transition-colors">Pricing & Tiers</a></li>
               <li><a href="#faq" className="hover:text-mc-text-strong transition-colors">Frequently Asked Questions</a></li>
             </ul>
           </div>
 
-          {/* Column 5: Studio Metadata */}
-          <div className="space-y-3 font-mono text-xs">
-            <div className="text-mc-orange uppercase tracking-wider mb-2">
-              SYSTEM METADATA
+          {/* Column 5: Legal & System Metadata */}
+          <div className="space-y-5 font-mono text-xs">
+            {/* Approved Legal Group */}
+            <div className="space-y-2.5">
+              <div className="text-mc-orange uppercase tracking-wider">
+                LEGAL &amp; GOVERNANCE
+              </div>
+              <ul className="space-y-2 font-sans text-sm text-mc-text-secondary">
+                <li>
+                  <a href="#privacy" className="hover:text-mc-orange transition-colors flex items-center gap-1 group">
+                    <span>Privacy Policy</span>
+                    <span className="text-[10px] text-mc-orange font-mono opacity-0 group-hover:opacity-100 transition-opacity">&rarr;</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#terms" className="hover:text-mc-orange transition-colors flex items-center gap-1 group">
+                    <span>Terms of Use</span>
+                    <span className="text-[10px] text-mc-orange font-mono opacity-0 group-hover:opacity-100 transition-opacity">&rarr;</span>
+                  </a>
+                </li>
+              </ul>
             </div>
-            <div className="text-mc-text-secondary space-y-1.5">
+
+            {/* System Metadata */}
+            <div className="space-y-1.5 pt-3 border-t border-mc-border-soft text-mc-text-tertiary">
               <div>STACK: React 19 + TypeScript</div>
-              <div>DESIGN: MONOLITH V2.1</div>
               <div>IP HANDOFF: 100% Client Owned</div>
-              <div>QUALITY: Zero Template Bloat</div>
-              <div className="text-mc-system-green pt-2 flex items-center gap-1.5">
+              <div>DATA: Zero Brokerage / DPDP Aligned</div>
+              <div className="text-mc-system-green pt-1 flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-mc-system-green" />
-                <span>SYSTEM STATUS: OPERATIONAL</span>
+                <span>STATUS: OPERATIONAL</span>
               </div>
             </div>
           </div>
@@ -83,8 +112,24 @@ export const Footer: React.FC = () => {
 
         {/* Legal & Studio Avatar Trust Bar (Inspired by image) */}
         <div className="pt-8 pb-10 border-t border-mc-border-soft flex flex-col lg:flex-row items-center justify-between gap-6 font-mono text-xs text-mc-text-tertiary">
-          <div>
-            MONOLITH CODES STUDIO LLC © {currentYear}. ALL RIGHTS RESERVED.
+          <div className="flex flex-wrap items-center gap-2.5">
+            <span>MONOLITH CODES © {currentYear}. ALL RIGHTS RESERVED.</span>
+            <span>&bull;</span>
+            <a
+              href="#privacy"
+              className="text-mc-text-secondary hover:text-mc-orange transition-colors underline-offset-4 hover:underline"
+            >
+              PRIVACY POLICY
+            </a>
+            <span>&bull;</span>
+            <a
+              href="#terms"
+              className="text-mc-text-secondary hover:text-mc-orange transition-colors underline-offset-4 hover:underline"
+            >
+              TERMS OF USE
+            </a>
+            <span>&bull;</span>
+            <span className="text-mc-system-green">DPDP V2.1 ALIGNED</span>
           </div>
 
           <div className="text-center">

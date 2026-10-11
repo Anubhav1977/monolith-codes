@@ -23,9 +23,9 @@ export const BrandLockup: React.FC<BrandLockupProps> = ({
   const shouldReduceMotion = useReducedMotion();
 
   const markSizes = {
-    sm: 'h-6 w-auto',
-    md: 'h-8 w-auto',
-    lg: 'h-10 w-auto',
+    sm: 'h-6 w-6',
+    md: 'h-8 w-8',
+    lg: 'h-10 w-10',
   };
 
   const titleSizes = {
@@ -65,7 +65,7 @@ export const BrandLockup: React.FC<BrandLockupProps> = ({
       <img
         src="/assets/brand/monolith-mark.png"
         alt="MONOLITH CODES"
-        className={cn(markSizes[size], 'object-contain', className)}
+        className={cn(markSizes[size], 'object-contain block', className)}
       />
     );
   }
@@ -98,18 +98,21 @@ export const BrandLockup: React.FC<BrandLockupProps> = ({
         if (event.animationName === 'mc-brand-settle') setIsInstalling(false);
       }}
     >
-      <div className="mc-brand-mark shrink-0 relative" aria-hidden="true">
+      <div
+        className={cn('mc-brand-mark shrink-0 relative flex items-center justify-center', markSizes[size])}
+        aria-hidden="true"
+      >
         <span className="mc-brand-glow" />
         <span className="mc-brand-shadow" />
         <span className="mc-brand-shockwave" />
         {DUST_PARTICLES.map((particle) => (
           <span key={particle} className={`mc-brand-dust mc-brand-dust--${particle + 1}`} />
         ))}
-        <div className="mc-brand-mark-shell relative">
+        <div className="mc-brand-mark-shell relative flex items-center justify-center w-full h-full">
           <img
             src="/assets/brand/monolith-mark.png"
             alt=""
-            className={cn(markSizes[size], 'object-contain')}
+            className={cn(markSizes[size], 'object-contain block')}
           />
         </div>
       </div>

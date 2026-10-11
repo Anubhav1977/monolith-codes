@@ -260,8 +260,19 @@ export const PricingSection: React.FC = () => {
           </div>
           <div className="flex items-center gap-2.5">
             <Sparkles className="w-4.5 h-4.5 text-mc-orange shrink-0" />
-            <span>30-Day Post-Launch Hypercare</span>
+            <span>Agreed Post-Launch Hypercare</span>
           </div>
+        </div>
+
+        {/* Transparent Commercial Footnote */}
+        <div className="mt-8 pt-6 border-t border-mc-border-soft flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-mono text-mc-text-tertiary">
+          <div>
+            * Payment terms, milestones, and indicative timelines are defined in your written proposal before work begins.
+          </div>
+          <a href="#process" className="text-mc-orange hover:underline flex items-center gap-1 font-medium">
+            <span>Review our 7-Stage How We Work Pipeline</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </a>
         </div>
       </div>
     </section>
