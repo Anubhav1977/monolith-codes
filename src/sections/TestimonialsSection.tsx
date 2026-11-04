@@ -109,7 +109,7 @@ export const TestimonialsSection: React.FC = () => {
   return (
     <section id="testimonials" className="relative overflow-hidden py-20 md:py-28 bg-mc-bg border-b border-mc-border">
       <SectionSpotlight />
-      <div className="max-w-[1360px] mx-auto px-6 md:px-10">
+      <div className="max-w-340 mx-auto px-6 md:px-10">
         <div className="vt-head text-center mb-10 md:mb-16">
           <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-mc-orange mb-5">
             <span className="w-2 h-2 rounded-full bg-mc-orange" />
@@ -122,7 +122,7 @@ export const TestimonialsSection: React.FC = () => {
 
         {wide ? (
           <div
-            className="relative mx-auto h-[700px] w-full"
+            className="relative mx-auto h-175 w-full"
             onMouseEnter={() => setSpread(true)}
             onMouseLeave={() => { setSpread(false); setHovered(null); }}
           >
@@ -156,7 +156,7 @@ export const TestimonialsSection: React.FC = () => {
                     zIndex: spread ? (hovered === i ? 20 : 10 - Math.round(Math.abs(o))) : i + 1,
                   }}
                   className={cn(
-                    'absolute top-0 flex flex-col rounded-[6px] border p-6 shadow-[0_24px_60px_-24px_rgba(0,0,0,.8)]',
+                    'absolute top-0 flex flex-col rounded-md border p-6 shadow-[0_24px_60px_-24px_rgba(0,0,0,.8)]',
                     toneClass(t.tone)
                   )}
                 >
@@ -166,7 +166,7 @@ export const TestimonialsSection: React.FC = () => {
             })}
           </div>
         ) : (
-          <div className="mx-auto w-full max-w-[420px]">
+          <div className="mx-auto w-full max-w-105">
             <motion.div
               className="relative"
               initial={false}
@@ -185,7 +185,7 @@ export const TestimonialsSection: React.FC = () => {
                   }
                   transition={{ type: 'spring', stiffness: 110, damping: 17, delay: spread ? i * 0.05 : 0 }}
                   style={{ height: MH, marginBottom: i === TESTIMONIALS.length - 1 ? 0 : MG, zIndex: spread ? 1 : i + 1 }}
-                  className={cn('relative flex flex-col rounded-[6px] border p-6 shadow-[0_24px_60px_-24px_rgba(0,0,0,.8)]', toneClass(t.tone))}
+                  className={cn('relative flex flex-col rounded-md border p-6 shadow-[0_24px_60px_-24px_rgba(0,0,0,.8)]', toneClass(t.tone))}
                 >
                   <CardBody t={t} compact />
                 </motion.article>

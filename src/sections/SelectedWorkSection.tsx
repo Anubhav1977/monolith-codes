@@ -138,7 +138,7 @@ export const SelectedWorkSection: React.FC = () => {
   return (
     <section id="work" className="relative overflow-hidden py-14 md:py-16 bg-mc-surface-deep/40 border-b border-mc-border">
       <SectionSpotlight />
-      <div className="max-w-[1360px] mx-auto px-6 md:px-10">
+      <div className="max-w-340 mx-auto px-6 md:px-10">
         <div className="vt-head grid grid-cols-1 lg:grid-cols-12 gap-4 mb-8">
           <div className="lg:col-span-3 font-mono text-xs text-mc-orange uppercase tracking-wider flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-mc-orange" />
@@ -156,7 +156,7 @@ export const SelectedWorkSection: React.FC = () => {
 
         <ScrollStage>
           <div
-            className="relative mx-auto h-[540px] select-none"
+            className="relative mx-auto h-135 select-none"
             style={{ perspective: 1400 }}
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
@@ -188,7 +188,7 @@ export const SelectedWorkSection: React.FC = () => {
                     abs > 2 && 'pointer-events-none'
                   )}
                 >
-                  <div className={cn('relative h-[150px] overflow-hidden border-b border-mc-border bg-gradient-to-br', GRADIENTS[i % GRADIENTS.length])}>
+                  <div className={cn('relative h-37.5 overflow-hidden border-b border-mc-border bg-linear-to-br', GRADIENTS[i % GRADIENTS.length])}>
                     {item.image ? (
                       <img src={item.image} alt={item.title} loading="lazy" decoding="async" draggable={false} className="h-full w-full object-cover" />
                     ) : (
@@ -202,7 +202,7 @@ export const SelectedWorkSection: React.FC = () => {
                     <div className="truncate font-mono text-[10px] uppercase tracking-wide text-mc-orange">
                       {item.index} • {item.category}
                     </div>
-                    <h3 className="mt-1.5 font-sans text-[18px] font-medium leading-[1.25] tracking-tight text-mc-text-strong line-clamp-2">
+                    <h3 className="mt-1.5 font-sans text-[18px] font-medium leading-tight tracking-tight text-mc-text-strong line-clamp-2">
                       {item.title}
                     </h3>
                     <div className="mt-1 font-mono text-[11px] text-mc-text-tertiary">Client: {item.clientContext}</div>
@@ -225,7 +225,7 @@ export const SelectedWorkSection: React.FC = () => {
                     <a
                       href="#inquiry"
                       onClick={(e) => e.stopPropagation()}
-                      className="mt-4 flex h-10 w-full items-center justify-center gap-2 rounded-[6px] border border-mc-border bg-mc-surface-deep font-sans text-[13px] font-medium text-mc-text-strong hover:border-mc-orange hover:text-mc-orange transition-colors"
+                      className="mt-4 flex h-10 w-full items-center justify-center gap-2 rounded-md border border-mc-border bg-mc-surface-deep font-sans text-[13px] font-medium text-mc-text-strong hover:border-mc-orange hover:text-mc-orange transition-colors"
                     >
                       <span>Request Similar Architecture</span>
                       <ArrowUpRight className="h-4 w-4" />
@@ -271,7 +271,7 @@ export const SelectedWorkSection: React.FC = () => {
           return (
             <motion.div
               key="work-modal"
-              className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-black/75 backdrop-blur-sm"
+              className="fixed inset-0 z-100 flex items-center justify-center p-4 md:p-8 bg-black/75 backdrop-blur-sm"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -286,7 +286,7 @@ export const SelectedWorkSection: React.FC = () => {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 40, scale: 0.96 }}
                 transition={{ type: 'spring', stiffness: 160, damping: 22 }}
-                className="relative grid w-full max-w-[1100px] max-h-[90vh] overflow-y-auto rounded-[28px] bg-mc-surface border border-mc-border shadow-[0_40px_120px_-20px_rgba(0,0,0,.8)] lg:grid-cols-[1.15fr_1fr]"
+                className="relative grid w-full max-w-275 max-h-[90vh] overflow-y-auto rounded-[28px] bg-mc-surface border border-mc-border shadow-[0_40px_120px_-20px_rgba(0,0,0,.8)] lg:grid-cols-[1.15fr_1fr]"
               >
                 <button
                   onClick={() => setOpen(false)}
@@ -296,7 +296,7 @@ export const SelectedWorkSection: React.FC = () => {
                   <X className="h-5 w-5" />
                 </button>
 
-                <div className={cn('relative min-h-[260px] lg:min-h-[520px] bg-gradient-to-br', GRADIENTS[active % GRADIENTS.length])}>
+                <div className={cn('relative min-h-65 lg:min-h-130 bg-linear-to-br', GRADIENTS[active % GRADIENTS.length])}>
                   {c.image ? (
                     <img src={c.image} alt={c.title} decoding="async" draggable={false} className="absolute inset-0 h-full w-full object-cover" />
                   ) : (

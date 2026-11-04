@@ -57,7 +57,7 @@ const SERVICES: ServiceItem[] = [
 export const ServiceSystemsSection: React.FC = () => {
   return (
     <section id="services" className="py-24 border-b border-mc-border">
-      <div className="max-w-[1360px] mx-auto px-6 md:px-10">
+      <div className="max-w-340 mx-auto px-6 md:px-10">
         {/* Section Header */}
         <div className="vt-head grid grid-cols-1 lg:grid-cols-12 gap-6 mb-16">
           <div className="lg:col-span-3 font-mono text-xs text-mc-orange uppercase tracking-wider flex items-center gap-2">

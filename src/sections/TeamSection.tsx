@@ -90,7 +90,7 @@ export const TeamSection: React.FC = () => {
       {/* Background Subtle Gradient Glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-mc-orange-06 via-transparent to-transparent pointer-events-none" />
 
-      <div className="max-w-[1360px] mx-auto px-6 md:px-10 relative z-10">
+      <div className="max-w-340 mx-auto px-6 md:px-10 relative z-10">
         {/* Leadership overview: copy and both directors share one desktop row. */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-8 mb-16 items-stretch">
           <div className="md:col-span-2 lg:col-span-4 flex flex-col justify-between py-1 lg:pr-4">
@@ -130,7 +130,7 @@ export const TeamSection: React.FC = () => {
                 />
 
                 {/* Subtle dark vignette overlay at bottom */}
-                <div className="absolute inset-0 bg-gradient-to-t from-mc-surface via-transparent to-transparent opacity-90" />
+                <div className="absolute inset-0 bg-linear-to-t from-mc-surface via-transparent to-transparent opacity-90" />
 
                 {/* Badge Tag on Photo */}
                 <div className="absolute top-4 left-4 bg-mc-bg/85 backdrop-blur-md border border-mc-border px-3 py-1.5 rounded-md font-mono text-[11px] text-mc-text-strong flex items-center gap-2">

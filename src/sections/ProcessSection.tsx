@@ -196,7 +196,7 @@ export const ProcessSection: React.FC = () => {
 
   return (
     <section id="process" className="py-20 md:py-28 border-b border-mc-border bg-mc-bg">
-      <div className="max-w-[1360px] mx-auto px-6 md:px-10">
+      <div className="max-w-340 mx-auto px-6 md:px-10">
         <div className="text-center mb-12 md:mb-16">
           <h2 className="vt-title">How does it <em>work</em>?</h2>
           <p className="mt-5 text-mc-text-secondary">The 7-stage delivery pipeline — from first enquiry to launch.</p>
@@ -221,7 +221,7 @@ export const ProcessSection: React.FC = () => {
                   aria-selected={isActive}
                   onClick={() => go(i)}
                   className={cn(
-                    'relative shrink-0 min-w-[128px] lg:min-w-0 overflow-hidden rounded-xl border px-4 py-3.5 text-left transition-all duration-300 cursor-pointer',
+                    'relative shrink-0 min-w-32 lg:min-w-0 overflow-hidden rounded-xl border px-4 py-3.5 text-left transition-all duration-300 cursor-pointer',
                     isActive
                       ? 'border-mc-orange/60 bg-mc-orange/10 shadow-[0_0_30px_-8px_rgba(255,107,0,.45)]'
                       : 'border-mc-border bg-mc-surface hover:border-mc-border-strong'
@@ -235,13 +235,13 @@ export const ProcessSection: React.FC = () => {
                   </div>
                   <div className={cn('mt-2 text-sm font-medium', isActive ? 'text-mc-text-strong' : 'text-mc-text-secondary')}>{short}</div>
 
-                  <span className="absolute inset-x-0 bottom-0 h-[3px] bg-mc-border/60" aria-hidden="true" />
-                  {isPast && <span className="absolute inset-x-0 bottom-0 h-[3px] bg-mc-orange/70" aria-hidden="true" />}
+                  <span className="absolute inset-x-0 bottom-0 h-0.75 bg-mc-border/60" aria-hidden="true" />
+                  {isPast && <span className="absolute inset-x-0 bottom-0 h-0.75 bg-mc-orange/70" aria-hidden="true" />}
                   {isActive && (
                     <span
                       key={active}
                       aria-hidden="true"
-                      className="hw-fill absolute inset-x-0 bottom-0 h-[3px] bg-mc-orange"
+                      className="hw-fill absolute inset-x-0 bottom-0 h-0.75 bg-mc-orange"
                       style={{ animationPlayState: paused ? 'paused' : 'running' }}
                       onAnimationEnd={() => go(active + 1)}
                     />
@@ -254,7 +254,7 @@ export const ProcessSection: React.FC = () => {
           {/* Detail panel */}
           <div className="relative mt-4 overflow-hidden rounded-2xl border border-mc-border bg-mc-surface">
             <div
-              className="pointer-events-none absolute -right-24 -top-24 h-[420px] w-[420px] rounded-full bg-mc-orange/10 blur-3xl"
+              className="pointer-events-none absolute -right-24 -top-24 h-105 w-105 rounded-full bg-mc-orange/10 blur-3xl"
               aria-hidden="true"
             />
 
@@ -270,7 +270,7 @@ export const ProcessSection: React.FC = () => {
                 {/* Left: story */}
                 <div className="flex min-w-0 flex-col">
                   <div className="flex items-end gap-4">
-                    <span className="bg-gradient-to-b from-mc-orange to-mc-orange/20 bg-clip-text font-sans text-[72px] font-semibold leading-[0.85] tracking-tighter text-transparent sm:text-[88px]">
+                    <span className="bg-linear-to-b from-mc-orange to-mc-orange/20 bg-clip-text font-sans text-[72px] font-semibold leading-[0.85] tracking-tighter text-transparent sm:text-[88px]">
                       {stage.step}
                     </span>
                     <span className="mb-1 font-mono text-xs uppercase tracking-wider text-mc-text-tertiary">Stage {stage.number}</span>
@@ -283,7 +283,7 @@ export const ProcessSection: React.FC = () => {
                   <ul className="mt-7 divide-y divide-mc-border-soft border-y border-mc-border-soft">
                     {stage.details.map((d) => (
                       <li key={d} className="flex items-start gap-3 py-3.5 text-sm text-mc-text-strong/90 sm:text-[15px]">
-                        <CheckCircle2 className="mt-0.5 h-[18px] w-[18px] shrink-0 text-mc-orange" />
+                        <CheckCircle2 className="mt-0.5 h-4.5 w-4.5 shrink-0 text-mc-orange" />
                         <span>{d}</span>
                       </li>
                     ))}
@@ -306,7 +306,7 @@ export const ProcessSection: React.FC = () => {
                       {stage.artifactSnippet.lines.map((l) => (
                         <p key={l} className="flex gap-3">
                           <span className="select-none text-mc-orange">›</span>
-                          <span className="min-w-0 break-words">{l}</span>
+                          <span className="min-w-0 wrap-break-word">{l}</span>
                         </p>
                       ))}
                       <p className="flex gap-3">

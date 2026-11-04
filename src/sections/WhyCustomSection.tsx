@@ -60,7 +60,7 @@ const SPANS = ['lg:col-span-5', 'lg:col-span-7', 'lg:col-span-4', 'lg:col-span-4
 
 export const WhyCustomSection: React.FC = () => (
   <section id="why-custom" className="py-28 border-b border-mc-border bg-mc-bg">
-    <div className="max-w-[1100px] mx-auto px-6 md:px-10">
+    <div className="max-w-275 mx-auto px-6 md:px-10">
       <motion.div
         initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }} className="text-center mb-16"

@@ -293,7 +293,7 @@ export const ProductStackSection: React.FC = () => {
 
   return (
     <section id="product-stack" className="py-24 border-b border-mc-border bg-mc-bg relative">
-      <div className="max-w-[1360px] mx-auto px-6 md:px-10">
+      <div className="max-w-340 mx-auto px-6 md:px-10">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -418,11 +418,11 @@ export const ProductStackSection: React.FC = () => {
 
                   {/* Middle Column: Service Preview Mockup Image */}
                   <div className="lg:col-span-4 flex items-center justify-center py-2 relative">
-                    <div className="relative w-full max-w-[460px] flex items-center justify-center group/img">
+                    <div className="relative w-full max-w-115 flex items-center justify-center group/img">
                       <img
                         src={item.image} loading="lazy" decoding="async"
                         alt={item.fullTitle}
-                        className="w-full h-auto max-h-[130px] sm:max-h-[170px] lg:max-h-[300px] object-contain transition-transform duration-500 group-hover/img:scale-105 filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.6)]"
+                        className="w-full h-auto max-h-32.5 sm:max-h-42.5 lg:max-h-75 object-contain transition-transform duration-500 group-hover/img:scale-105 filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.6)]"
                       />
                     </div>
                   </div>

@@ -57,7 +57,7 @@ const CredibilityCard: React.FC<{ metric: MetricItem; index: number }> = ({ metr
 export const CredibilityRail: React.FC = () => {
   return (
     <section className="vt-horizon py-24 bg-mc-surface-deep/40 border-b border-mc-border" aria-label="How we work">
-      <div className="relative z-[1] max-w-[1360px] mx-auto px-6 md:px-10"><h2 className="vt-title mb-14">How we <em>work</em> with you</h2><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
+      <div className="relative z-1 max-w-340 mx-auto px-6 md:px-10"><h2 className="vt-title mb-14">How we <em>work</em> with you</h2><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
         {METRICS.map((metric, index) => <CredibilityCard key={metric.index} metric={metric} index={index} />)}
       </div></div>
     </section>

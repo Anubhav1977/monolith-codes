@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, HelpCircle, ArrowUpRight, MessageSquare, ShieldCheck } from 'lucide-react';
+import { ChevronDown, HelpCircle, ArrowUpRight, MessageSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { JsonLd } from '@/components/Seo';
 
@@ -93,7 +93,7 @@ export const FaqSection: React.FC = () => {
   return (
     <section id="faq" className="py-24 border-b border-mc-border bg-mc-bg">
       <JsonLd id="ld-faq" data={FAQ_SCHEMA} />
-      <div className="max-w-[1360px] mx-auto px-6 md:px-10">
+      <div className="max-w-340 mx-auto px-6 md:px-10">
         {/* Section Header */}
         <div className="vt-head grid grid-cols-1 lg:grid-cols-12 gap-6 mb-16">
           <div className="lg:col-span-3 font-mono text-xs text-mc-orange uppercase tracking-wider flex items-center gap-2">

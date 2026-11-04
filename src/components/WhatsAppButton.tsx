@@ -20,7 +20,7 @@ export const WhatsAppButton: React.FC = () => {
             initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 5, scale: 0.9 }}
-            className="relative p-3.5 rounded-lg bg-mc-surface border border-mc-border text-xs font-sans text-mc-text-strong shadow-2xl backdrop-blur-md max-w-[220px]"
+            className="relative p-3.5 rounded-lg bg-mc-surface border border-mc-border text-xs font-sans text-mc-text-strong shadow-2xl backdrop-blur-md max-w-55"
           >
             <button
               onClick={(e) => {

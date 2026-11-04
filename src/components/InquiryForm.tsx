@@ -431,7 +431,7 @@ export const InquiryForm: React.FC = () => {
           onBlur={() => handleBlur('description')}
           placeholder="Describe your product idea, key features to build, target user roles, or key business outcomes..."
           className={cn(
-            'w-full p-3.5 sm:p-4 rounded-lg bg-mc-surface-deep border text-sm text-mc-text placeholder-mc-text-tertiary transition-all outline-none min-h-[100px] sm:min-h-[110px]',
+            'w-full p-3.5 sm:p-4 rounded-lg bg-mc-surface-deep border text-sm text-mc-text placeholder-mc-text-tertiary transition-all outline-none min-h-25 sm:min-h-27.5',
             touched.description && isDescriptionValid && 'border-emerald-500/80 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/20 bg-emerald-950/10',
             touched.description && !isDescriptionValid && 'border-rose-500 focus:border-rose-500 focus:ring-1 focus:ring-rose-500/20 bg-rose-950/10',
             !touched.description && 'border-mc-border focus:border-mc-orange focus:ring-1 focus:ring-mc-orange'

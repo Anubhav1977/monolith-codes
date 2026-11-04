@@ -100,14 +100,14 @@ export const Navigation: React.FC = () => {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 h-[72px] transition-all duration-240 border-b border-transparent',
+        'fixed top-0 left-0 right-0 z-50 h-18 transition-all duration-240 border-b border-transparent',
         isScrolled
           ? 'bg-mc-bg/90 backdrop-blur-md border-mc-border shadow-lg'
           : 'bg-transparent',
         isScrolled && 'is-glass'
       )}
     >
-      <div className="max-w-[1360px] mx-auto h-full px-4 sm:px-6 md:px-10 flex items-center justify-between">
+      <div className="max-w-340 mx-auto h-full px-4 sm:px-6 md:px-10 flex items-center justify-between">
         {/* Left: Brand Logo */}
         <a href="#" className="flex items-center" aria-label="MONOLITH CODES — home">
           <BrandLockup variant="horizontal" size="md" interactiveHover />
@@ -141,7 +141,7 @@ export const Navigation: React.FC = () => {
 
                   {/* Dropdown Menu */}
                   {isOpen && (
-                    <div className="absolute top-[52px] left-1/2 -translate-x-1/2 w-72 p-2 rounded-lg bg-mc-surface border border-mc-border shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-160 z-50">
+                    <div className="absolute top-13 left-1/2 -translate-x-1/2 w-72 p-2 rounded-lg bg-mc-surface border border-mc-border shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-160 z-50">
                       {group.children.map((child) => (
                         <a
                           key={child.label}
@@ -188,9 +188,9 @@ export const Navigation: React.FC = () => {
           <button
             onClick={scrollToInquiry}
             className={cn(
-              'h-[44px] px-5 text-sm font-sans font-medium rounded-[6px]',
+              'h-11 px-5 text-sm font-sans font-medium rounded-md',
               'bg-mc-orange text-mc-bg hover:bg-mc-orange-highlight active:bg-mc-orange-dark',
-              'flex items-center gap-2 shadow-sm transition-all duration-160 hover:-translate-y-[1px] cursor-pointer'
+              'flex items-center gap-2 shadow-sm transition-all duration-160 hover:-translate-y-px cursor-pointer'
             )}
           >
             <span>Start a Project</span>
@@ -217,7 +217,7 @@ export const Navigation: React.FC = () => {
       {mobileMenuOpen && (
         <div
           id="mobile-menu-drawer"
-          className="lg:hidden fixed inset-x-0 top-[72px] h-[calc(100dvh-72px)] bg-mc-bg/98 backdrop-blur-xl border-t border-mc-border flex flex-col p-5 sm:p-6 overflow-y-auto overscroll-contain z-50"
+          className="lg:hidden fixed inset-x-0 top-18 h-[calc(100dvh-72px)] bg-mc-bg/98 backdrop-blur-xl border-t border-mc-border flex flex-col p-5 sm:p-6 overflow-y-auto overscroll-contain z-50"
         >
           <nav className="flex flex-col gap-2 py-2 flex-1">
             {NAV_GROUPS.map((group, idx) => {
@@ -279,7 +279,7 @@ export const Navigation: React.FC = () => {
           <div className="mt-8 pt-6 border-t border-mc-border flex flex-col gap-4">
             <button
               onClick={scrollToInquiry}
-              className="w-full h-12 text-base font-sans font-semibold rounded-[6px] bg-mc-orange text-mc-bg hover:bg-mc-orange-highlight flex items-center justify-center gap-2"
+              className="w-full h-12 text-base font-sans font-semibold rounded-md bg-mc-orange text-mc-bg hover:bg-mc-orange-highlight flex items-center justify-center gap-2"
             >
               <span>Start a Project</span>
               <ArrowUpRight className="w-5 h-5" />

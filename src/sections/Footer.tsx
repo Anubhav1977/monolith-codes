@@ -12,7 +12,7 @@ export const Footer: React.FC = () => {
       <h2 className="vt-talk__word">Let's Talk</h2>
     </div>
     <footer className="pt-24 pb-0 bg-mc-bg border-t border-mc-border overflow-hidden select-none">
-      <div className="max-w-[1360px] mx-auto px-6 md:px-10">
+      <div className="max-w-340 mx-auto px-6 md:px-10">
         {/* Main Footer Links Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
           {/* Column 1 & 2: Brand Lockup & Studio Directive */}

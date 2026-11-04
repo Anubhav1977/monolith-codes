@@ -115,7 +115,7 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBackToHome, onNavigate
     <div className="min-h-screen bg-mc-bg text-mc-text selection:bg-mc-orange selection:text-mc-bg">
       {/* Top Utility Header — Fully Mobile Responsive */}
       <header className="sticky top-0 z-50 bg-mc-bg/95 backdrop-blur-md border-b border-mc-border print:hidden">
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-10 h-16 sm:h-18 flex items-center justify-between gap-2 sm:gap-4">
+        <div className="max-w-320 mx-auto px-4 sm:px-6 md:px-10 h-16 sm:h-18 flex items-center justify-between gap-2 sm:gap-4">
           <div className="flex items-center gap-2 sm:gap-6 min-w-0">
             <button
               onClick={() => {
@@ -296,7 +296,7 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBackToHome, onNavigate
       )}
 
       {/* Main Terms Layout */}
-      <main className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-10 py-10 sm:py-16 md:py-24">
+      <main className="max-w-320 mx-auto px-4 sm:px-6 md:px-10 py-10 sm:py-16 md:py-24">
         {/* Document Hero */}
         <div className="mb-20 pb-16 border-b border-mc-border">
           <div className="flex flex-wrap items-center gap-3 mb-6">
@@ -841,7 +841,7 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBackToHome, onNavigate
 
       {/* Simplified Legal Footer */}
       <footer className="py-8 border-t border-mc-border bg-mc-surface-deep text-center font-mono text-xs text-mc-text-tertiary">
-        <div className="max-w-[1280px] mx-auto px-6">
+        <div className="max-w-320 mx-auto px-6">
           MONOLITH CODES &bull; WEBSITE TERMS OF USE &bull; STUDIO@MONOLITHCODES.COM
         </div>
       </footer>
