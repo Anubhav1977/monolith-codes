@@ -10,22 +10,29 @@ import { SelectedWorkSection } from '@/sections/SelectedWorkSection';
 import { CapabilitiesSection } from '@/sections/CapabilitiesSection';
 import { TechnicalProofSection } from '@/sections/TechnicalProofSection';
 import { ProcessSection } from '@/sections/ProcessSection';
+import { TestimonialsSection } from '@/sections/TestimonialsSection';
 import { PricingSection } from '@/sections/PricingSection';
 import { TeamSection } from '@/sections/TeamSection';
 import { FaqSection } from '@/sections/FaqSection';
 import { EditorialSection } from '@/sections/EditorialSection';
 import { InquirySection } from '@/sections/InquirySection';
 import { Footer } from '@/sections/Footer';
+import { StatsScatter } from '@/components/StatsScatter';
+import { IntroSplit } from '@/components/IntroSplit';
+import { StackedCta } from '@/components/StackedCta';
 import { WhatsAppButton } from '@/components/WhatsAppButton';
 import { PrivacyPolicy } from '@/pages/PrivacyPolicy';
+import { AboutUs } from '@/pages/AboutUs';
 import { TermsOfUse } from '@/pages/TermsOfUse';
+import { applyPageMeta, PAGE_META } from '@/components/Seo';
 
 export const App: React.FC = () => {
-  const [currentRoute, setCurrentRoute] = useState<'home' | 'privacy' | 'terms'>(() => {
+  const [currentRoute, setCurrentRoute] = useState<'home' | 'privacy' | 'terms' | 'about'>(() => {
     if (typeof window === 'undefined') return 'home';
     const hash = window.location.hash;
     if (hash.startsWith('#privacy')) return 'privacy';
     if (hash.startsWith('#terms')) return 'terms';
+    if (hash.startsWith('#about')) return 'about';
     return 'home';
   });
 
@@ -36,6 +43,8 @@ export const App: React.FC = () => {
         setCurrentRoute('privacy');
       } else if (hash.startsWith('#terms')) {
         setCurrentRoute('terms');
+      } else if (hash.startsWith('#about')) {
+        setCurrentRoute('about');
       } else {
         setCurrentRoute('home');
       }
@@ -43,6 +52,44 @@ export const App: React.FC = () => {
 
     window.addEventListener('hashchange', handleHash);
     return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
+
+  // Keep <title> / description / social tags in sync with the hash "page" being shown
+  useEffect(() => {
+    applyPageMeta(PAGE_META[currentRoute]);
+  }, [currentRoute]);
+
+  // On desktop, mailto: links open Gmail compose in a new tab (works without a mail app installed).
+  // On touch devices the native mail app is the better target, so the link is left alone.
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if (window.matchMedia('(pointer: coarse)').matches) return;
+      const a = (e.target as HTMLElement | null)?.closest<HTMLAnchorElement>('a[href^="mailto:"]');
+      if (!a) return;
+      e.preventDefault();
+      const url = new URL(a.getAttribute('href') as string);
+      const params = new URLSearchParams({ view: 'cm', fs: '1', to: decodeURIComponent(url.pathname) });
+      const subject = url.searchParams.get('subject');
+      const body = url.searchParams.get('body');
+      if (subject) params.set('su', subject);
+      if (body) params.set('body', body);
+      window.open(`https://mail.google.com/mail/?${params.toString()}`, '_blank', 'noopener,noreferrer');
+    };
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  }, []);
+
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      const el = (e.target as HTMLElement | null)?.closest<HTMLElement>('.cred-card, .vt-glow');
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      el.style.setProperty('--my', `${e.clientY - r.top}px`);
+    };
+    window.addEventListener('pointermove', onMove, { passive: true });
+    return () => window.removeEventListener('pointermove', onMove);
   }, []);
 
   const navigateToHome = () => {
@@ -72,6 +119,8 @@ export const App: React.FC = () => {
         <PrivacyPolicy onBackToHome={navigateToHome} />
       )}
 
+      {currentRoute === 'about' && <AboutUs onBackToHome={navigateToHome} />}
+
       {currentRoute === 'terms' && (
         <TermsOfUse
           onBackToHome={navigateToHome}
@@ -96,6 +145,10 @@ export const App: React.FC = () => {
           {/* 01 Hero */}
           <HeroSection />
 
+          <StatsScatter />
+
+          <IntroSplit />
+
           {/* Trust Bar */}
           <CredibilityRail />
 
@@ -105,6 +158,7 @@ export const App: React.FC = () => {
           {/* Editorial Rhythm 1 */}
           <EditorialSection
             label="MC / CORE USP"
+            headline="Zero templates. Zero lock-in."
             quote="“Every solution is custom engineered for your business. Never built from templates. Never assembled from pre-made themes.”"
             author="MONOLITH CODES POSITIONING"
             subtitle="Ground-Up Custom Architecture • Zero Vendor Lock-in"
@@ -119,6 +173,7 @@ export const App: React.FC = () => {
           {/* Editorial Rhythm 2 */}
           <EditorialSection
             label="MC / OUR ENGINEERING THESIS"
+            headline="Built like architecture."
             quote="“Serious business software should feel constructed like architecture: structural, precise, quiet, and built to perform for years without breakdown.”"
             author="MONOLITH CODES STUDIO DIRECTIVE"
             subtitle="Production-Grade React • Zero Superficial Hype"
@@ -129,6 +184,9 @@ export const App: React.FC = () => {
 
           {/* 06 Technical Proof & Dual Layer Switcher */}
           <TechnicalProofSection />
+
+          {/* Client Testimonials */}
+          <TestimonialsSection />
 
           {/* 07 Engineering Process */}
           <ProcessSection />
@@ -141,6 +199,8 @@ export const App: React.FC = () => {
 
           {/* 09 Frequently Asked Questions */}
           <FaqSection />
+
+          <StackedCta />
 
           {/* 10 Start a Project / Inquiry */}
           <InquirySection />

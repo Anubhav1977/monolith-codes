@@ -97,17 +97,17 @@ export const PricingSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-40px' }}
           transition={{ duration: 0.4 }}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12"
+          className="vt-head vt-head--compact grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12"
         >
           <div className="lg:col-span-3 font-mono text-xs text-mc-orange uppercase tracking-wider flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-mc-orange" />
             <span>07 / PRICING & TIERS</span>
           </div>
 
-          <div className="lg:col-span-9 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="lg:col-span-9 flex flex-col items-center gap-8">
             <div>
               <h2 className="text-3xl md:text-5xl font-sans font-medium text-mc-text-strong tracking-tight mb-2">
-                TRANSPARENT ENGAGEMENT TIERS
+                TRANSPARENT<br />ENGAGEMENT TIERS
               </h2>
               <p className="text-mc-text-body text-base md:text-lg max-w-xl">
                 Bespoke engineering structured for predictability. No hidden fees, no recurring theme licenses, 100% full IP handoff.
@@ -115,7 +115,7 @@ export const PricingSection: React.FC = () => {
             </div>
 
             {/* Sprint vs Retainer Switcher Toggle */}
-            <div className="inline-flex p-1 rounded-lg bg-mc-surface border border-mc-border shrink-0 self-start md:self-auto">
+            <div className="inline-flex p-1 rounded-lg bg-mc-surface border border-mc-border shrink-0 self-center">
               <button
                 onClick={() => setModelType('sprint')}
                 className={cn(

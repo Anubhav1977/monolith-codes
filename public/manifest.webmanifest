@@ -1,0 +1,16 @@
+{
+  "name": "MONOLITH CODES — Custom Software Development Studio",
+  "short_name": "MONOLITH CODES",
+  "description": "Custom software engineering studio: websites, web apps, SaaS, mobile apps and ERP/CRM systems.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#080A0C",
+  "theme_color": "#080A0C",
+  "lang": "en",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -1,4 +1,6 @@
+# MONOLITH CODES — https://monolithcodes.com
 User-agent: *
 Allow: /
+Disallow: /api/
 
 Sitemap: https://monolithcodes.com/sitemap.xml

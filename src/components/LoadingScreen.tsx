@@ -104,7 +104,7 @@ export const LoadingScreen: React.FC = () => {
 
               {/* The actual logo */}
               <img
-                src="/assets/brand/monolith-mark.png"
+                src="/assets/brand/monolith-mark.webp"
                 alt=""
                 className="mc-loading-logo-img"
                 draggable={false}

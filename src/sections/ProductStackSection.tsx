@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Globe,
@@ -54,7 +54,7 @@ const STACK_ITEMS: StackItem[] = [
     tagline: 'High-conversion marketing engines, sub-second landing pages & bespoke digital frontends.',
     icon: <Globe className="w-5 h-5 text-mc-orange" />,
     systemStatus: 'Verified Engine • Sub-200ms TBT',
-    image: '/assets/images/services/Modern web Experience.png',
+    image: '/assets/images/services/Modern web Experience.webp',
     features: [
       {
         icon: <Zap className="w-4 h-4" />,
@@ -88,7 +88,7 @@ const STACK_ITEMS: StackItem[] = [
     tagline: 'Bespoke web platforms engineered for high traffic, real-time data & complex logic.',
     icon: <Server className="w-5 h-5 text-mc-orange" />,
     systemStatus: 'Active Queue • Real-time Sync',
-    image: '/assets/images/services/complex web applications.png',
+    image: '/assets/images/services/complex web applications.webp',
     features: [
       {
         icon: <Zap className="w-4 h-4" />,
@@ -122,7 +122,7 @@ const STACK_ITEMS: StackItem[] = [
     tagline: 'Native-feel iOS & Android mobile platforms for field teams and customer access.',
     icon: <Smartphone className="w-5 h-5 text-mc-orange" />,
     systemStatus: 'Cross-Platform • 60 FPS',
-    image: '/assets/images/services/Mobile Application System.png',
+    image: '/assets/images/services/Mobile Application System.webp',
     features: [
       {
         icon: <Smartphone className="w-4 h-4" />,
@@ -156,7 +156,7 @@ const STACK_ITEMS: StackItem[] = [
     tagline: 'Multi-tenant cloud products, subscription engines & telemetry dashboards.',
     icon: <LayoutDashboard className="w-5 h-5 text-mc-orange" />,
     systemStatus: 'Multi-Tenant • 99.99% Uptime',
-    image: '/assets/images/services/Saas platform.png',
+    image: '/assets/images/services/Saas platform.webp',
     features: [
       {
         icon: <Layers className="w-4 h-4" />,
@@ -190,7 +190,7 @@ const STACK_ITEMS: StackItem[] = [
     tagline: 'Custom operational software tailored strictly to your internal business rules.',
     icon: <Cpu className="w-5 h-5 text-mc-orange" />,
     systemStatus: 'Verified Engine • Zero Bottleneck',
-    image: '/assets/images/services/ERP systems.png',
+    image: '/assets/images/services/ERP systems.webp',
     features: [
       {
         icon: <Box className="w-4 h-4" />,
@@ -224,7 +224,7 @@ const STACK_ITEMS: StackItem[] = [
     tagline: 'Pragmatic LLM integration, automated document triage & smart agentic workflows.',
     icon: <Bot className="w-5 h-5 text-mc-orange" />,
     systemStatus: 'Agentic Pipeline • Active LLM',
-    image: '/assets/images/services/AI and Business Automation.png',
+    image: '/assets/images/services/AI and Business Automation.webp',
     isFlow: true,
     features: [
       {
@@ -251,6 +251,36 @@ const STACK_ITEMS: StackItem[] = [
     stackItems: ['Python', 'Node.js', 'OpenAI / Anthropic APIs', 'Pinecone / PgVector'],
   },
 ];
+
+/**
+ * Sticky-stacks only while the whole card fits in the viewport. If a card is taller than the screen
+ * (short laptops / phones) a sticky card would pin and its bottom could never be scrolled into view,
+ * so in that case it scrolls normally.
+ */
+const StickyWrap: React.FC<{ top: number; children: React.ReactNode }> = ({ top, children }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [canStick, setCanStick] = useState(true);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const measure = () => setCanStick(el.offsetHeight + top + 16 <= window.innerHeight);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    window.addEventListener('resize', measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, [top]);
+
+  return (
+    <div ref={ref} style={canStick ? { top } : undefined} className={cn('z-10 transform-gpu', canStick ? 'sticky' : 'relative')}>
+      {children}
+    </div>
+  );
+};
 
 export const ProductStackSection: React.FC = () => {
   const scrollToInquiry = () => {
@@ -288,15 +318,9 @@ export const ProductStackSection: React.FC = () => {
         </motion.div>
 
         {/* Sticky Stacking Cards Container */}
-        <div className="space-y-16 sm:space-y-24 lg:space-y-40 pb-14 relative">
+        <div className="space-y-12 sm:space-y-16 lg:space-y-40 pb-14 relative">
           {STACK_ITEMS.map((item, index) => (
-            <div
-              key={item.id}
-              style={{
-                top: `calc(72px + ${index * 10}px)`,
-              }}
-              className="sticky z-10 transform-gpu"
-            >
+            <StickyWrap key={item.id} top={72 + index * 10}>
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -315,7 +339,7 @@ export const ProductStackSection: React.FC = () => {
                 <div className="absolute bottom-3 right-3 w-2.5 h-2.5 border-b-2 border-r-2 border-mc-orange/70 pointer-events-none" />
 
                 {/* 3-Column Main Content Layout Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 items-stretch">
                   {/* Left Column: Index, Split Title, Subtitle, Features & Sprint Footer */}
                   <div className="lg:col-span-5 flex flex-col justify-between space-y-6">
                     <div>
@@ -325,7 +349,7 @@ export const ProductStackSection: React.FC = () => {
                       </div>
 
                       {/* Split Two-Toned Headline */}
-                      <h3 className="text-3xl sm:text-4xl md:text-5xl font-sans font-bold tracking-tight uppercase leading-[0.95] mb-4">
+                      <h3 className="text-2xl sm:text-3xl md:text-5xl font-sans font-bold tracking-tight uppercase leading-[0.95] mb-3 lg:mb-4">
                         <span className="text-mc-text-strong block">{item.titleMain}</span>
                         <span className="text-mc-orange block">{item.titleOrange}</span>
                       </h3>
@@ -337,7 +361,7 @@ export const ProductStackSection: React.FC = () => {
                     </div>
 
                     {/* Features Row / Pipeline Flow */}
-                    <div className="pt-2">
+                    <div className="hidden pt-2 lg:block">
                       {item.isFlow ? (
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 items-start relative">
                           {item.features.map((feat, idx) => (
@@ -379,7 +403,7 @@ export const ProductStackSection: React.FC = () => {
                     </div>
 
                     {/* Left Bottom Target Sprint / Ownership Metadata */}
-                    <div className="pt-6 border-t border-mc-border/60 flex flex-wrap items-center gap-3 sm:gap-6 font-mono text-[11px] uppercase tracking-wider">
+                    <div className="hidden pt-6 border-t border-mc-border/60 lg:flex flex-wrap items-center gap-3 sm:gap-6 font-mono text-[11px] uppercase tracking-wider">
                       <div className="flex items-center gap-2">
                         <span className="text-mc-text-tertiary">TARGET SPRINT</span>
                         <span className="text-mc-text-strong font-semibold">4 – 12 WEEKS</span>
@@ -396,9 +420,9 @@ export const ProductStackSection: React.FC = () => {
                   <div className="lg:col-span-4 flex items-center justify-center py-2 relative">
                     <div className="relative w-full max-w-[460px] flex items-center justify-center group/img">
                       <img
-                        src={item.image}
+                        src={item.image} loading="lazy" decoding="async"
                         alt={item.fullTitle}
-                        className="w-full h-auto max-h-[220px] sm:max-h-[300px] object-contain transition-transform duration-500 group-hover/img:scale-105 filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.6)]"
+                        className="w-full h-auto max-h-[130px] sm:max-h-[170px] lg:max-h-[300px] object-contain transition-transform duration-500 group-hover/img:scale-105 filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.6)]"
                       />
                     </div>
                   </div>
@@ -406,7 +430,7 @@ export const ProductStackSection: React.FC = () => {
                   {/* Right Column: Status Badge, Engineering Stack & Action Link */}
                   <div className="lg:col-span-3 flex flex-col justify-between space-y-4">
                     {/* Status Pill Badge (Top Right) */}
-                    <div className="flex items-center justify-start lg:justify-end">
+                    <div className="hidden items-center justify-start lg:flex lg:justify-end">
                       <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-mc-surface-deep/80 border border-mc-border font-mono text-[11px]">
                         <span className="w-2 h-2 rounded-full bg-mc-system-green animate-pulse" />
                         <span className="text-mc-text-secondary">{item.systemStatus}</span>
@@ -414,7 +438,16 @@ export const ProductStackSection: React.FC = () => {
                     </div>
 
                     {/* Stack Code Box */}
-                    <div className="space-y-2">
+                    {/* Compact stack chips (phones / tablets) */}
+                    <div className="flex flex-wrap gap-2 lg:hidden">
+                      {item.stackItems.map((tech) => (
+                        <span key={tech} className="rounded-full border border-mc-border bg-mc-surface-deep px-3 py-1 font-mono text-[11px] text-mc-text-secondary">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="hidden space-y-2 lg:block">
                       <div className="font-mono text-[11px] text-mc-text-tertiary uppercase tracking-wider font-medium px-0.5">
                         ENGINEERING STACK
                       </div>
@@ -441,7 +474,7 @@ export const ProductStackSection: React.FC = () => {
                     </div>
 
                     {/* Right Bottom Action Link */}
-                    <div className="pt-4 pb-1 flex justify-start lg:justify-end">
+                    <div className="pt-1 pb-1 flex justify-start lg:pt-4 lg:justify-end">
                       <button
                         onClick={scrollToInquiry}
                         className="group inline-flex items-center gap-2 font-sans text-xs sm:text-sm font-medium text-mc-text-strong hover:text-mc-orange transition-colors cursor-pointer"
@@ -453,8 +486,10 @@ export const ProductStackSection: React.FC = () => {
                   </div>
                 </div>
               </motion.div>
-            </div>
+            </StickyWrap>
           ))}
+          {/* Scroll runway: lets the last card reach its pinned spot and rest there before the stack releases */}
+          <div aria-hidden="true" className="h-[26vh] lg:h-[38vh]" />
         </div>
 
         {/* Bottom Process Link Banner Card */}

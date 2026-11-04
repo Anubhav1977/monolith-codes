@@ -63,7 +63,7 @@ export const BrandLockup: React.FC<BrandLockupProps> = ({
   if (variant === 'mark-only') {
     return (
       <img
-        src="/assets/brand/monolith-mark.png"
+        src="/assets/brand/monolith-mark.webp"
         alt="MONOLITH CODES"
         className={cn(markSizes[size], 'object-contain block', className)}
       />
@@ -110,7 +110,7 @@ export const BrandLockup: React.FC<BrandLockupProps> = ({
         ))}
         <div className="mc-brand-mark-shell relative flex items-center justify-center w-full h-full">
           <img
-            src="/assets/brand/monolith-mark.png"
+            src="/assets/brand/monolith-mark.webp"
             alt=""
             className={cn(markSizes[size], 'object-contain block')}
           />

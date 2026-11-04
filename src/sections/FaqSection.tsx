@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, HelpCircle, ArrowUpRight, MessageSquare, ShieldCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { JsonLd } from '@/components/Seo';
 
 interface FaqItem {
   id: string;
@@ -67,6 +68,17 @@ const FAQS: FaqItem[] = [
   },
 ];
 
+/** FAQPage structured data built from the same list that is rendered on the page. */
+const FAQ_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQS.map((f) => ({
+    "@type": "Question",
+    name: f.question,
+    acceptedAnswer: { "@type": "Answer", text: f.answer },
+  })),
+};
+
 export const FaqSection: React.FC = () => {
   const [activeFaq, setActiveFaq] = useState<string | null>(FAQS[0].id);
 
@@ -80,9 +92,10 @@ export const FaqSection: React.FC = () => {
 
   return (
     <section id="faq" className="py-24 border-b border-mc-border bg-mc-bg">
+      <JsonLd id="ld-faq" data={FAQ_SCHEMA} />
       <div className="max-w-[1360px] mx-auto px-6 md:px-10">
         {/* Section Header */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-16">
+        <div className="vt-head grid grid-cols-1 lg:grid-cols-12 gap-6 mb-16">
           <div className="lg:col-span-3 font-mono text-xs text-mc-orange uppercase tracking-wider flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-mc-orange" />
             <span>09 / FREQUENTLY ASKED QUESTIONS</span>

@@ -27,16 +27,16 @@ export const TechnicalProofSection: React.FC = () => {
     <section id="proof" className="py-24 bg-mc-surface-deep/40 border-b border-mc-border">
       <div className="max-w-[1360px] mx-auto px-6 md:px-10">
         {/* Section Header */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
+        <div className="vt-head vt-head--compact grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
           <div className="lg:col-span-3 font-mono text-xs text-mc-orange uppercase tracking-wider flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-mc-orange" />
             <span>05 / TECHNICAL PROOF</span>
           </div>
 
-          <div className="lg:col-span-9 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="lg:col-span-9 flex flex-col items-center gap-8">
             <div>
               <h2 className="text-3xl md:text-4xl font-sans font-medium text-mc-text-strong tracking-tight mb-2">
-                CLEAR FOR FOUNDERS, RIGOROUS FOR ENGINEERS
+                CLEAR FOR FOUNDERS,<br />RIGOROUS FOR ENGINEERS
               </h2>
               <p className="text-mc-text-body text-base max-w-xl">
                 Switch between the Scan Layer (business overview) and the Inspect Layer (code implementation details).
@@ -44,7 +44,7 @@ export const TechnicalProofSection: React.FC = () => {
             </div>
 
             {/* Dual Layer Switcher */}
-            <div className="inline-flex p-1 rounded-lg bg-mc-surface border border-mc-border shrink-0 self-start md:self-auto">
+            <div className="inline-flex p-1 rounded-lg bg-mc-surface border border-mc-border shrink-0 self-center">
               <button
                 onClick={() => setActiveTab('scan')}
                 className={cn(

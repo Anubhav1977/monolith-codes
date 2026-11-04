@@ -32,7 +32,7 @@ const TEAM: TeamMember[] = [
     id: 'anubhav',
     name: 'ANUBHAV GARG',
     role: 'FOUNDER & LEAD TECHNICAL ENGINEER',
-    photo: '/assets/faces/founder_pp.png',
+    photo: '/assets/faces/founder_pp.webp',
     bio: 'I lead architecture, engineering, and technical direction—turning complex ideas into scalable, high-performance software systems.',
     competencies: [
       {
@@ -57,7 +57,7 @@ const TEAM: TeamMember[] = [
     id: 'ankit',
     name: 'ANKIT KUMAR',
     role: 'CO-FOUNDER & BUSINESS DIRECTOR',
-    photo: '/assets/faces/cofounder_pp.png',
+    photo: '/assets/faces/cofounder_pp.webp',
     bio: 'I connect business needs with the right technical solutions, manage client relationships, and ensure smooth project delivery from start to finish.',
     competencies: [
       {
@@ -121,7 +121,7 @@ export const TeamSection: React.FC = () => {
               {/* Photo Frame */}
               <div className="relative h-56 lg:h-48 xl:h-56 overflow-hidden bg-mc-surface-deep shrink-0">
                 <img
-                  src={member.photo}
+                  src={member.photo} loading="lazy" decoding="async"
                   alt={`${member.name} - ${member.role}`}
                   className="w-full h-full object-cover object-[center_15%] filter contrast-[1.02] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                   onError={(e) => {
@@ -244,7 +244,7 @@ export const TeamSection: React.FC = () => {
           <div className="mt-8 pt-6 border-t border-mc-border-soft flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-mc-text-tertiary">
             <div className="flex items-center gap-2">
               <img
-                src="/assets/brand/monolith-mark.png"
+                src="/assets/brand/monolith-mark.webp" loading="lazy" decoding="async"
                 alt="MONOLITH CODES"
                 className="h-4 w-auto object-contain opacity-80"
               />

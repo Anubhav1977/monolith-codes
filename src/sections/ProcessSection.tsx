@@ -1,6 +1,21 @@
-import React, { useState } from 'react';
-import { ArtifactFrame } from '@/components/ArtifactFrame';
-import { CheckCircle2, ArrowRight, ShieldCheck, Clock, CreditCard, RefreshCw, Layers } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import {
+  CheckCircle2,
+  ShieldCheck,
+  Clock,
+  CreditCard,
+  RefreshCw,
+  Search,
+  FileText,
+  KeyRound,
+  Code2,
+  BadgeCheck,
+  Rocket,
+  LifeBuoy,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ProcessStage {
@@ -152,161 +167,184 @@ const STAGES: ProcessStage[] = [
   },
 ];
 
-export const ProcessSection: React.FC = () => {
-  const [activeStep, setActiveStep] = useState<number>(0);
+const STEP_META = [
+  { short: 'Enquiry', Icon: Search },
+  { short: 'Scope', Icon: FileText },
+  { short: 'Approval', Icon: KeyRound },
+  { short: 'Build', Icon: Code2 },
+  { short: 'Test', Icon: BadgeCheck },
+  { short: 'Deploy', Icon: Rocket },
+  { short: 'Support', Icon: LifeBuoy },
+];
 
-  const currentStage = STAGES[activeStep];
+export const ProcessSection: React.FC = () => {
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const railRef = useRef<HTMLDivElement>(null);
+  const stage = STAGES[active];
+  const total = STAGES.length;
+
+  const go = (i: number) => setActive((i + total) % total);
+
+  // keep the active chip in view on small screens without ever moving the page itself
+  useEffect(() => {
+    const rail = railRef.current;
+    const btn = rail?.children[active] as HTMLElement | undefined;
+    if (!rail || !btn) return;
+    rail.scrollTo({ left: btn.offsetLeft - (rail.clientWidth - btn.clientWidth) / 2, behavior: 'smooth' });
+  }, [active]);
 
   return (
-    <section id="process" className="py-24 border-b border-mc-border bg-mc-bg">
+    <section id="process" className="py-20 md:py-28 border-b border-mc-border bg-mc-bg">
       <div className="max-w-[1360px] mx-auto px-6 md:px-10">
-        {/* Section Header */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-16">
-          <div className="lg:col-span-3 font-mono text-xs text-mc-orange uppercase tracking-wider flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-mc-orange" />
-            <span>06 / HOW WE WORK</span>
-          </div>
-
-          <div className="lg:col-span-9">
-            <h2 className="text-3xl md:text-5xl font-sans font-medium text-mc-text-strong tracking-tight mb-4">
-              THE 7-STAGE DELIVERY PIPELINE
-            </h2>
-            <p className="text-mc-text-body text-base md:text-lg max-w-3xl leading-relaxed">
-              A structured, transparent engineering process designed to eliminate project ambiguity. Development officially begins after the scope is approved and the agreed initial payment is received.
-            </p>
-          </div>
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="vt-title">How does it <em>work</em>?</h2>
+          <p className="mt-5 text-mc-text-secondary">The 7-stage delivery pipeline — from first enquiry to launch.</p>
         </div>
 
-        {/* Signal Stepper Progress Bar */}
-        <div className="relative mb-12 hidden md:block">
-          {/* Base Neutral Line */}
-          <div className="absolute top-1/2 left-0 right-0 h-[2px] bg-mc-border -translate-y-1/2" />
-          {/* Active Orange Signal Segment */}
+        <div className="mb-20 md:mb-24" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+          {/* Stepper */}
           <div
-            className="absolute top-1/2 left-0 h-[2px] bg-mc-orange -translate-y-1/2 transition-all duration-300"
-            style={{ width: `${(activeStep / (STAGES.length - 1)) * 100}%` }}
-          />
-
-          <div className="relative z-10 flex items-center justify-between">
-            {STAGES.map((s, idx) => {
-              const isPast = idx < activeStep;
-              const isCurrent = idx === activeStep;
+            ref={railRef}
+            role="tablist"
+            aria-label="Delivery stages"
+            className="flex lg:grid lg:grid-cols-7 gap-2.5 overflow-x-auto no-scrollbar pb-3 -mx-1 px-1"
+          >
+            {STAGES.map((st, i) => {
+              const { short, Icon } = STEP_META[i];
+              const isActive = i === active;
+              const isPast = i < active;
               return (
                 <button
-                  key={s.step}
-                  onClick={() => setActiveStep(idx)}
+                  key={st.step}
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => go(i)}
                   className={cn(
-                    'flex flex-col items-center gap-2 p-2 rounded transition-all group cursor-pointer',
-                    isCurrent ? 'scale-105' : 'opacity-80 hover:opacity-100'
+                    'relative shrink-0 min-w-[128px] lg:min-w-0 overflow-hidden rounded-xl border px-4 py-3.5 text-left transition-all duration-300 cursor-pointer',
+                    isActive
+                      ? 'border-mc-orange/60 bg-mc-orange/10 shadow-[0_0_30px_-8px_rgba(255,107,0,.45)]'
+                      : 'border-mc-border bg-mc-surface hover:border-mc-border-strong'
                   )}
                 >
-                  <div
-                    className={cn(
-                      'w-8 h-8 rounded-full font-mono text-xs flex items-center justify-center border transition-all',
-                      isCurrent
-                        ? 'bg-mc-orange text-mc-bg font-bold border-mc-orange shadow-lg'
-                        : isPast
-                        ? 'bg-mc-surface-deep text-mc-orange border-mc-orange'
-                        : 'bg-mc-surface text-mc-text-tertiary border-mc-border'
-                    )}
-                  >
-                    {s.step}
+                  <div className="flex items-center justify-between">
+                    <span className={cn('font-mono text-[11px] tracking-wider', isActive || isPast ? 'text-mc-orange' : 'text-mc-text-tertiary')}>
+                      {st.step}
+                    </span>
+                    <Icon className={cn('h-4 w-4 transition-colors', isActive || isPast ? 'text-mc-orange' : 'text-mc-text-tertiary')} />
                   </div>
-                  <span
-                    className={cn(
-                      'font-mono text-xs uppercase transition-colors',
-                      isCurrent ? 'text-mc-orange font-semibold' : 'text-mc-text-secondary'
-                    )}
-                  >
-                    {s.title}
-                  </span>
+                  <div className={cn('mt-2 text-sm font-medium', isActive ? 'text-mc-text-strong' : 'text-mc-text-secondary')}>{short}</div>
+
+                  <span className="absolute inset-x-0 bottom-0 h-[3px] bg-mc-border/60" aria-hidden="true" />
+                  {isPast && <span className="absolute inset-x-0 bottom-0 h-[3px] bg-mc-orange/70" aria-hidden="true" />}
+                  {isActive && (
+                    <span
+                      key={active}
+                      aria-hidden="true"
+                      className="hw-fill absolute inset-x-0 bottom-0 h-[3px] bg-mc-orange"
+                      style={{ animationPlayState: paused ? 'paused' : 'running' }}
+                      onAnimationEnd={() => go(active + 1)}
+                    />
+                  )}
                 </button>
               );
             })}
           </div>
-        </div>
 
-        {/* Active Stage Details & Visual Artifact */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-20">
-          {/* Left Column: Stage Copy & Deliverables */}
-          <div className="lg:col-span-6 p-6 sm:p-8 rounded-xl border border-mc-border bg-mc-surface flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <span className="font-mono text-xs text-mc-orange font-medium">{currentStage.number}</span>
-                <span className="px-2.5 py-1 rounded bg-mc-orange-10 border border-mc-orange-28 text-mc-orange font-mono text-xs uppercase font-semibold">
-                  STAGE {currentStage.step} OF 07
-                </span>
-              </div>
+          {/* Detail panel */}
+          <div className="relative mt-4 overflow-hidden rounded-2xl border border-mc-border bg-mc-surface">
+            <div
+              className="pointer-events-none absolute -right-24 -top-24 h-[420px] w-[420px] rounded-full bg-mc-orange/10 blur-3xl"
+              aria-hidden="true"
+            />
 
-              <h3 className="text-2xl sm:text-3xl font-sans font-medium text-mc-text-strong mb-4">
-                {currentStage.title}
-              </h3>
-              <p className="text-sm sm:text-base font-sans text-mc-text-body leading-relaxed mb-6">
-                {currentStage.summary}
-              </p>
-
-              <div className="space-y-3 mb-8">
-                <h4 className="font-mono text-xs text-mc-text-secondary uppercase tracking-wider">
-                  STAGE DELIVERABLES:
-                </h4>
-                {currentStage.details.map((d, i) => (
-                  <div key={i} className="flex items-center gap-3 text-sm font-sans text-mc-text">
-                    <CheckCircle2 className="w-4 h-4 text-mc-orange shrink-0" />
-                    <span>{d}</span>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="relative grid grid-cols-[minmax(0,1fr)] gap-8 p-6 sm:p-9 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-14 lg:p-12"
+              >
+                {/* Left: story */}
+                <div className="flex min-w-0 flex-col">
+                  <div className="flex items-end gap-4">
+                    <span className="bg-gradient-to-b from-mc-orange to-mc-orange/20 bg-clip-text font-sans text-[72px] font-semibold leading-[0.85] tracking-tighter text-transparent sm:text-[88px]">
+                      {stage.step}
+                    </span>
+                    <span className="mb-1 font-mono text-xs uppercase tracking-wider text-mc-text-tertiary">Stage {stage.number}</span>
                   </div>
-                ))}
-              </div>
-            </div>
+                  <h3 className="mt-5 font-sans text-2xl font-medium leading-[1.1] tracking-tight text-mc-text-strong sm:text-3xl lg:text-4xl">
+                    {stage.title}
+                  </h3>
+                  <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-mc-text-body sm:text-base">{stage.summary}</p>
 
-            {/* Stepper Navigation Controls */}
-            <div className="pt-6 border-t border-mc-border flex items-center justify-between">
-              <button
-                disabled={activeStep === 0}
-                onClick={() => setActiveStep(Math.max(0, activeStep - 1))}
-                className="px-4 py-2 text-xs font-mono rounded-lg bg-mc-surface-deep border border-mc-border text-mc-text disabled:opacity-40 disabled:cursor-not-allowed hover:border-mc-border-strong transition-colors cursor-pointer"
-              >
-                &larr; Previous Stage
-              </button>
-
-              <button
-                disabled={activeStep === STAGES.length - 1}
-                onClick={() => setActiveStep(Math.min(STAGES.length - 1, activeStep + 1))}
-                className="px-4 py-2 text-xs font-mono rounded-lg bg-mc-orange text-mc-bg font-semibold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-mc-orange-highlight transition-colors flex items-center gap-1 cursor-pointer"
-              >
-                <span>Next Stage</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Right Column: Stage Visual Artifact */}
-          <div className="lg:col-span-6">
-            <ArtifactFrame
-              title={currentStage.artifactSnippet.header}
-              category={`STAGE ${currentStage.step} ARTIFACT`}
-              className="h-full min-h-[360px]"
-            >
-              <div className="p-6 font-mono text-xs space-y-4">
-                <div className="text-mc-text-tertiary">
-                  // MONOLITH PIPELINE TRACE &bull; {currentStage.title}
+                  <ul className="mt-7 divide-y divide-mc-border-soft border-y border-mc-border-soft">
+                    {stage.details.map((d) => (
+                      <li key={d} className="flex items-start gap-3 py-3.5 text-sm text-mc-text-strong/90 sm:text-[15px]">
+                        <CheckCircle2 className="mt-0.5 h-[18px] w-[18px] shrink-0 text-mc-orange" />
+                        <span>{d}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
 
-                <div className="p-4 rounded-lg bg-mc-surface-deep border border-mc-border space-y-2">
-                  {currentStage.artifactSnippet.lines.map((line, idx) => (
-                    <div key={idx} className="flex items-start gap-3">
-                      <span className="text-mc-orange font-bold">&rsaquo;</span>
-                      <span className="text-mc-text-strong font-mono">{line}</span>
+                {/* Right: terminal artifact */}
+                <div className="flex min-w-0 flex-col justify-center">
+                  <div className="min-w-0 overflow-hidden rounded-xl border border-mc-border bg-[#0a0b0d] shadow-[0_30px_70px_-30px_rgba(0,0,0,.9)]">
+                    <div className="flex items-center justify-between gap-3 border-b border-mc-border px-4 py-3">
+                      <div className="flex min-w-0 items-center gap-2">
+                        <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]/80" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]/80" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/80" />
+                        <span className="ml-3 truncate font-mono text-xs text-mc-text-secondary">{stage.artifactSnippet.header}</span>
+                      </div>
+                      <span className="shrink-0 font-mono text-[10px] uppercase tracking-wider text-mc-orange">Stage {stage.step}/07</span>
                     </div>
-                  ))}
+                    <div className="space-y-1.5 px-5 py-6 font-mono text-[12.5px] leading-6 text-mc-text-strong sm:text-[13px]">
+                      {stage.artifactSnippet.lines.map((l) => (
+                        <p key={l} className="flex gap-3">
+                          <span className="select-none text-mc-orange">›</span>
+                          <span className="min-w-0 break-words">{l}</span>
+                        </p>
+                      ))}
+                      <p className="flex gap-3">
+                        <span className="select-none text-mc-orange">›</span>
+                        <span className="hw-caret inline-block h-4 w-2 translate-y-1 bg-mc-orange/80" />
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2 border-t border-mc-border px-5 py-3 font-mono text-[11px] text-mc-text-tertiary">
+                      <span className="h-1.5 w-1.5 rounded-full bg-mc-system-green" />
+                      Quality Gate: 100% Pass • Trace Execution: OK
+                    </div>
+                  </div>
                 </div>
+              </motion.div>
+            </AnimatePresence>
 
-                <div className="p-4 rounded-lg bg-mc-surface border border-mc-border space-y-1.5 text-mc-text-secondary text-xs">
-                  <div>Pipeline Status: VERIFIED SPECIFICATION</div>
-                  <div>Quality Gate: 100% Pass</div>
-                  <div>Trace Execution: OK</div>
-                </div>
+            {/* Controls */}
+            <div className="relative flex items-center justify-between border-t border-mc-border px-6 py-4 sm:px-9 lg:px-12">
+              <span className="font-mono text-[11px] uppercase tracking-wider text-mc-text-tertiary">
+                {paused ? 'Paused' : 'Auto-playing'} • {stage.step} / 0{total}
+              </span>
+              <div className="flex items-center gap-2.5">
+                <button
+                  onClick={() => go(active - 1)}
+                  aria-label="Previous stage"
+                  className="grid h-10 w-10 cursor-pointer place-items-center rounded-full border border-mc-border bg-mc-surface-deep text-mc-text transition-colors hover:border-mc-orange hover:text-mc-orange"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button
+                  onClick={() => go(active + 1)}
+                  aria-label="Next stage"
+                  className="grid h-10 w-10 cursor-pointer place-items-center rounded-full border border-mc-border bg-mc-surface-deep text-mc-text transition-colors hover:border-mc-orange hover:text-mc-orange"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
               </div>
-            </ArtifactFrame>
+            </div>
           </div>
         </div>
 

@@ -47,7 +47,7 @@ const NAV_GROUPS: NavGroup[] = [
   },
   {
     label: 'About',
-    href: '#why-custom',
+    href: '#about',
   },
 ];
 
@@ -103,7 +103,8 @@ export const Navigation: React.FC = () => {
         'fixed top-0 left-0 right-0 z-50 h-[72px] transition-all duration-240 border-b border-transparent',
         isScrolled
           ? 'bg-mc-bg/90 backdrop-blur-md border-mc-border shadow-lg'
-          : 'bg-transparent'
+          : 'bg-transparent',
+        isScrolled && 'is-glass'
       )}
     >
       <div className="max-w-[1360px] mx-auto h-full px-4 sm:px-6 md:px-10 flex items-center justify-between">

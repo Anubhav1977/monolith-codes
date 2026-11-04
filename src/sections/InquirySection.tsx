@@ -63,7 +63,7 @@ export const InquirySection: React.FC = () => {
                 {/* Founder Photo */}
                 <div className="relative shrink-0">
                   <img
-                    src="/assets/faces/founder_pp_p.png"
+                    src="/assets/faces/founder_pp_p.webp" loading="lazy" decoding="async" width={80} height={80}
                     alt="Founder & Lead Architect"
                     className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover object-[center_12%] border border-mc-border shadow-md"
                     onError={(e) => {

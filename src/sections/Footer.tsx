@@ -1,11 +1,16 @@
 import React from 'react';
 import { BrandLockup } from '@/components/BrandLockup';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Instagram, Linkedin, Mail, Phone } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
+    <>
+    <div className="vt-talk" aria-hidden="true">
+      <div className="vt-talk__blobs"><i /><i /><i /><i /></div>
+      <h2 className="vt-talk__word">Let's Talk</h2>
+    </div>
     <footer className="pt-24 pb-0 bg-mc-bg border-t border-mc-border overflow-hidden select-none">
       <div className="max-w-[1360px] mx-auto px-6 md:px-10">
         {/* Main Footer Links Grid */}
@@ -31,6 +36,32 @@ export const Footer: React.FC = () => {
               <span className="w-2 h-2 rounded-full bg-mc-system-green animate-pulse" />
               <span>Available for Q3/Q4 Projects • WhatsApp Direct Support</span>
             </div>
+
+            {/* Contact */}
+            <ul className="select-text space-y-2.5 pt-2 font-sans text-sm">
+              <li>
+                <a
+                  href="tel:+919217247687"
+                  className="inline-flex items-center gap-3 text-mc-text-strong transition-colors hover:text-mc-orange"
+                >
+                  <span className="grid h-8 w-8 place-items-center rounded-full border border-mc-border bg-mc-surface text-mc-orange">
+                    <Phone className="h-4 w-4" />
+                  </span>
+                  <span>+91 92172 47687</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:studio@monolithcodes.com"
+                  className="inline-flex items-center gap-3 text-mc-text-strong transition-colors hover:text-mc-orange"
+                >
+                  <span className="grid h-8 w-8 place-items-center rounded-full border border-mc-border bg-mc-surface text-mc-orange">
+                    <Mail className="h-4 w-4" />
+                  </span>
+                  <span>studio@monolithcodes.com</span>
+                </a>
+              </li>
+            </ul>
           </div>
 
           {/* Column 3: Capabilities */}
@@ -86,15 +117,26 @@ export const Footer: React.FC = () => {
               </ul>
             </div>
 
-            {/* System Metadata */}
-            <div className="space-y-1.5 pt-3 border-t border-mc-border-soft text-mc-text-tertiary">
-              <div>STACK: React 19 + TypeScript</div>
-              <div>IP HANDOFF: 100% Client Owned</div>
-              <div>DATA: Zero Brokerage / DPDP Aligned</div>
-              <div className="text-mc-system-green pt-1 flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-mc-system-green" />
-                <span>STATUS: OPERATIONAL</span>
-              </div>
+            {/* Social links */}
+            <div className="select-text flex items-center gap-3 pt-3 border-t border-mc-border-soft">
+              <a
+                href="https://www.linkedin.com/company/monolith-codes/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="MONOLITH CODES on LinkedIn"
+                className="grid h-11 w-11 place-items-center rounded-full border border-mc-border text-mc-text-strong transition-colors hover:border-mc-orange hover:text-mc-orange"
+              >
+                <Linkedin className="h-5 w-5" />
+              </a>
+              <a
+                href="https://www.instagram.com/monolithcodes_/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="MONOLITH CODES on Instagram"
+                className="grid h-11 w-11 place-items-center rounded-full border border-mc-border text-mc-text-strong transition-colors hover:border-mc-orange hover:text-mc-orange"
+              >
+                <Instagram className="h-5 w-5" />
+              </a>
             </div>
           </div>
         </div>
@@ -172,7 +214,7 @@ export const Footer: React.FC = () => {
 
       {/* Massive Architectural Bottom Display Typography */}
       <div className="group relative w-full h-[clamp(70px,9vw,150px)] overflow-hidden border-t border-mc-border/40 bg-mc-surface-deep/30">
-        <h1
+        <p aria-hidden="true"
           className="
       absolute
       left-1/2
@@ -194,8 +236,9 @@ export const Footer: React.FC = () => {
     "
         >
           MONOLITHCODES
-        </h1>
+        </p>
       </div>
     </footer>
+    </>
   );
 };
