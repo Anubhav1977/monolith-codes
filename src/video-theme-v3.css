@@ -6,7 +6,7 @@
 .about__bar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 16px; max-width: 1100px; margin: 18px auto 0; padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14); background: linear-gradient(135deg, rgba(255,255,255,.1), rgba(255,255,255,.03)); backdrop-filter: blur(22px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 10px 40px rgba(0,0,0,.4); }
 .about__back { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--mc-text-secondary); cursor: pointer; background: none; border: 0; transition: color .3s ease; }
 .about__back:hover { color: var(--mc-orange); }
-.about__main { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 80px 24px 120px; }
+.about__main { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 150px 24px 120px; }
 .about__top { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
 .about__tag { margin: 0; font: 11px var(--font-mono, monospace); letter-spacing: .24em; text-transform: uppercase; color: var(--mc-text-tertiary); }
 .about__motto { list-style: none; margin: 0; padding: 0 0 12px; position: relative; font: 12px var(--font-mono, monospace); letter-spacing: .4em; text-transform: uppercase; color: var(--mc-text-secondary); display: grid; gap: 4px; }
@@ -120,3 +120,9 @@ header nav[aria-label="Main Navigation"] {
 header nav[aria-label="Main Navigation"]::before { display: none !important; }
 header.fixed > div:not(#mobile-menu-drawer)::before, header.fixed.is-glass > div:not(#mobile-menu-drawer)::before { display: none !important; }
 header.fixed a[aria-label^="MONOLITH"], header.fixed > div > div:last-child { border-radius: 0 !important; background: none !important; box-shadow: none !important; border: 0 !important; backdrop-filter: none !important; }
+
+/* Testimonials in light theme: light cards so the (dark) text is readable */
+[data-theme="light"] .testi-warm { background: #fff1e4 !important; border-color: rgba(232,93,0,.35) !important; box-shadow: 0 24px 50px -24px rgba(120,60,10,.35) !important; }
+[data-theme="light"] .testi-cool { background: #eef4f7 !important; border-color: rgba(60,120,150,.3) !important; box-shadow: 0 24px 50px -24px rgba(30,70,95,.3) !important; }
+[data-theme="light"] .testi-warm p, [data-theme="light"] .testi-cool p, [data-theme="light"] .testi-warm div, [data-theme="light"] .testi-cool div { color: #1b1d20; }
+[data-theme="light"] .testi-warm .font-mono, [data-theme="light"] .testi-cool .font-mono { color: #62666A; }

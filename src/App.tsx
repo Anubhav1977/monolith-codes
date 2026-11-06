@@ -92,6 +92,15 @@ export const App: React.FC = () => {
     return () => window.removeEventListener('pointermove', onMove);
   }, []);
 
+  // Coming back to home from About/Privacy/Terms via a section link (e.g. #work): scroll once home has rendered
+  useEffect(() => {
+    if (currentRoute !== 'home') return;
+    const id = window.location.hash.replace('#', '');
+    if (!id) return;
+    const t = window.setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }), 400); // scrollToHashOnHome
+    return () => window.clearTimeout(t);
+  }, [currentRoute]);
+
   const navigateToHome = () => {
     window.location.hash = '';
     setCurrentRoute('home');

@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowUpRight, Code2, Smartphone, PenTool, ShoppingCart, Layers, Cpu } from 'lucide-react';
-import { BrandLockup } from '@/components/BrandLockup';
-import { ThemeToggle } from '@/components/ThemeToggle';
+import { ArrowUpRight, Code2, Smartphone, PenTool, ShoppingCart, Layers, Cpu } from 'lucide-react';
+import { Navigation } from '@/components/Navigation';
 
 interface AboutUsProps { onBackToHome?: () => void; }
 
@@ -39,13 +38,7 @@ export const AboutUs: React.FC<AboutUsProps> = ({ onBackToHome }) => {
       <div className="about__glow about__glow--a" aria-hidden="true" />
       <div className="about__glow about__glow--b" aria-hidden="true" />
 
-      <header className="about__bar">
-        <button onClick={onBackToHome} className="about__back" aria-label="Back to home">
-          <ArrowLeft className="w-4 h-4" /> Back
-        </button>
-        <BrandLockup variant="horizontal" size="md" />
-        <ThemeToggle />
-      </header>
+      <Navigation />
 
       <main className="about__main">
         <motion.div className="about__top" {...reveal()}>

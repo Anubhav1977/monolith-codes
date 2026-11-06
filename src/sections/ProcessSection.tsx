@@ -292,17 +292,17 @@ export const ProcessSection: React.FC = () => {
 
                 {/* Right: terminal artifact */}
                 <div className="flex min-w-0 flex-col justify-center">
-                  <div className="min-w-0 overflow-hidden rounded-xl border border-mc-border bg-[#0a0b0d] shadow-[0_30px_70px_-30px_rgba(0,0,0,.9)]">
-                    <div className="flex items-center justify-between gap-3 border-b border-mc-border px-4 py-3">
+                  <div className="min-w-0 overflow-hidden rounded-xl border border-white/10 bg-[#0a0b0d] shadow-[0_30px_70px_-30px_rgba(0,0,0,.9)]">
+                    <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-3">
                       <div className="flex min-w-0 items-center gap-2">
                         <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]/80" />
                         <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]/80" />
                         <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/80" />
-                        <span className="ml-3 truncate font-mono text-xs text-mc-text-secondary">{stage.artifactSnippet.header}</span>
+                        <span className="ml-3 truncate font-mono text-xs text-[#9A9CA0]">{stage.artifactSnippet.header}</span>
                       </div>
                       <span className="shrink-0 font-mono text-[10px] uppercase tracking-wider text-mc-orange">Stage {stage.step}/07</span>
                     </div>
-                    <div className="space-y-1.5 px-5 py-6 font-mono text-[12.5px] leading-6 text-mc-text-strong sm:text-[13px]">
+                    <div className="space-y-1.5 px-5 py-6 font-mono text-[12.5px] leading-6 text-[#F4F3EE] sm:text-[13px]">
                       {stage.artifactSnippet.lines.map((l) => (
                         <p key={l} className="flex gap-3">
                           <span className="select-none text-mc-orange">›</span>
@@ -314,7 +314,7 @@ export const ProcessSection: React.FC = () => {
                         <span className="hw-caret inline-block h-4 w-2 translate-y-1 bg-mc-orange/80" />
                       </p>
                     </div>
-                    <div className="flex items-center gap-2 border-t border-mc-border px-5 py-3 font-mono text-[11px] text-mc-text-tertiary">
+                    <div className="flex items-center gap-2 border-t border-white/10 px-5 py-3 font-mono text-[11px] text-[#70747A]">
                       <span className="h-1.5 w-1.5 rounded-full bg-mc-system-green" />
                       Quality Gate: 100% Pass • Trace Execution: OK
                     </div>

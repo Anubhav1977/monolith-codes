@@ -85,8 +85,8 @@ const CardBody: React.FC<{ t: Testimonial; compact?: boolean }> = ({ t, compact 
 
 const toneClass = (tone: Testimonial['tone']) =>
   tone === 'warm'
-    ? 'bg-[#1d1611] border-[#ff6b00]/20'
-    : 'bg-[#13191d] border-[#7fb3c8]/20';
+    ? 'testi-warm bg-[#1d1611] border-[#ff6b00]/20'
+    : 'testi-cool bg-[#13191d] border-[#7fb3c8]/20';
 
 export const TestimonialsSection: React.FC = () => {
   const [spread, setSpread] = useState(false);
