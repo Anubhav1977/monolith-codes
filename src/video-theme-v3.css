@@ -65,9 +65,7 @@
 [data-theme="light"] .vt-wire { filter: drop-shadow(0 0 10px rgba(232,93,0,.4)); }
 [data-theme="light"] .vt-cube__face { border-color: rgba(232,93,0,.9); }
 [data-theme="light"] .vt-marquee__text { background: linear-gradient(90deg, #E84A00 0%, #FF8A1F 40%, #2a2d31 70%, rgba(42,45,49,.35) 100%); -webkit-background-clip: text; background-clip: text; }
-[data-theme="light"] .vt-stack__line { background: linear-gradient(90deg, #E84A00, #FF6B00 55%, #B84300); -webkit-background-clip: text; background-clip: text; }
 [data-theme="light"] #vt-hx stop:last-child { stop-color: #E84A00; }
-[data-theme="light"] .vt-helix { mix-blend-mode: normal; }
 [data-theme="light"] .vt-horizon::after { background: var(--mc-bg); box-shadow: 0 -30px 120px rgba(255,107,0,.3), inset 0 40px 100px rgba(255,107,0,.1); }
 [data-theme="light"] .vt-spot { background: linear-gradient(180deg, rgba(255,107,0,.22), rgba(255,107,0,.05) 70%, transparent); }
 

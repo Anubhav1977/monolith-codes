@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, CheckCircle2, ShieldCheck, Zap, Sparkles, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { type Currency, setCurrency, useCurrency } from '@/lib/currency';
 
 interface PricingTier {
   id: string;
   name: string;
   badge?: string;
   tagline: string;
+  /** Indicative starting price per currency. */
+  startingFrom: Record<Currency, string>;
   sprintTimeline: string;
   retainerTimeline: string;
   idealFor: string;
@@ -17,11 +20,14 @@ interface PricingTier {
   featured?: boolean;
 }
 
+// TODO(pricing): placeholder starting prices taken from the lower bounds of the
+// inquiry form's budget brackets — confirm or replace with real studio rates.
 const PRICING_TIERS: PricingTier[] = [
   {
     id: 'launch',
     name: 'Launch',
     tagline: 'High-conversion, bespoke web frontends & digital product foundations.',
+    startingFrom: { USD: '$10k', INR: '₹75k' },
     sprintTimeline: '2 – 4 Weeks Scope',
     retainerTimeline: 'Dedicated Sprint Cell',
     idealFor: 'Businesses replacing slow templates with production-grade web experiences.',
@@ -41,6 +47,7 @@ const PRICING_TIERS: PricingTier[] = [
     name: 'Grow',
     badge: 'MOST POPULAR',
     tagline: 'Custom web applications, multi-tenant SaaS platforms & customer portals.',
+    startingFrom: { USD: '$25k', INR: '₹2 Lakh' },
     sprintTimeline: '6 - 10 Weeks Scope',
     retainerTimeline: 'Embedded Senior Team',
     idealFor: 'Founders & growing companies building scalable custom software platforms.',
@@ -60,6 +67,7 @@ const PRICING_TIERS: PricingTier[] = [
     id: 'build',
     name: 'Build',
     tagline: 'Enterprise ERP/CRM systems, AI agent pipelines & studio cell teams.',
+    startingFrom: { USD: '$50k', INR: '₹5 Lakh' },
     sprintTimeline: '10 - 16+ Weeks Scope',
     retainerTimeline: 'Quarterly Dedicated Studio',
     idealFor: 'Established enterprises requiring complex operational systems or dedicated sprint cells.',
@@ -79,6 +87,8 @@ const PRICING_TIERS: PricingTier[] = [
 export const PricingSection: React.FC = () => {
   const [modelType, setModelType] = useState<'sprint' | 'retainer'>('sprint');
   const [expandedTier, setExpandedTier] = useState<string | null>(null);
+  // India → INR, everywhere else → USD (auto-detected; visitor can still switch).
+  const currency = useCurrency();
 
   const scrollToInquiry = () => {
     document.getElementById('inquiry')?.scrollIntoView({ behavior: 'smooth' });
@@ -177,9 +187,20 @@ export const PricingSection: React.FC = () => {
                   </span>
                 </div>
 
-                <p className="text-sm font-sans text-mc-text-body leading-relaxed mb-6">
+                <p className="text-sm font-sans text-mc-text-body leading-relaxed mb-5">
                   {tier.tagline}
                 </p>
+
+                {/* Indicative starting price in the visitor's currency */}
+                <div className="flex items-baseline gap-2 mb-6">
+                  <span className="font-mono text-[11px] uppercase tracking-wider text-mc-text-tertiary">
+                    From
+                  </span>
+                  <span className="text-3xl sm:text-4xl font-sans font-medium tracking-tight text-mc-text-strong tabular-nums">
+                    {tier.startingFrom[currency]}
+                  </span>
+                  <span className="font-mono text-[11px] text-mc-text-tertiary">{currency}</span>
+                </div>
 
                 {/* Target Context Box */}
                 <div className="p-4 rounded-lg bg-mc-surface-deep border border-mc-border-soft text-xs font-sans text-mc-text-body mb-6">
@@ -267,7 +288,16 @@ export const PricingSection: React.FC = () => {
         {/* Transparent Commercial Footnote */}
         <div className="mt-8 pt-6 border-t border-mc-border-soft flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-mono text-mc-text-tertiary">
           <div>
-            * Payment terms, milestones, and indicative timelines are defined in your written proposal before work begins.
+            * Prices are indicative starting points in {currency}
+            {' · '}
+            <button
+              type="button"
+              onClick={() => setCurrency(currency === 'INR' ? 'USD' : 'INR')}
+              className="py-2 -my-2 underline underline-offset-4 hover:text-mc-orange transition-colors cursor-pointer"
+            >
+              Show in {currency === 'INR' ? 'USD' : 'INR'}
+            </button>
+            . Payment terms, milestones, and final pricing are defined in your written proposal before work begins.
           </div>
           <a href="#process" className="text-mc-orange hover:underline flex items-center gap-1 font-medium">
             <span>Review our 7-Stage How We Work Pipeline</span>

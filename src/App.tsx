@@ -20,7 +20,7 @@ import { WorkTogetherSection } from '@/sections/WorkTogetherSection';
 import { Footer } from '@/sections/Footer';
 import { StatsScatter } from '@/components/StatsScatter';
 import { IntroSplit } from '@/components/IntroSplit';
-import { StackedCta } from '@/components/StackedCta';
+import { OwnershipSection } from '@/sections/OwnershipSection';
 import { WhatsAppButton } from '@/components/WhatsAppButton';
 import { PrivacyPolicy } from '@/pages/PrivacyPolicy';
 import { AboutUs } from '@/pages/AboutUs';
@@ -210,7 +210,7 @@ export const App: React.FC = () => {
           {/* 09 Frequently Asked Questions */}
           <FaqSection />
 
-          <StackedCta />
+          <OwnershipSection />
 
           {/* 10 Start a Project / Inquiry */}
           <InquirySection />

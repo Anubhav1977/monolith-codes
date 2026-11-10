@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Send, CheckCircle2, AlertCircle, Loader2, Globe, Check, Mail } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Send, CheckCircle2, AlertCircle, Loader2, Check, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { setCurrency, useCurrency } from '@/lib/currency';
 
 interface FormState {
   name: string;
@@ -8,7 +9,7 @@ interface FormState {
   phone: string;
   company: string;
   selectedCategories: string[]; // Multi-selection chips
-  budget: string;
+  budgetIndex: number; // index into the active currency's ranges
   timeline: string;
   description: string;
   website: string; // Honeypot anti-spam field
@@ -56,26 +57,9 @@ function validatePhone(phone: string): boolean {
   return /^[\d\+\-\(\)\s]{7,20}$/.test(phone.trim());
 }
 
-function detectIsIndia(): boolean {
-  try {
-    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-    const lang = typeof navigator !== 'undefined' ? navigator.language || '' : '';
-    return tz.includes('Kolkata') || tz.includes('Calcutta') || lang.toLowerCase().includes('in');
-  } catch {
-    return false;
-  }
-}
-
 export const InquiryForm: React.FC = () => {
-  const [currency, setCurrency] = useState<'USD' | 'INR'>('USD');
-
-  // Auto-detect visitor location on initial mount
-  useEffect(() => {
-    if (detectIsIndia()) {
-      setCurrency('INR');
-    }
-  }, []);
-
+  // Auto-detected (India → INR, elsewhere → USD); the visitor never has to pick.
+  const currency = useCurrency();
   const budgetOptions = currency === 'INR' ? BUDGET_RANGES_INR : BUDGET_RANGES_USD;
 
   const [formData, setFormData] = useState<FormState>({
@@ -84,21 +68,11 @@ export const InquiryForm: React.FC = () => {
     phone: '',
     company: '',
     selectedCategories: [CATEGORY_OPTIONS[1]], // Default multi-selection
-    budget: budgetOptions[1],
+    budgetIndex: 1,
     timeline: '1-2 Months',
     description: '',
     website: '', // Honeypot field
   });
-
-  // Handle Currency Toggle
-  const handleCurrencyChange = (newCurrency: 'USD' | 'INR') => {
-    setCurrency(newCurrency);
-    const newOptions = newCurrency === 'INR' ? BUDGET_RANGES_INR : BUDGET_RANGES_USD;
-    setFormData((prev) => ({
-      ...prev,
-      budget: newOptions[1],
-    }));
-  };
 
   // Toggle Category Multi-Selection
   const toggleCategory = (category: string) => {
@@ -148,6 +122,8 @@ export const InquiryForm: React.FC = () => {
   const isPhoneValid = validatePhone(formData.phone);
   const isDescriptionValid = formData.description.trim().length >= 10;
 
+  const budget = budgetOptions[Math.min(formData.budgetIndex, budgetOptions.length - 1)];
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage('');
@@ -175,6 +151,7 @@ export const InquiryForm: React.FC = () => {
         },
         body: JSON.stringify({
           ...formData,
+          budget,
           projectType: formData.selectedCategories.join(', '), // Format multi-selected categories for server
           _formRenderTime: formRenderTimeRef.current,
         }),
@@ -214,7 +191,7 @@ export const InquiryForm: React.FC = () => {
         <div className="p-4 rounded-lg bg-mc-surface-deep border border-mc-border text-left max-w-md mx-auto mb-6 font-mono text-xs text-mc-text-secondary">
           <div className="text-mc-orange mb-1 font-semibold">RECORD SUMMARY:</div>
           <div>Requirements: {formData.selectedCategories.join(', ')}</div>
-          <div>Estimated Budget: {formData.budget}</div>
+          <div>Estimated Budget: {budget}</div>
           <div>Timeline: {formData.timeline}</div>
           <div>Work Email: {formData.email}</div>
           {formData.company && <div>Company: {formData.company}</div>}
@@ -230,7 +207,7 @@ export const InquiryForm: React.FC = () => {
               phone: '',
               company: '',
               selectedCategories: [CATEGORY_OPTIONS[1], CATEGORY_OPTIONS[2]],
-              budget: budgetOptions[1],
+              budgetIndex: 1,
               timeline: '1-2 Months',
               description: '',
               website: '',
@@ -337,7 +314,7 @@ export const InquiryForm: React.FC = () => {
         </div>
       </div>
 
-      {/* Row 2: Project Budget (with USD/INR currency selector) & Timeline / Company */}
+      {/* Row 2: Project Budget (currency auto-detected) & Timeline / Company */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         {/* Project Budget */}
         <div>
@@ -345,43 +322,24 @@ export const InquiryForm: React.FC = () => {
             <label htmlFor="budget" className="block text-xs font-mono text-mc-text-secondary uppercase">
               Project Budget
             </label>
-            {/* Currency Selector */}
-            <div className="flex items-center gap-1 bg-mc-surface-deep p-0.5 rounded border border-mc-border">
-              <button
-                type="button"
-                onClick={() => handleCurrencyChange('USD')}
-                className={cn(
-                  'px-2 py-0.5 text-[10px] font-mono rounded transition-all',
-                  currency === 'USD'
-                    ? 'bg-mc-orange text-mc-bg font-bold'
-                    : 'text-mc-text-tertiary hover:text-mc-text'
-                )}
-              >
-                USD ($)
-              </button>
-              <button
-                type="button"
-                onClick={() => handleCurrencyChange('INR')}
-                className={cn(
-                  'px-2 py-0.5 text-[10px] font-mono rounded transition-all flex items-center gap-1',
-                  currency === 'INR'
-                    ? 'bg-mc-orange text-mc-bg font-bold'
-                    : 'text-mc-text-tertiary hover:text-mc-text'
-                )}
-              >
-                <Globe className="w-2.5 h-2.5 inline" /> INR (₹)
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={() => setCurrency(currency === 'INR' ? 'USD' : 'INR')}
+              className="-my-2 py-2 text-[11px] font-mono text-mc-text-tertiary hover:text-mc-orange underline-offset-4 hover:underline transition-colors cursor-pointer"
+            >
+              <span className="sr-only">Budget shown in {currency}. </span>
+              Show in {currency === 'INR' ? 'USD ($)' : 'INR (₹)'}
+            </button>
           </div>
           <select
             id="budget"
             name="budget"
-            value={formData.budget}
-            onChange={handleChange}
+            value={Math.min(formData.budgetIndex, budgetOptions.length - 1)}
+            onChange={(e) => setFormData((prev) => ({ ...prev, budgetIndex: Number(e.target.value) }))}
             className="w-full h-11 sm:h-12 px-4 rounded-lg bg-mc-surface-deep border border-mc-border text-sm text-mc-text focus:border-mc-orange focus:ring-1 focus:ring-mc-orange transition-all"
           >
-            {budgetOptions.map((range) => (
-              <option key={range} value={range}>
+            {budgetOptions.map((range, i) => (
+              <option key={range} value={i}>
                 {range}
               </option>
             ))}

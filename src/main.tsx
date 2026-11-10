@@ -6,6 +6,7 @@ import './video-theme.css';
 import './video-theme-v2.css';
 import './video-theme-v3.css';
 import './work-together.css';
+import './ownership.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

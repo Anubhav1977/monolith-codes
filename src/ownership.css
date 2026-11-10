@@ -1,0 +1,193 @@
+/* ======================================================================= */
+/* OwnershipSection — copy + interactive 3D pillar field (mobile-first)     */
+/* ======================================================================= */
+
+.own {
+  --own-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* Scene tokens, read by PillarField3D (fog/background, pillar body, idle cap). */
+  --own-scene-bg: var(--mc-bg);
+  --own-pillar: #1B2129;
+  --own-cap: #2A313B;
+
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column-reverse; /* mobile: copy first, scene below */
+  background: var(--mc-bg);
+  border-top: 1px solid var(--mc-border-soft);
+}
+
+[data-theme="light"] .own {
+  /* Light: an architectural paper model rather than inverted graphite. */
+  --own-pillar: #D9D5CB;
+  --own-cap: #C6C1B5;
+}
+
+/* ---- Copy ---- */
+.own__inner {
+  position: relative;
+  z-index: 1;
+  padding: 88px 16px 8px;
+  pointer-events: none;
+}
+
+.own__copy {
+  display: grid;
+  justify-items: start;
+  gap: 18px;
+  max-width: 520px;
+  pointer-events: auto;
+}
+
+.own__eyebrow {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mc-orange);
+}
+
+.own__title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(2.5rem, 10.5vw, 4.75rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  color: var(--mc-text-strong);
+}
+
+.own__accent { color: var(--mc-orange); }
+
+.own__old { display: inline; }
+
+.own__struck {
+  position: relative;
+  white-space: nowrap;
+}
+
+/* orange rule drawn through "templates." in sync with the scene */
+.own__strike {
+  position: absolute;
+  left: -0.04em;
+  right: 0.12em;
+  top: 54%;
+  height: max(3px, 0.07em);
+  background: var(--mc-orange);
+  transform-origin: 0 50%;
+}
+
+.own__lede {
+  margin: 0;
+  max-width: 40ch;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--mc-text-secondary);
+}
+
+.own__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  margin-top: 6px;
+  padding: 0 20px;
+  border-radius: 8px;
+  background: var(--mc-orange);
+  color: var(--mc-ink);
+  font-size: 15px;
+  font-weight: 500;
+  transition: background-color 160ms var(--own-ease);
+}
+
+.own__cta svg { width: 16px; height: 16px; transition: transform 160ms var(--own-ease); }
+.own__cta:hover { background: var(--mc-orange-highlight); }
+.own__cta:hover svg { transform: translate(2px, -2px); }
+.own__cta:focus-visible { outline: 2px solid var(--mc-orange); outline-offset: 3px; }
+
+/* ---- 3D stage ---- */
+.own__stage {
+  position: relative;
+  height: clamp(360px, 108vw, 540px);
+  /* placeholder glow while three.js loads / if WebGL is unavailable */
+  background: radial-gradient(ellipse 55% 45% at 50% 60%, var(--mc-orange-06), transparent 70%);
+}
+
+.own3d {
+  position: absolute;
+  inset: 0;
+  /* soft top/bottom edges so the scene dissolves into the page */
+  mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 82%, transparent 100%);
+}
+
+.own3d__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y; /* vertical swipes scroll the page, horizontal ones rotate */
+  cursor: grab;
+}
+
+.own3d[data-dragging] .own3d__canvas { cursor: grabbing; }
+
+.own__hint {
+  position: absolute;
+  left: 16px; /* mobile: bottom-left, clear of the floating WhatsApp button */
+  bottom: 20px;
+  margin: 0;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mc-text-tertiary);
+  pointer-events: none;
+}
+
+.own__hint--fine { display: none; }
+
+@media (hover: hover) and (pointer: fine) {
+  .own__hint--fine { display: inline; }
+  .own__hint--touch { display: none; }
+}
+
+/* ---- Tablet ---- */
+@media (min-width: 640px) {
+  .own__inner { padding: 112px 32px 8px; }
+  .own__stage { height: clamp(460px, 80vw, 620px); }
+}
+
+/* ---- Desktop: scene fills the right side, copy overlays the left ---- */
+@media (min-width: 1024px) {
+  .own {
+    display: block;
+    min-height: min(100svh, 880px);
+  }
+  .own__inner {
+    display: flex;
+    align-items: center;
+    max-width: 1280px;
+    min-height: min(100svh, 880px);
+    margin: 0 auto;
+    padding: 120px 40px;
+  }
+  .own__copy { gap: 24px; }
+  .own__stage {
+    position: absolute;
+    inset: 0 0 0 28%;
+    height: auto;
+  }
+  .own3d {
+    mask-image:
+      linear-gradient(90deg, transparent 0%, #000 22%),
+      linear-gradient(180deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    mask-composite: intersect;
+  }
+  .own__hint { left: 50%; bottom: 32px; translate: -50% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .own__cta, .own__cta svg { transition: none; }
+  .own__hint { display: none; }
+}
