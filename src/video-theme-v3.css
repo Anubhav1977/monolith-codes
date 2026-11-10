@@ -69,8 +69,6 @@
 [data-theme="light"] #vt-hx stop:last-child { stop-color: #E84A00; }
 [data-theme="light"] .vt-helix { mix-blend-mode: normal; }
 [data-theme="light"] .vt-horizon::after { background: var(--mc-bg); box-shadow: 0 -30px 120px rgba(255,107,0,.3), inset 0 40px 100px rgba(255,107,0,.1); }
-[data-theme="light"] .vt-talk__word { color: #111315; }
-[data-theme="light"] .vt-talk__blobs i { opacity: .9; }
 [data-theme="light"] .vt-spot { background: linear-gradient(180deg, rgba(255,107,0,.22), rgba(255,107,0,.05) 70%, transparent); }
 
 /* How it works */

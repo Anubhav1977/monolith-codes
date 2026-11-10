@@ -33,6 +33,10 @@
     --mc-orange-65: rgba(255, 107, 0, 0.65);
 
     --mc-system-green: #3FB950;
+
+    /* Theme-invariant brand ink/paper (for surfaces that stay the same in both themes) */
+    --mc-ink: #080A0C;
+    --mc-paper: #F4F3EE;
   }
 
   [data-theme="light"] {

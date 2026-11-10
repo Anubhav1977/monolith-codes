@@ -6,11 +6,6 @@ export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <>
-    <div className="vt-talk" aria-hidden="true">
-      <div className="vt-talk__blobs"><i /><i /><i /><i /></div>
-      <h2 className="vt-talk__word">Let's Talk</h2>
-    </div>
     <footer className="pt-24 pb-0 bg-mc-bg border-t border-mc-border overflow-hidden select-none">
       <div className="max-w-340 mx-auto px-6 md:px-10">
         {/* Main Footer Links Grid */}
@@ -239,6 +234,5 @@ export const Footer: React.FC = () => {
         </p>
       </div>
     </footer>
-    </>
   );
 };

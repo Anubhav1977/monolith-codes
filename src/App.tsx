@@ -16,6 +16,7 @@ import { TeamSection } from '@/sections/TeamSection';
 import { FaqSection } from '@/sections/FaqSection';
 import { EditorialSection } from '@/sections/EditorialSection';
 import { InquirySection } from '@/sections/InquirySection';
+import { WorkTogetherSection } from '@/sections/WorkTogetherSection';
 import { Footer } from '@/sections/Footer';
 import { StatsScatter } from '@/components/StatsScatter';
 import { IntroSplit } from '@/components/IntroSplit';
@@ -213,6 +214,9 @@ export const App: React.FC = () => {
 
           {/* 10 Start a Project / Inquiry */}
           <InquirySection />
+
+          {/* 11 Closing CTA — Let's work together */}
+          <WorkTogetherSection />
         </main>
 
         {/* Studio Footer with Giant Wordmark */}
