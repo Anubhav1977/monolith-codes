@@ -22,6 +22,7 @@ import {
   GitFork,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { goToSection } from '@/lib/navigation';
 
 interface StackFeature {
   icon: React.ReactNode;
@@ -288,7 +289,7 @@ export const ProductStackSection: React.FC = () => {
   };
 
   const scrollToProcess = () => {
-    document.getElementById('process')?.scrollIntoView({ behavior: 'smooth' });
+    goToSection('process'); // lives on the pricing page
   };
 
   return (

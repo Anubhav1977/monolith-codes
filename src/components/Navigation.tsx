@@ -3,6 +3,7 @@ import { BrandLockup } from './BrandLockup';
 import { ThemeToggle } from './ThemeToggle';
 import { Menu, X, ArrowUpRight, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { goToSection } from '@/lib/navigation';
 
 interface SubNavItem {
   label: string;
@@ -90,7 +91,7 @@ export const Navigation: React.FC = () => {
   const scrollToInquiry = () => {
     setMobileMenuOpen(false);
     setActiveDropdown(null);
-    document.getElementById('inquiry')?.scrollIntoView({ behavior: 'smooth' });
+    goToSection('inquiry');
   };
 
   const toggleMobileGroup = (label: string) => {

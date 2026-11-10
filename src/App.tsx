@@ -9,9 +9,8 @@ import { ProductStackSection } from '@/sections/ProductStackSection';
 import { SelectedWorkSection } from '@/sections/SelectedWorkSection';
 import { CapabilitiesSection } from '@/sections/CapabilitiesSection';
 import { TechnicalProofSection } from '@/sections/TechnicalProofSection';
-import { ProcessSection } from '@/sections/ProcessSection';
 import { TestimonialsSection } from '@/sections/TestimonialsSection';
-import { PricingSection } from '@/sections/PricingSection';
+import { PricingTeaser } from '@/sections/PricingTeaser';
 import { TeamSection } from '@/sections/TeamSection';
 import { FaqSection } from '@/sections/FaqSection';
 import { EditorialSection } from '@/sections/EditorialSection';
@@ -25,32 +24,30 @@ import { WhatsAppButton } from '@/components/WhatsAppButton';
 import { PrivacyPolicy } from '@/pages/PrivacyPolicy';
 import { AboutUs } from '@/pages/AboutUs';
 import { TermsOfUse } from '@/pages/TermsOfUse';
+import { PricingPage } from '@/pages/PricingPage';
 import { applyPageMeta, PAGE_META } from '@/components/Seo';
 
+type Route = 'home' | 'privacy' | 'terms' | 'about' | 'pricing';
+
+/** Hash → page. Unknown hashes stay on the current page if it has that anchor, else go home. */
+function routeForHash(hash: string, current: Route): Route {
+  if (hash.startsWith('#privacy')) return 'privacy';
+  if (hash.startsWith('#terms')) return 'terms';
+  if (hash.startsWith('#about')) return 'about';
+  if (hash === '#pricing' || hash === '#process') return 'pricing';
+  const id = hash.slice(1);
+  if (id && document.getElementById(id)) return current; // in-page anchor (e.g. skip link)
+  return 'home';
+}
+
 export const App: React.FC = () => {
-  const [currentRoute, setCurrentRoute] = useState<'home' | 'privacy' | 'terms' | 'about'>(() => {
+  const [currentRoute, setCurrentRoute] = useState<Route>(() => {
     if (typeof window === 'undefined') return 'home';
-    const hash = window.location.hash;
-    if (hash.startsWith('#privacy')) return 'privacy';
-    if (hash.startsWith('#terms')) return 'terms';
-    if (hash.startsWith('#about')) return 'about';
-    return 'home';
+    return routeForHash(window.location.hash, 'home');
   });
 
   useEffect(() => {
-    const handleHash = () => {
-      const hash = window.location.hash;
-      if (hash.startsWith('#privacy')) {
-        setCurrentRoute('privacy');
-      } else if (hash.startsWith('#terms')) {
-        setCurrentRoute('terms');
-      } else if (hash.startsWith('#about')) {
-        setCurrentRoute('about');
-      } else {
-        setCurrentRoute('home');
-      }
-    };
-
+    const handleHash = () => setCurrentRoute((cur) => routeForHash(window.location.hash, cur));
     window.addEventListener('hashchange', handleHash);
     return () => window.removeEventListener('hashchange', handleHash);
   }, []);
@@ -93,12 +90,13 @@ export const App: React.FC = () => {
     return () => window.removeEventListener('pointermove', onMove);
   }, []);
 
-  // Coming back to home from About/Privacy/Terms via a section link (e.g. #work): scroll once home has rendered
+  // Arriving on home / pricing via a section link (e.g. #work, #process): scroll once the page has rendered
   useEffect(() => {
-    if (currentRoute !== 'home') return;
+    if (currentRoute !== 'home' && currentRoute !== 'pricing') return;
     const id = window.location.hash.replace('#', '');
-    if (!id) return;
-    const t = window.setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }), 400); // scrollToHashOnHome
+    if (currentRoute === 'pricing') window.scrollTo({ top: 0 }); // new page starts at its top
+    if (!id || id === 'pricing') return;
+    const t = window.setTimeout(() => document.getElementById(id)?.scrollIntoView(), 400); // cross-page arrival: jump, don't scroll the whole page
     return () => window.clearTimeout(t);
   }, [currentRoute]);
 
@@ -130,6 +128,8 @@ export const App: React.FC = () => {
       )}
 
       {currentRoute === 'about' && <AboutUs onBackToHome={navigateToHome} />}
+
+      {currentRoute === 'pricing' && <PricingPage />}
 
       {currentRoute === 'terms' && (
         <TermsOfUse
@@ -198,11 +198,8 @@ export const App: React.FC = () => {
           {/* Client Testimonials */}
           <TestimonialsSection />
 
-          {/* 07 Engineering Process */}
-          <ProcessSection />
-
-          {/* 08 Pricing & Tiers (Launch, Grow, Build) */}
-          <PricingSection />
+          {/* 07 Pricing teaser — full tiers, process and terms live on the Pricing page (#pricing) */}
+          <PricingTeaser />
 
           {/* 08 The People Behind The Systems */}
           <TeamSection />

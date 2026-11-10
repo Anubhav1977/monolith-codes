@@ -33,7 +33,7 @@ header nav[aria-label="Main Navigation"] > a, header nav[aria-label="Main Naviga
 .vt-head > div { width: 100%; max-width: 820px; }
 .vt-head > div:first-child { justify-content: center; }
 .vt-head p { margin-inline: auto; }
-.vt-head h2 { font-size: clamp(2.2rem, 4.6vw, 4.2rem) !important; line-height: 1.04 !important; letter-spacing: -.05em !important; font-weight: 400 !important; }
+.vt-head h2, .vt-head h1 { font-size: clamp(2.2rem, 4.6vw, 4.2rem) !important; line-height: 1.04 !important; letter-spacing: -.05em !important; font-weight: 400 !important; }
 
 /* Stats like the video: boxed cells on hairline grid */
 .vt-stats__grid { max-width: 920px; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid rgba(244,243,238,.07); padding-bottom: 210px; }
@@ -168,7 +168,7 @@ header nav[aria-label="Main Navigation"] > * { align-self: center; }
 
 /* Technical Proof header: compact two-line title, switcher below */
 .vt-head--compact > div { max-width: 1000px; }
-.vt-head--compact h2 { font-size: clamp(1.8rem, 3.4vw, 3.1rem) !important; line-height: 1.08 !important; white-space: normal; }
+.vt-head--compact h2, .vt-head--compact h1 { font-size: clamp(1.8rem, 3.4vw, 3.1rem) !important; line-height: 1.08 !important; white-space: normal; }
 .vt-head--compact p { max-width: 560px; }
 
 /* Process: card deck + livelier ribbon + steps aligned to top */

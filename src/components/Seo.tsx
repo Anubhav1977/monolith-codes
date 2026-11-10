@@ -37,7 +37,7 @@ export const applyPageMeta = ({ title, description }: PageMeta) => {
   setMeta('meta[name="twitter:description"]', 'content', description);
 };
 
-export const PAGE_META: Record<'home' | 'privacy' | 'terms' | 'about', PageMeta> = {
+export const PAGE_META: Record<'home' | 'privacy' | 'terms' | 'about' | 'pricing', PageMeta> = {
   home: {
     title: 'MONOLITH CODES | Custom Software Development Studio',
     description:
@@ -52,6 +52,11 @@ export const PAGE_META: Record<'home' | 'privacy' | 'terms' | 'about', PageMeta>
     title: 'Terms of Use | MONOLITH CODES',
     description:
       'The terms that govern access to and use of the MONOLITH CODES website and its project inquiry tools.',
+  },
+  pricing: {
+    title: 'Pricing & Process | MONOLITH CODES',
+    description:
+      'Starting prices for custom websites, web apps and enterprise systems, how our engineering process works, and our payment and delivery terms.',
   },
   about: {
     title: 'About MONOLITH CODES | Software Engineering Studio & Team',
