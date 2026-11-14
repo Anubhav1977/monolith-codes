@@ -135,3 +135,39 @@ header.fixed a[aria-label^="MONOLITH"], header.fixed > div > div:last-child { bo
   .gateway-hero__scroll { display: none; }
   .gateway-hero__status { left: 20px; bottom: 24px; max-width: calc(100% - 110px); }
 }
+
+/* ── 404 page: big status, single-ring search, proximity block field ───────── */
+.nf-title { margin: 0; display: grid; gap: 4px; }
+.nf-code {
+  display: block; font: 500 clamp(7rem, 22vw, 15rem)/.82 var(--font-sans, sans-serif); letter-spacing: -.07em;
+  background: linear-gradient(170deg, var(--mc-text-strong) 35%, var(--mc-orange) 130%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.nf-label { display: block; font: 500 clamp(1.6rem, 3.4vw, 2.6rem)/1.1 var(--font-sans, sans-serif); letter-spacing: -.03em; color: var(--mc-text-strong); }
+
+.nf-search { display: flex; align-items: center; gap: 12px; height: 48px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--mc-border); background: var(--mc-surface-deep); transition: border-color .16s ease, box-shadow .16s ease; }
+.nf-search:focus-within { border-color: var(--mc-orange); box-shadow: 0 0 0 3px color-mix(in srgb, var(--mc-orange) 22%, transparent); }
+.nf-search input { flex: 1; min-width: 0; height: 100%; border: 0; background: transparent; font-size: 14px; color: var(--mc-text); }
+.nf-search input::placeholder { color: var(--mc-text-tertiary); }
+/* One focus ring only: the wrapper shows it, so the input itself must not (overrides the global *:focus-visible). */
+.nf-search input:focus, .nf-search input:focus-visible { outline: none; }
+.nf-search input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+
+.nf-field { display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: 8px; touch-action: pan-y; }
+.nf-block, .nf-missing { aspect-ratio: 1; border-radius: 6px; }
+.nf-block {
+  --heat: 0;
+  background: linear-gradient(160deg, var(--mc-elevated), var(--mc-surface-deep));
+  border: 1px solid color-mix(in srgb, var(--mc-orange) calc(var(--heat) * 85%), var(--mc-border));
+  box-shadow: 0 calc(var(--heat) * 10px) calc(var(--heat) * 22px) color-mix(in srgb, var(--mc-orange) calc(var(--heat) * 30%), transparent);
+  transform: translateY(calc(var(--heat) * -6px));
+  transition: transform .22s ease-out, border-color .22s ease-out, box-shadow .22s ease-out;
+}
+.nf-missing { display: grid; place-items: center; min-width: 0; border: 1px dashed var(--mc-orange); color: var(--mc-orange); font: 500 18px var(--font-mono, monospace); background: color-mix(in srgb, var(--mc-orange) 6%, transparent); animation: nf-pulse 2.6s ease-in-out infinite; transition: background .2s ease, transform .2s ease; }
+.nf-missing:hover, .nf-missing:focus-visible { background: color-mix(in srgb, var(--mc-orange) 16%, transparent); transform: scale(1.04); }
+@keyframes nf-pulse { 50% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--mc-orange) 14%, transparent); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .nf-missing { animation: none; }
+  .nf-block, .nf-missing { transition: none; }
+}
