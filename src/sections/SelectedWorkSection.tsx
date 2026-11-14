@@ -3,86 +3,9 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpRight, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ScrollStage, SectionSpotlight } from '@/components/ScrollStage';
+import { CASE_STUDIES } from '@/content/work';
 
-interface CaseStudy {
-  id: string;
-  index: string;
-  category: string;
-  title: string;
-  clientContext: string;
-  problem: string;
-  solution: string;
-  metrics: { label: string; value: string }[];
-  stack: string[];
-  /** Project picture, e.g. '/assets/work/erp.jpg'. Falls back to a gradient if omitted. */
-  image?: string;
-}
-
-const CASE_STUDIES: CaseStudy[] = [
-  {
-    id: 'niketana-furniture',
-    index: 'CASE / 01',
-    category: 'CORPORATE WEBSITE & E-COMMERCE',
-    title: 'Niketana Modular Furniture Website',
-    clientContext: 'Niketana Furniture',
-    problem: '',
-    solution: 'A modern and premium website designed for Niketana Furniture, showcasing modular office furniture, workstations, and workspace solutions. Features an elegant UI, product categories, interactive project galleries, custom enquiry functionality, and a responsive browsing experience tailored for businesses.',
-    metrics: [],
-    stack: ['React.js', 'JavaScript', 'Tailwind CSS', 'Node.js', 'Cloudinary', 'REST API', 'Vercel'],
-    image: '/assets/work/niketana.webp',
-  },
-  {
-    id: 'saas-analytics',
-    index: 'CASE / 02',
-    category: 'PRODUCT & SAAS ENGINEERING',
-    title: 'High-Throughput Financial Telemetry & Billing Dashboard',
-    clientContext: 'Fintech Software Startup',
-    problem: 'Existing dashboard crashed under high concurrency during market open, causing customer churn and delayed metric updates.',
-    solution: 'Re-architected the frontend telemetry streaming pipeline using WebSockets and virtualized data tables capable of rendering 10,000+ live transactions per second.',
-    metrics: [
-      { label: 'Concurrency', value: '10k/sec' },
-      { label: 'Latency', value: '18ms' },
-      { label: 'Uptime', value: '99.99%' },
-    ],
-    stack: ['React', 'WebSockets', 'Tailwind v4', 'Node.js Gateway', 'TimescaleDB'],
-  },
-  {
-    id: 'estatepro-app',
-    index: 'CASE / 03',
-    category: 'MOBILE APP & REAL ESTATE',
-    title: 'EstatePro Real Estate Mobile App',
-    clientContext: 'EstatePro',
-    problem: '',
-    solution: 'A modern real estate mobile application UI designed to simplify property buying, renting, and investment. Features include premium property listings, advanced search filters, detailed property views, virtual tours, AI-powered property recommendations, and investment tools, delivering a seamless property discovery experience.',
-    metrics: [],
-    stack: ['React Native', 'TypeScript', 'Node.js', 'Express.js', 'MongoDB', 'REST API', 'Firebase Auth'],
-    image: '/assets/work/estatepro.webp',
-  },
-  {
-    id: 'renteasee',
-    index: 'CASE / 04',
-    category: 'RENTAL PLATFORM & REAL ESTATE',
-    title: 'RentEasee Rental Property Platform',
-    clientContext: 'RentEasee',
-    problem: '',
-    solution: 'A modern rental property platform designed to simplify the process of finding and renting homes. Features verified property listings, advanced search filters, tenant and owner dashboards, zero-brokerage options, direct owner communication, property management, and digital rental support with a seamless user experience.',
-    metrics: [],
-    stack: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'REST API', 'JWT Auth', 'Tailwind CSS', 'Vercel'],
-    image: '/assets/work/renteasee.webp',
-  },
-  {
-    id: 'hartwell-3d',
-    index: 'CASE / 05',
-    category: 'REAL ESTATE & 3D EXPERIENCE',
-    title: 'Immersive 3D Real Estate Website',
-    clientContext: 'Hartwell & Co.',
-    problem: '',
-    solution: 'An immersive 3D real estate website featuring interactive property visualization, modern architectural design, and elegant UI/UX. Built to deliver a premium property browsing experience with detailed layouts, lifestyle-focused sections, and smooth navigation.',
-    metrics: [],
-    stack: ['React', 'TypeScript', 'PostgreSQL', 'Tailwind'],
-    image: '/assets/work/hartwell.webp',
-  },
-];
+/** Case-study data lives in src/content/work.ts (shared with /work pages, schema and sitemap). */
 
 const GRADIENTS = [
   'from-[#3b1d0a] via-[#7a3410] to-[#ff6b00]',
@@ -169,7 +92,7 @@ export const SelectedWorkSection: React.FC = () => {
               const isActive = o === 0;
               return (
                 <motion.article
-                  key={item.id}
+                  key={item.slug}
                   onClick={() => (isActive ? setOpen(true) : setActive(i))}
                   whileHover={isActive ? { y: -14 } : undefined}
                   initial={false}
@@ -190,7 +113,7 @@ export const SelectedWorkSection: React.FC = () => {
                 >
                   <div className={cn('relative h-37.5 overflow-hidden border-b border-mc-border bg-linear-to-br', GRADIENTS[i % GRADIENTS.length])}>
                     {item.image ? (
-                      <img src={item.image} alt={item.title} loading="lazy" decoding="async" draggable={false} className="h-full w-full object-cover" />
+                      <img src={item.image.src} width={item.image.width} height={item.image.height} alt={item.image.alt} loading="lazy" decoding="async" draggable={false} className="h-full w-full object-cover" />
                     ) : (
                       <span className="absolute inset-0 grid place-items-center font-mono text-5xl font-semibold text-white/25">
                         {item.index.split('/ ')[1]}
@@ -205,7 +128,7 @@ export const SelectedWorkSection: React.FC = () => {
                     <h3 className="mt-1.5 font-sans text-[18px] font-medium leading-tight tracking-tight text-mc-text-strong line-clamp-2">
                       {item.title}
                     </h3>
-                    <div className="mt-1 font-mono text-[11px] text-mc-text-tertiary">Client: {item.clientContext}</div>
+                    <div className="mt-1 font-mono text-[11px] text-mc-text-tertiary">Client: {item.client}</div>
 
                     <h4 className="mt-3 font-mono text-[10px] uppercase text-mc-orange">About the project:</h4>
                     <p className="mt-1 font-sans text-[12px] leading-snug text-mc-text-body line-clamp-2">{item.solution}</p>
@@ -247,7 +170,7 @@ export const SelectedWorkSection: React.FC = () => {
             <div className="flex items-center gap-2">
               {CASE_STUDIES.map((c, i) => (
                 <button
-                  key={c.id}
+                  key={c.slug}
                   onClick={() => setActive(i)}
                   aria-label={`Go to project ${i + 1}`}
                   aria-current={i === active ? 'true' : undefined}
@@ -302,7 +225,7 @@ export const SelectedWorkSection: React.FC = () => {
 
                 <div className={cn('relative min-h-65 lg:min-h-130 bg-linear-to-br', GRADIENTS[active % GRADIENTS.length])}>
                   {c.image ? (
-                    <img src={c.image} alt={c.title} decoding="async" draggable={false} className="absolute inset-0 h-full w-full object-cover" />
+                    <img src={c.image.src} width={c.image.width} height={c.image.height} alt={c.image.alt} decoding="async" draggable={false} className="absolute inset-0 h-full w-full object-cover" />
                   ) : (
                     <span className="absolute inset-0 grid place-items-center font-mono text-7xl font-semibold text-white/25">
                       {c.index.split('/ ')[1]}
@@ -313,7 +236,7 @@ export const SelectedWorkSection: React.FC = () => {
                 <div className="flex flex-col p-7 md:p-10">
                   <div className="font-mono text-xs uppercase text-mc-orange">{c.index} • {c.category}</div>
                   <h3 className="mt-3 text-2xl md:text-3xl font-sans font-medium text-mc-text-strong leading-tight">{c.title}</h3>
-                  <div className="mt-2 font-mono text-xs text-mc-text-tertiary">Client: {c.clientContext}</div>
+                  <div className="mt-2 font-mono text-xs text-mc-text-tertiary">Client: {c.client}</div>
 
                   <h4 className="mt-7 font-mono text-xs uppercase text-mc-orange">About the project</h4>
                   <p className="mt-2 text-sm md:text-[15px] leading-relaxed text-mc-text-body">{c.solution}</p>

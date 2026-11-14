@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X } from 'lucide-react';
+import { SITE } from '@/lib/site';
 
 export const WhatsAppButton: React.FC = () => {
   const [showTooltip, setShowTooltip] = useState(false);
-
-  const openWhatsApp = () => {
-    const phoneNumber = '9560693524'; // 
-    const text = encodeURIComponent("Hello MONOLITH CODES, I'd like to discuss a custom software project.");
-    window.open(`https://wa.me/${phoneNumber}?text=${text}`, '_blank');
-  };
 
   return (
     <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3 pointer-events-auto select-none">
@@ -46,8 +41,10 @@ export const WhatsAppButton: React.FC = () => {
       </AnimatePresence>
 
       {/* Floating Action Button */}
-      <motion.button
-        onClick={openWhatsApp}
+      <motion.a
+        href={SITE.whatsappWithText}
+        target="_blank"
+        rel="noopener noreferrer"
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
         onFocus={() => setShowTooltip(true)}
@@ -58,7 +55,7 @@ export const WhatsAppButton: React.FC = () => {
         aria-label="Contact us on WhatsApp"
       >
         <MessageCircle className="w-6 h-6 fill-current relative z-10" />
-      </motion.button>
+      </motion.a>
     </div>
   );
 };

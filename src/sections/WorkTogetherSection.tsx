@@ -2,9 +2,10 @@ import React, { useRef } from 'react';
 import { motion, useInView, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { ShapeField } from '@/components/ShapeField';
+import { SITE } from '@/lib/site';
 
 const HEADLINE = ['Let’s work', 'together!'];
-const EMAIL = 'studio@monolithcodes.com';
+const EMAIL = SITE.email;
 
 /** Splits the headline into masked characters; words stay unbreakable. */
 const Headline: React.FC = () => {

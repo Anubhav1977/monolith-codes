@@ -1,6 +1,7 @@
 import React from 'react';
 import { InquiryForm } from '@/components/InquiryForm';
 import { CheckSquare, Calendar, ArrowRight, ShieldCheck, Clock, Award } from 'lucide-react';
+import { SITE } from '@/lib/site';
 
 export const InquirySection: React.FC = () => {
   return (
@@ -92,7 +93,7 @@ export const InquirySection: React.FC = () => {
 
               {/* Call Booking Button */}
               <a
-                href="https://cal.com/monolithcodes/project-discussion"
+                href={SITE.calendar}
                 className="w-full py-3 px-4 rounded-lg bg-mc-orange text-mc-bg font-sans font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 hover:bg-mc-orange-highlight active:bg-mc-orange-dark transition-all shadow-md group"
               >
                 <Calendar className="w-4 h-4" />

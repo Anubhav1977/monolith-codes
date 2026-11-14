@@ -4,6 +4,7 @@ import { PageShell, Breadcrumbs } from '@/components/PageShell';
 import { ClosingCta, IndexLabel } from '@/components/ContentBlocks';
 import { getGuide, type GuideBlock } from '@/content/guides';
 import { getService } from '@/content/services';
+import { getFounder } from '@/lib/site';
 import type { PageProps } from './registry';
 
 const formatDate = (iso: string) =>
@@ -63,6 +64,7 @@ const Block: React.FC<{ block: GuideBlock }> = ({ block }) => {
 const GuidePage: React.FC<PageProps> = ({ route }) => {
   const g = getGuide(route.slug ?? '');
   if (!g) return null;
+  const author = getFounder(g.author);
   const services = g.relatedServices.map(getService).filter((s): s is NonNullable<typeof s> => !!s);
 
   return (
@@ -88,8 +90,22 @@ const GuidePage: React.FC<PageProps> = ({ route }) => {
               </h1>
               <p className="mt-6 text-lg md:text-xl text-mc-text-strong leading-relaxed max-w-3xl">{g.summary}</p>
               <p className="mt-5 font-mono text-xs text-mc-text-tertiary">
-                By the MONOLITH CODES engineering team · Updated <time dateTime={g.updated}>{formatDate(g.updated)}</time> ·{' '}
-                {g.readingMinutes} min read
+                By{' '}
+                {author ? (
+                  <a href="/about" rel="author" className="text-mc-text-secondary underline underline-offset-4 hover:text-mc-orange">
+                    {author.name}
+                  </a>
+                ) : (
+                  'the MONOLITH CODES engineering team'
+                )}
+                {author ? `, ${author.jobTitle}` : ''} · Published <time dateTime={g.published}>{formatDate(g.published)}</time>
+                {g.updated !== g.published && (
+                  <>
+                    {' '}
+                    · Updated <time dateTime={g.updated}>{formatDate(g.updated)}</time>
+                  </>
+                )}{' '}
+                · {g.readingMinutes} min read
               </p>
             </div>
           </div>

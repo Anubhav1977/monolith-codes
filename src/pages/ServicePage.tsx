@@ -12,6 +12,8 @@ import {
 } from '@/components/ContentBlocks';
 import { SERVICES, getService } from '@/content/services';
 import { GUIDES } from '@/content/guides';
+import { caseStudiesForService } from '@/content/work';
+import { STARTING_PRICES } from '@/lib/pricing';
 import { SITE } from '@/lib/site';
 import type { PageProps } from './registry';
 
@@ -20,6 +22,10 @@ const ServicePage: React.FC<PageProps> = ({ route }) => {
   if (!s) return null;
   const others = SERVICES.filter((o) => o.slug !== s.slug);
   const guides = GUIDES.filter((g) => g.relatedServices.includes(s.slug));
+  const work = caseStudiesForService(s.slug);
+  const price = s.tier ? STARTING_PRICES[s.tier] : null;
+  // Answer-first key facts: price, timeline, location — quotable by search and AI engines.
+  const keyFacts = [price ? `From ${price.USD} (${price.INR} in India)` : 'Quoted per project', `Timeline: ${s.timelineShort}`, SITE.footerLocationLine];
 
   return (
     <PageShell>
@@ -41,7 +47,7 @@ const ServicePage: React.FC<PageProps> = ({ route }) => {
               {s.h1}
             </h1>
             <p className="mt-6 text-lg md:text-xl text-mc-text-body leading-relaxed max-w-2xl">{s.summary}</p>
-            <p className="mt-4 font-mono text-xs text-mc-text-tertiary">{SITE.locationLine}</p>
+            <p className="mt-4 font-mono text-xs text-mc-text-tertiary">{keyFacts.join(' · ')}</p>
             <div className="mt-8">
               <CtaPair secondaryHref="#pricing-and-timeline" secondaryLabel="Price & timeline" />
             </div>
@@ -89,7 +95,7 @@ const ServicePage: React.FC<PageProps> = ({ route }) => {
         </ol>
         <p className="mt-6 text-sm text-mc-text-secondary">
           Every project follows our written-scope, milestone-based delivery model —{' '}
-          <a href="/pricing#process" className="text-mc-orange underline-offset-4 hover:underline">
+          <a href="/pricing#process" className="text-mc-orange underline underline-offset-4">
             see the full 7-stage process
           </a>
           .
@@ -125,18 +131,23 @@ const ServicePage: React.FC<PageProps> = ({ route }) => {
         </a>
       </RailSection>
 
-      {s.relatedWork.length > 0 && (
+      {work.length > 0 && (
         <RailSection index="07 / Related work" title="Related projects" id="related-work">
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {s.relatedWork.map((w) => (
-              <li key={w.title} className="rounded-lg border border-mc-border bg-mc-surface p-5 md:p-6">
-                <h3 className="text-lg font-sans font-medium text-mc-text-strong">{w.title}</h3>
-                <p className="mt-2 text-sm md:text-base text-mc-text-body leading-relaxed">{w.text}</p>
+            {work.map((w) => (
+              <li key={w.slug} className="relative rounded-lg border border-mc-border bg-mc-surface p-5 md:p-6 hover:border-mc-orange transition-colors">
+                <h3 className="text-lg font-sans font-medium text-mc-text-strong">
+                  <a href={`/work/${w.slug}`} className="after:absolute after:inset-0 hover:text-mc-orange transition-colors">
+                    {w.title}
+                  </a>
+                </h3>
+                <p className="mt-2 text-sm md:text-base text-mc-text-body leading-relaxed">{w.problem || w.solution}</p>
+                <p className="mt-3 font-mono text-[11px] text-mc-text-tertiary">Client: {w.client}</p>
               </li>
             ))}
           </ul>
-          <a href="/#work" className="mt-6 inline-flex min-h-11 items-center gap-1.5 text-mc-orange font-medium hover:underline underline-offset-4">
-            View selected work <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+          <a href="/work" className="mt-6 inline-flex min-h-11 items-center gap-1.5 text-mc-orange font-medium hover:underline underline-offset-4">
+            View all case studies <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
           </a>
         </RailSection>
       )}

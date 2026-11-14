@@ -8,7 +8,9 @@
     "build": "tsc && vite build && vite build --ssr src/entry-server.tsx && node scripts/prerender.mjs",
     "lint": "tsc --noEmit",
     "preview": "vite preview",
-    "indexnow": "node scripts/indexnow.mjs"
+    "seo:indexnow": "node scripts/indexnow.mjs",
+    "seo:crawl": "node scripts/seo-crawl.mjs",
+    "seo:og": "node scripts/og-images.mjs"
   },
   "dependencies": {
     "@types/nodemailer": "^8.0.1",

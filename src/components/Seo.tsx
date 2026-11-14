@@ -1,4 +1,4 @@
-import type { RouteDef } from '@/lib/routes';
+import { SITE_GRAPH, markdownPathFor, ogImageUrl, type RouteDef } from '@/lib/routes';
 import { SITE, absoluteUrl } from '@/lib/site';
 
 /**
@@ -13,8 +13,10 @@ const esc = (s: string) =>
 /** JSON for a <script> tag — `<` escaped so content can never close the script element. */
 export const jsonForScript = (data: unknown) => JSON.stringify(data).replace(/</g, '\\u003c');
 
-const routeGraph = (route: RouteDef) =>
-  route.jsonLd.length ? { '@context': 'https://schema.org', '@graph': route.jsonLd } : null;
+/** One connected @graph per page: site-wide entities (Organization, founders, WebSite) + page nodes. */
+const routeGraph = (route: RouteDef) => ({ '@context': 'https://schema.org', '@graph': [...SITE_GRAPH, ...route.jsonLd] });
+
+const ogFor = (route: RouteDef) => (route.meta.indexable === false ? SITE.ogImage : ogImageUrl(route.path));
 
 const robotsFor = (route: RouteDef) =>
   route.meta.indexable === false
@@ -38,7 +40,12 @@ export const routeHeadHtml = (route: RouteDef) => {
     `<meta property="og:description" content="${esc(description)}" />`,
     `<meta name="twitter:title" content="${esc(title)}" />`,
     `<meta name="twitter:description" content="${esc(description)}" />`,
-    graph ? `<script type="application/ld+json" id="route-jsonld">${jsonForScript(graph)}</script>` : '',
+    `<meta property="og:image" content="${ogFor(route)}" />`,
+    `<meta property="og:image:alt" content="${esc(title)}" />`,
+    `<meta name="twitter:image" content="${ogFor(route)}" />`,
+    `<meta name="twitter:image:alt" content="${esc(title)}" />`,
+    route.markdown ? `<link rel="alternate" type="text/markdown" title="Markdown version" href="${markdownPathFor(route.path)}" />` : '',
+    `<script type="application/ld+json" id="route-jsonld">${jsonForScript(graph)}</script>`,
   ];
   return lines.filter(Boolean).join('\n  ');
 };
@@ -66,6 +73,23 @@ export const applyRouteMeta = (route: RouteDef) => {
   upsertMeta('property', 'og:description', description);
   upsertMeta('name', 'twitter:title', title);
   upsertMeta('name', 'twitter:description', description);
+  upsertMeta('property', 'og:image', ogFor(route));
+  upsertMeta('property', 'og:image:alt', title);
+  upsertMeta('name', 'twitter:image', ogFor(route));
+  upsertMeta('name', 'twitter:image:alt', title);
+
+  let md = document.head.querySelector<HTMLLinkElement>('link[rel="alternate"][type="text/markdown"]');
+  if (!route.markdown) md?.remove();
+  else {
+    if (!md) {
+      md = document.createElement('link');
+      md.rel = 'alternate';
+      md.type = 'text/markdown';
+      md.title = 'Markdown version';
+      document.head.appendChild(md);
+    }
+    md.href = markdownPathFor(route.path);
+  }
 
   let link = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
   if (route.meta.indexable === false) {
@@ -81,10 +105,6 @@ export const applyRouteMeta = (route: RouteDef) => {
 
   const graph = routeGraph(route);
   let script = document.getElementById('route-jsonld') as HTMLScriptElement | null;
-  if (!graph) {
-    script?.remove();
-    return;
-  }
   if (!script) {
     script = document.createElement('script');
     script.type = 'application/ld+json';

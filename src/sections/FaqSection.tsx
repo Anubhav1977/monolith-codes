@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ChevronDown, HelpCircle, ArrowUpRight, MessageSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { HOME_FAQS as FAQS } from '@/content/faqs';
@@ -50,9 +50,11 @@ export const FaqSection: React.FC = () => {
                 )}
               >
                 <button
+                  id={`faq-question-${faq.id}`}
                   onClick={() => toggleFaq(faq.id)}
                   aria-expanded={isOpen}
-                  className="w-full p-6 text-left flex items-center justify-between gap-4 select-none cursor-pointer"
+                  aria-controls={`faq-answer-${faq.id}`}
+                  className="w-full p-6 text-left flex items-center justify-between gap-4 cursor-pointer"
                 >
                   <div className="flex items-center gap-4">
                     <span className="font-mono text-xs text-mc-orange shrink-0">
@@ -64,6 +66,7 @@ export const FaqSection: React.FC = () => {
                   </div>
 
                   <ChevronDown
+                    aria-hidden="true"
                     className={cn(
                       'w-5 h-5 text-mc-text-tertiary transition-transform duration-200 shrink-0',
                       isOpen && 'rotate-180 text-mc-orange'
@@ -71,21 +74,25 @@ export const FaqSection: React.FC = () => {
                   />
                 </button>
 
-                <AnimatePresence>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.24, ease: 'easeInOut' }}
-                      className="border-t border-mc-border-soft px-6 pb-6 pt-4"
-                    >
-                      <p className="font-sans text-sm md:text-base text-mc-text-body leading-relaxed pl-8">
-                        {faq.answer}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {/* Answers stay in the DOM (crawlers, FAQPage parity, find-in-page); collapsed ones are
+                    height 0 + hidden from assistive tech, so the visual accordion is unchanged. */}
+                <motion.div
+                  id={`faq-answer-${faq.id}`}
+                  role="region"
+                  aria-labelledby={`faq-question-${faq.id}`}
+                  aria-hidden={!isOpen}
+                  inert={!isOpen}
+                  initial={false}
+                  animate={isOpen ? { opacity: 1, height: 'auto' } : { opacity: 0, height: 0 }}
+                  transition={{ duration: 0.24, ease: 'easeInOut' }}
+                  className="overflow-hidden"
+                >
+                  <div className="border-t border-mc-border-soft px-6 pb-6 pt-4">
+                    <p className="font-sans text-sm md:text-base text-mc-text-body leading-relaxed pl-8">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </motion.div>
               </div>
             );
           })}

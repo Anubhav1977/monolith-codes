@@ -30,7 +30,7 @@ interface ProcessStage {
   };
 }
 
-const STAGES: ProcessStage[] = [
+export const STAGES: ProcessStage[] = [
   {
     step: '01',
     number: '01 / 07',
@@ -217,8 +217,10 @@ export const ProcessSection: React.FC = () => {
               return (
                 <button
                   key={st.step}
+                  id={`process-tab-${st.step}`}
                   role="tab"
                   aria-selected={isActive}
+                  aria-controls={`process-panel-${st.step}`}
                   onClick={() => go(i)}
                   className={cn(
                     'relative shrink-0 min-w-32 lg:min-w-0 overflow-hidden rounded-xl border px-4 py-3.5 text-left transition-all duration-300 cursor-pointer',
@@ -261,6 +263,9 @@ export const ProcessSection: React.FC = () => {
             <AnimatePresence mode="wait">
               <motion.div
                 key={active}
+                id={`process-panel-${stage.step}`}
+                role="tabpanel"
+                aria-labelledby={`process-tab-${stage.step}`}
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
@@ -322,6 +327,24 @@ export const ProcessSection: React.FC = () => {
                 </div>
               </motion.div>
             </AnimatePresence>
+
+            {/* Inactive stages: real tabpanels kept in the HTML (hidden) so every stage is crawlable
+                and the tab pattern is complete for assistive tech. No visual change. */}
+            {STAGES.map((st, i) =>
+              i === active ? null : (
+                <div key={st.step} id={`process-panel-${st.step}`} role="tabpanel" aria-labelledby={`process-tab-${st.step}`} hidden>
+                  <h3>
+                    Stage {st.number}: {st.title}
+                  </h3>
+                  <p>{st.summary}</p>
+                  <ul>
+                    {st.details.map((d) => (
+                      <li key={d}>{d}</li>
+                    ))}
+                  </ul>
+                </div>
+              ),
+            )}
 
             {/* Controls */}
             <div className="relative flex items-center justify-between border-t border-mc-border px-6 py-4 sm:px-9 lg:px-12">

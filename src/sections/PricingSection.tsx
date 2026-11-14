@@ -4,80 +4,8 @@ import { ArrowUpRight, CheckCircle2, ShieldCheck, Zap, Sparkles, ChevronDown } f
 import { cn } from '@/lib/utils';
 import { type Currency, setCurrency, useCurrency } from '@/lib/currency';
 import { STARTING_PRICES } from '@/lib/pricing';
+import { PRICING_TIERS, type PricingTier } from '@/content/pricing';
 import { goToSection } from '@/lib/navigation';
-
-interface PricingTier {
-  id: keyof typeof STARTING_PRICES;
-  name: string;
-  badge?: string;
-  tagline: string;
-  sprintTimeline: string;
-  retainerTimeline: string;
-  idealFor: string;
-  features: string[];
-  expandableDetails: string;
-  ctaText: string;
-  featured?: boolean;
-}
-
-const PRICING_TIERS: PricingTier[] = [
-  {
-    id: 'launch',
-    name: 'Launch',
-    tagline: 'High-conversion, bespoke web frontends & digital product foundations.',
-    sprintTimeline: '2 – 4 Weeks Scope',
-    retainerTimeline: 'Dedicated Sprint Cell',
-    idealFor: 'Businesses replacing slow templates with production-grade web experiences.',
-    features: [
-      '100% Custom React 19 & Tailwind v4 architecture',
-      'Performance tuned for good Core Web Vitals (LCP, INP, CLS)',
-      'Headless CMS or static data integration',
-      'Full responsive design & dark/light theme support',
-      '100% IP ownership & Git repository handoff',
-    ],
-    expandableDetails: 'Includes complete UX architecture, custom component library, SEO optimization, and sub-second performance tuning for high-converting marketing sites.',
-    ctaText: 'Start Launch Project',
-    featured: false,
-  },
-  {
-    id: 'grow',
-    name: 'Grow',
-    badge: 'MOST POPULAR',
-    tagline: 'Custom web applications, multi-tenant SaaS platforms & customer portals.',
-    sprintTimeline: '6 - 10 Weeks Scope',
-    retainerTimeline: 'Embedded Senior Team',
-    idealFor: 'Founders & growing companies building scalable custom software platforms.',
-    features: [
-      'Everything in Launch plus full-stack backend API',
-      'Multi-role auth, RBAC & audit-logged workflows',
-      'Real-time WebSocket telemetry & analytics dashboards',
-      'Stripe subscription & automated billing engine',
-      'AWS / Cloudflare CI/CD automated deployment',
-      '30-day post-launch hypercare & bug guarantee',
-    ],
-    expandableDetails: 'Designed for production applications handling live user accounts, subscription billing, real-time telemetry dashboards, and multi-tenant data security.',
-    ctaText: 'Start Grow Platform',
-    featured: true,
-  },
-  {
-    id: 'build',
-    name: 'Build',
-    tagline: 'Enterprise ERP/CRM systems, AI agent pipelines & studio cell teams.',
-    sprintTimeline: '10 - 16+ Weeks Scope',
-    retainerTimeline: 'Quarterly Dedicated Studio',
-    idealFor: 'Established enterprises requiring complex operational systems or dedicated sprint cells.',
-    features: [
-      'Bespoke ERP, CRM & inventory management engines',
-      'Custom REST/GraphQL API bridges & legacy SAP/Oracle sync',
-      'Pragmatic AI / LLM workflow & RAG document triage',
-      'Dedicated Senior React/Node studio engineering cell',
-      'Custom SLA, infrastructure hardening & security audit',
-    ],
-    expandableDetails: 'Bespoke enterprise engineering cell tailored to complex operational workflows, high-concurrency database queries, and legacy database migration.',
-    ctaText: 'Inquire for Enterprise Build',
-    featured: false,
-  },
-];
 
 interface PricingCardProps {
   tier: PricingTier;
@@ -260,8 +188,11 @@ export const PricingSection: React.FC = () => {
               <h1 className="text-3xl md:text-5xl font-sans font-medium text-mc-text-strong tracking-tight mb-2">
                 TRANSPARENT{' '}<br />ENGAGEMENT TIERS
               </h1>
+              {/* Answer-first summary (quotable by search and AI engines). REVIEW(owner): copy built from published prices/timelines. */}
               <p className="text-mc-text-body text-base md:text-lg max-w-xl">
-                Bespoke engineering structured for predictability. No hidden fees, no recurring theme licenses, 100% full IP handoff.
+                Custom websites start from $999 (₹12,999 in India) and take 2–4 weeks; web applications and SaaS MVPs start
+                from $2,499 (₹29,999) and take 6–10 weeks; ERP/CRM and AI systems are quoted per project. Every price is fixed
+                in a written proposal — no hidden fees, no recurring theme licences, 100% IP handoff.
               </p>
             </div>
 
@@ -295,6 +226,7 @@ export const PricingSection: React.FC = () => {
         </motion.div>
 
         {/* 3-Column Pricing Grid */}
+        <h2 className="sr-only">Pricing tiers: Launch, Grow and Build</h2>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-16">
           {PRICING_TIERS.map((tier, idx) => (
             <PricingCard

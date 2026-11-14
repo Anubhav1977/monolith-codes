@@ -2,12 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { SectionSpotlight } from '@/components/ScrollStage';
+import { TESTIMONIALS as TESTIMONIAL_CONTENT, type TestimonialContent } from '@/content/testimonials';
 
-interface Testimonial {
-  id: string;
-  quote: string;
-  company: string;
-  tagline: string;
+interface Testimonial extends TestimonialContent {
   tone: 'warm' | 'cool';
   /** Pile (stacked) pose */
   pile: { x: number; y: number; r: number };
@@ -17,58 +14,19 @@ const CARD_H = 440;
 const MH = 380; // card height on phones/tablets
 const MG = 16; // gap between cards on phones/tablets
 
-/**
- * Client quotes — confirmed real and approved for publication by the studio (Nov 2026).
- * TODO(content): add the quoted person's name and role to each entry (with their permission);
- * named attribution is a strong trust/E-E-A-T signal.
- */
-const TESTIMONIALS: Testimonial[] = [
-  {
-    id: 'niketana',
-    quote:
-      '“Monolith Codes rebuilt our entire online presence from scratch. The site finally feels as premium as our furniture, and the custom enquiry flow has brought in far more serious business leads than our old website ever did.”',
-    company: 'Niketana',
-    tagline: 'Modular Furniture Systems',
-    tone: 'warm',
-    pile: { x: -70, y: 70, r: -8 },
-  },
-  {
-    id: 'fintech',
-    quote:
-      '“Our dashboard used to freeze at market open. The new telemetry pipeline handles thousands of live updates without a hiccup, and the team communicated clearly through every sprint.”',
-    company: 'Fintech Startup',
-    tagline: 'Financial Telemetry & Billing',
-    tone: 'cool',
-    pile: { x: 0, y: 0, r: 2 },
-  },
-  {
-    id: 'estatepro',
-    quote:
-      '“They turned a rough idea into a polished mobile app. The property search, virtual tours and recommendations feel effortless — our early users keep praising how smooth the experience is.”',
-    company: 'EstatePro',
-    tagline: 'Real Estate Mobile App',
-    tone: 'warm',
-    pile: { x: 70, y: 40, r: 7 },
-  },
-  {
-    id: 'renteasee',
-    quote:
-      '“RentEasee needed a platform that owners and tenants would both actually enjoy using. Monolith delivered dashboards, verified listings and direct owner contact exactly as we pictured — on time and rock solid.”',
-    company: 'RentEasee',
-    tagline: 'Rental Property Platform',
-    tone: 'cool',
-    pile: { x: -40, y: 150, r: -5 },
-  },
-  {
-    id: 'hartwell',
-    quote:
-      '“The interactive 3D property experience set us apart overnight. Clients stay longer, explore every room and come to consultations already in love with the homes. Truly a premium result.”',
-    company: 'Hartwell & Co.',
-    tagline: 'Luxury Real Estate',
-    tone: 'warm',
-    pile: { x: 50, y: 170, r: 10 },
-  },
-];
+/** Visual pose per card; quotes and attribution live in src/content/testimonials.ts. */
+const POSES: Record<string, Pick<Testimonial, 'tone' | 'pile'>> = {
+  niketana: { tone: 'warm', pile: { x: -70, y: 70, r: -8 } },
+  fintech: { tone: 'cool', pile: { x: 0, y: 0, r: 2 } },
+  estatepro: { tone: 'warm', pile: { x: 70, y: 40, r: 7 } },
+  renteasee: { tone: 'cool', pile: { x: -40, y: 150, r: -5 } },
+  hartwell: { tone: 'warm', pile: { x: 50, y: 170, r: 10 } },
+};
+
+const TESTIMONIALS: Testimonial[] = TESTIMONIAL_CONTENT.map((t, i) => ({
+  ...t,
+  ...(POSES[t.id] ?? { tone: i % 2 ? 'cool' : 'warm', pile: { x: 0, y: i * 30, r: 0 } }),
+}));
 
 const QuoteMark: React.FC<{ className?: string }> = ({ className }) => (
   <svg viewBox="0 0 48 36" aria-hidden="true" className={className} fill="currentColor">
