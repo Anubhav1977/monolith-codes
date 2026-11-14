@@ -32,3 +32,6 @@ dist-server/
 
 # local SEO audit reports
 monolithcodes.com-audit/
+
+# SEO audit/report docs are tracked
+!seo/*.md
