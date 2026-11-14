@@ -5,6 +5,10 @@ import { IS_SERVER } from '@/lib/env';
  * Vercel Web Analytics + Speed Insights, loaded after the page is idle so they never compete with
  * first paint / LCP. Both scripts are served from this origin (/_vercel/…), so the CSP is unchanged.
  *
+ * Off until enabled: set VITE_VERCEL_ANALYTICS=true / VITE_VERCEL_SPEED_INSIGHTS=true (Vercel → Production env)
+ * after switching the products on in the Vercel dashboard — otherwise /_vercel/* scripts 404 and log
+ * console errors (Lighthouse Best Practices).
+ *
  * Conversion events (custom events need Web Analytics enabled in the Vercel project; see seo/SEO_REPORT.md):
  *   generate_lead     — inquiry form submitted successfully   { service, budget }
  *   book_call         — click on the cal.com booking link
@@ -17,10 +21,13 @@ import { IS_SERVER } from '@/lib/env';
 type EventProps = Record<string, string | number | boolean | null>;
 type AnalyticsModule = typeof import('@vercel/analytics');
 
+const ANALYTICS_ON = import.meta.env.PROD && import.meta.env.VITE_VERCEL_ANALYTICS === 'true';
+const SPEED_INSIGHTS_ON = import.meta.env.PROD && import.meta.env.VITE_VERCEL_SPEED_INSIGHTS === 'true';
+
 let loader: Promise<AnalyticsModule | null> | null = null;
 
 const load = () => {
-  if (IS_SERVER || !import.meta.env.PROD) return Promise.resolve(null);
+  if (IS_SERVER || !ANALYTICS_ON) return Promise.resolve(null);
   loader ??= import('@vercel/analytics')
     .then((m) => {
       m.inject({ mode: 'production', framework: 'react' });
@@ -48,7 +55,7 @@ export const initAnalytics = () => {
     typeof window.requestIdleCallback === 'function' ? window.requestIdleCallback(cb, { timeout: 4000 }) : setTimeout(cb, 2500);
   idle(() => {
     void load();
-    if (import.meta.env.PROD) {
+    if (SPEED_INSIGHTS_ON) {
       void import('@vercel/speed-insights').then((m) => m.injectSpeedInsights({ framework: 'react' })).catch(() => {});
     }
   });

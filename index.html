@@ -28,8 +28,10 @@
   <link rel="alternate" type="text/plain" title="LLM summary" href="/llms.txt" />
   <link rel="author" href="/humans.txt" />
 
-  <!-- Self-hosted primary font (latin) — preloaded to avoid late text swap -->
+  <!-- Self-hosted fonts (latin) — both families used above the fold are preloaded so they arrive before
+       first layout; otherwise the late Geist Mono swap forces a second full-page layout. -->
   <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin />
 
   <!-- Social (site-wide) -->
   <meta property="og:site_name" content="MONOLITH CODES" />
