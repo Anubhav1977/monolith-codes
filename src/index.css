@@ -22,7 +22,7 @@
     --mc-text: #F4F3EE;
     --mc-text-body: #C4C3BE;
     --mc-text-secondary: #9A9CA0;
-    --mc-text-tertiary: #70747A;
+    --mc-text-tertiary: #868A90; /* WCAG AA: ≥4.98:1 on every dark surface (was #70747A, 3.7–4.2:1) */
     --mc-text-disabled: #555A61;
 
     --mc-orange-06: rgba(255, 107, 0, 0.06);
@@ -55,8 +55,8 @@
     --mc-text-strong: #111315;
     --mc-text: #111315;
     --mc-text-body: #34373A;
-    --mc-text-secondary: #62666A;
-    --mc-text-tertiary: #7D8185;
+    --mc-text-secondary: #5A5E62; /* WCAG AA: ≥5.0:1 on every light surface (was #62666A, 4.4:1 on surface-deep) */
+    --mc-text-tertiary: #5E6266; /* WCAG AA: ≥4.7:1 on every light surface (was #7D8185, 3.0–3.6:1) */
     --mc-text-disabled: #A0A3A5;
 
     --mc-orange: #E85D00;

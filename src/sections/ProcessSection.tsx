@@ -319,7 +319,7 @@ export const ProcessSection: React.FC = () => {
                         <span className="hw-caret inline-block h-4 w-2 translate-y-1 bg-mc-orange/80" />
                       </p>
                     </div>
-                    <div className="flex items-center gap-2 border-t border-white/10 px-5 py-3 font-mono text-[11px] text-[#70747A]">
+                    <div className="flex items-center gap-2 border-t border-white/10 px-5 py-3 font-mono text-[11px] text-[#868A90]">
                       <span className="h-1.5 w-1.5 rounded-full bg-mc-system-green" />
                       Quality Gate: 100% Pass • Trace Execution: OK
                     </div>

@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react';
 import { Send, CheckCircle2, AlertCircle, Loader2, Check, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { setCurrency, useCurrency } from '@/lib/currency';
+import { track } from '@/lib/analytics';
+import { SITE } from '@/lib/site';
 
 interface FormState {
   name: string;
@@ -161,6 +163,8 @@ export const InquiryForm: React.FC = () => {
 
       if (response.ok && result.success) {
         setStatus('success');
+        // Conversion event — service + budget band only, never personal data.
+        track('generate_lead', { service: formData.selectedCategories.join(', ') || 'unspecified', budget: budget || 'unspecified', currency });
       } else {
         setStatus('error');
         setErrorMessage(
@@ -170,7 +174,7 @@ export const InquiryForm: React.FC = () => {
     } catch (err: any) {
       setStatus('error');
       setErrorMessage(
-        'Connection error while submitting inquiry. Please check your network or reach us directly at studio@monolithcodes.com.'
+        'Connection error while submitting inquiry. Please check your network or reach us directly at ' + SITE.email + '.'
       );
     }
   };
@@ -470,7 +474,7 @@ export const InquiryForm: React.FC = () => {
         <div className="text-xs font-mono text-mc-text-tertiary text-center sm:text-right">
           Prefer email?{' '}
           <a
-            href="mailto:studio@monolithcodes.com"
+            href={`mailto:${SITE.email}`}
             className="text-mc-text-strong underline underline-offset-4 hover:text-mc-orange transition-colors"
           >
             studio@monolithcodes.com
