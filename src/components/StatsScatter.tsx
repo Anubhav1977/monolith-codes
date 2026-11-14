@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { IS_SERVER } from '@/lib/env';
 import { motion, useInView, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from 'framer-motion';
 
 interface Stat { prefix?: string; value: number; suffix: string; label: string; }
 
 const STATS: Stat[] = [
-  { value: 99, suffix: '+', label: 'Core Web Vitals score' },
-  { prefix: '<', value: 200, suffix: 'ms', label: 'Total blocking time' },
+  { value: 99, suffix: '+', label: 'Lighthouse performance target' },
+  { prefix: '<', value: 200, suffix: 'ms', label: 'Total blocking time target' },
   { value: 100, suffix: '%', label: 'IP ownership — code is yours' },
   { value: 0, suffix: '', label: 'Templates or pre-made themes' },
 ];
@@ -20,7 +21,8 @@ const MOTION: { y: [number, number]; reveal: [number, number] }[] = [
 
 const Counter: React.FC<{ stat: Stat; active: boolean }> = ({ stat, active }) => {
   const reduce = useReducedMotion();
-  const [n, setN] = useState(reduce ? stat.value : 0);
+  // Prerendered HTML (no window) shows the real figure; the browser animates up to it.
+  const [n, setN] = useState(reduce || IS_SERVER ? stat.value : 0);
   useEffect(() => {
     if (reduce) { setN(stat.value); return; }
     if (!active) return;

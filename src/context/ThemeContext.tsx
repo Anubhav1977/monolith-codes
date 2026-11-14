@@ -21,7 +21,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         return stored;
       }
     } catch (e) {}
-    return 'dark';
+    return 'system'; // AGENTS.md §8: System is the default until the visitor picks Light or Dark
   });
 
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(() => {

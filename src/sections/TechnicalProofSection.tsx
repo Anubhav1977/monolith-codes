@@ -36,7 +36,7 @@ export const TechnicalProofSection: React.FC = () => {
           <div className="lg:col-span-9 flex flex-col items-center gap-8">
             <div>
               <h2 className="text-3xl md:text-4xl font-sans font-medium text-mc-text-strong tracking-tight mb-2">
-                CLEAR FOR FOUNDERS,<br />RIGOROUS FOR ENGINEERS
+                CLEAR FOR FOUNDERS,{' '}<br />RIGOROUS FOR ENGINEERS
               </h2>
               <p className="text-mc-text-body text-base max-w-xl">
                 Switch between the Scan Layer (business overview) and the Inspect Layer (code implementation details).

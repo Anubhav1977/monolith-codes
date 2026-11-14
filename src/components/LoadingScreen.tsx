@@ -5,11 +5,11 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
  * LoadingScreen — Premium first-load brand introduction.
  *
  * Sequence:
- *   1. Monolith mark rises into place with mechanical weight  (0 → 900ms)
- *   2. Orange edge-light sweep traces the logo edges            (600 → 1200ms)
- *   3. Wordmark reveals: MONOLITH then CODES                   (1000 → 1600ms)
- *   4. Tagline fades in                                         (1400 → 1700ms)
- *   5. Entire screen exits upward, revealing the website        (1800 → 2400ms)
+ *   1. Monolith mark rises into place                 (60ms)
+ *   2. Orange edge-light sweep traces the logo edges  (360ms)
+ *   3. Wordmark reveals: MONOLITH then CODES          (620ms)
+ *   4. Tagline fades in                               (860ms)
+ *   5. Screen exits upward, revealing the website     (1150 → ~1600ms)
  *
  * Guards:
  *   - sessionStorage prevents replay within a browser session
@@ -42,7 +42,7 @@ export const LoadingScreen: React.FC = () => {
       try {
         sessionStorage.setItem(SESSION_KEY, '1');
       } catch {}
-    }, 700);
+    }, 450);
   }, []);
 
   useEffect(() => {
@@ -51,18 +51,19 @@ export const LoadingScreen: React.FC = () => {
     // Reduced motion: show the brand for a brief moment then exit
     if (shouldReduceMotion) {
       setPhase('wordmark');
-      const t = setTimeout(beginExit, 800);
+      const t = setTimeout(beginExit, 500);
       return () => clearTimeout(t);
     }
 
     // Full animation timeline — paced for readability
     const timers: ReturnType<typeof setTimeout>[] = [];
 
-    timers.push(setTimeout(() => setPhase('logo-rise'), 100));
-    timers.push(setTimeout(() => setPhase('edge-light'), 900));
-    timers.push(setTimeout(() => setPhase('wordmark'), 1600));
-    timers.push(setTimeout(() => setPhase('tagline'), 2200));
-    timers.push(setTimeout(beginExit, 3600));
+    // Kept short (~1.6s total incl. exit): the intro is brand polish, not a gate in front of content.
+    timers.push(setTimeout(() => setPhase('logo-rise'), 60));
+    timers.push(setTimeout(() => setPhase('edge-light'), 360));
+    timers.push(setTimeout(() => setPhase('wordmark'), 620));
+    timers.push(setTimeout(() => setPhase('tagline'), 860));
+    timers.push(setTimeout(beginExit, 1150));
 
     return () => timers.forEach(clearTimeout);
   }, [shouldShow, shouldReduceMotion, beginExit]);
@@ -84,7 +85,7 @@ export const LoadingScreen: React.FC = () => {
           className="mc-loading-screen"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, y: '-4%' }}
-          transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+          transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
           role="status"
           aria-label="Loading MONOLITH CODES"
           aria-live="polite"

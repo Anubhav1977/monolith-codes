@@ -13,23 +13,18 @@ export const Footer: React.FC = () => {
           {/* Column 1 & 2: Brand Lockup & Studio Directive */}
           <div className="lg:col-span-2 space-y-4">
             <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                window.location.hash = '';
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
+              href="/"
               className="inline-block cursor-pointer group"
-              aria-label="MONOLITH CODES — Return to Top"
+              aria-label="MONOLITH CODES — home"
             >
               <BrandLockup variant="horizontal" size="lg" interactiveHover />
             </a>
             <p className="text-sm text-mc-text-secondary max-w-sm leading-relaxed font-sans">
-              MONOLITH CODES is a software engineering studio. We engineer custom web applications, SaaS platforms, mobile apps, ERP/CRM systems, and business workflow automation.
+              MONOLITH CODES is a custom software development studio based in India. We engineer websites, web applications, SaaS platforms, mobile apps, ERP/CRM systems and business automation for clients in India and worldwide.
             </p>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-mc-surface border border-mc-border text-xs font-mono text-mc-text-body">
               <span className="w-2 h-2 rounded-full bg-mc-system-green animate-pulse" />
-              <span>Available for Q3/Q4 Projects • WhatsApp Direct Support</span>
+              <span>Accepting new projects · India &amp; worldwide · WhatsApp direct support</span>
             </div>
 
             {/* Contact */}
@@ -62,15 +57,15 @@ export const Footer: React.FC = () => {
           {/* Column 3: Capabilities */}
           <div className="space-y-3 font-sans text-sm">
             <div className="font-mono text-xs text-mc-orange uppercase tracking-wider mb-2">
-              CAPABILITIES
+              SERVICES
             </div>
-            <ul className="space-y-2 text-mc-text-secondary">
-              <li><a href="#product-stack" className="hover:text-mc-text-strong transition-colors">Web Experiences</a></li>
-              <li><a href="#product-stack" className="hover:text-mc-text-strong transition-colors">Custom Web Apps</a></li>
-              <li><a href="#product-stack" className="hover:text-mc-text-strong transition-colors">SaaS Platforms</a></li>
-              <li><a href="#product-stack" className="hover:text-mc-text-strong transition-colors">Mobile Applications</a></li>
-              <li><a href="#product-stack" className="hover:text-mc-text-strong transition-colors">ERP & CRM Systems</a></li>
-              <li><a href="#product-stack" className="hover:text-mc-text-strong transition-colors">AI & Automation Solutions</a></li>
+            <ul className="text-mc-text-secondary">
+              <li><a href="/services/website-development" className="inline-flex min-h-11 items-center hover:text-mc-text-strong transition-colors">Website Development</a></li>
+              <li><a href="/services/web-application-development" className="inline-flex min-h-11 items-center hover:text-mc-text-strong transition-colors">Web Application Development</a></li>
+              <li><a href="/services/saas-development" className="inline-flex min-h-11 items-center hover:text-mc-text-strong transition-colors">SaaS Development</a></li>
+              <li><a href="/services/mobile-app-development" className="inline-flex min-h-11 items-center hover:text-mc-text-strong transition-colors">Mobile App Development</a></li>
+              <li><a href="/services/erp-crm-development" className="inline-flex min-h-11 items-center hover:text-mc-text-strong transition-colors">ERP & CRM Development</a></li>
+              <li><a href="/services/ai-automation" className="inline-flex min-h-11 items-center hover:text-mc-text-strong transition-colors">AI & Automation</a></li>
             </ul>
           </div>
 
@@ -79,13 +74,15 @@ export const Footer: React.FC = () => {
             <div className="font-mono text-xs text-mc-orange uppercase tracking-wider mb-2">
               STUDIO NAV
             </div>
-            <ul className="space-y-2 text-mc-text-secondary">
-              <li><a href="#why-custom" className="hover:text-mc-text-strong transition-colors">Why Custom Engineering</a></li>
-              <li><a href="#work" className="hover:text-mc-text-strong transition-colors">Selected Work & Proof</a></li>
-              <li><a href="#proof" className="hover:text-mc-text-strong transition-colors">Technical Proof</a></li>
-              <li><a href="#process" className="hover:text-mc-text-strong transition-colors">How We Work (7-Stage)</a></li>
-              <li><a href="#pricing" className="hover:text-mc-text-strong transition-colors">Pricing & Tiers</a></li>
-              <li><a href="#faq" className="hover:text-mc-text-strong transition-colors">Frequently Asked Questions</a></li>
+            <ul className="text-mc-text-secondary">
+              <li><a href="/#why-custom" className="inline-flex min-h-11 items-center hover:text-mc-text-strong transition-colors">Why Custom Engineering</a></li>
+              <li><a href="/#work" className="inline-flex min-h-11 items-center hover:text-mc-text-strong transition-colors">Selected Work & Proof</a></li>
+              <li><a href="/#proof" className="inline-flex min-h-11 items-center hover:text-mc-text-strong transition-colors">Technical Proof</a></li>
+              <li><a href="/pricing#process" className="inline-flex min-h-11 items-center hover:text-mc-text-strong transition-colors">How We Work (7-Stage)</a></li>
+              <li><a href="/pricing" className="inline-flex min-h-11 items-center hover:text-mc-text-strong transition-colors">Pricing & Tiers</a></li>
+              <li><a href="/guides" className="inline-flex min-h-11 items-center hover:text-mc-text-strong transition-colors">Guides</a></li>
+              <li><a href="/about" className="inline-flex min-h-11 items-center hover:text-mc-text-strong transition-colors">About the Studio</a></li>
+              <li><a href="/#faq" className="inline-flex min-h-11 items-center hover:text-mc-text-strong transition-colors">Frequently Asked Questions</a></li>
             </ul>
           </div>
 
@@ -96,15 +93,15 @@ export const Footer: React.FC = () => {
               <div className="text-mc-orange uppercase tracking-wider">
                 LEGAL &amp; GOVERNANCE
               </div>
-              <ul className="space-y-2 font-sans text-sm text-mc-text-secondary">
+              <ul className="font-sans text-sm text-mc-text-secondary">
                 <li>
-                  <a href="#privacy" className="hover:text-mc-orange transition-colors flex items-center gap-1 group">
+                  <a href="/privacy" className="hover:text-mc-orange transition-colors flex min-h-11 items-center gap-1 group">
                     <span>Privacy Policy</span>
                     <span className="text-[10px] text-mc-orange font-mono opacity-0 group-hover:opacity-100 transition-opacity">&rarr;</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#terms" className="hover:text-mc-orange transition-colors flex items-center gap-1 group">
+                  <a href="/terms" className="hover:text-mc-orange transition-colors flex min-h-11 items-center gap-1 group">
                     <span>Terms of Use</span>
                     <span className="text-[10px] text-mc-orange font-mono opacity-0 group-hover:opacity-100 transition-opacity">&rarr;</span>
                   </a>
@@ -138,7 +135,7 @@ export const Footer: React.FC = () => {
 
         {/* Quick Explore Services Bar (Inspired by image) */}
         <a
-          href="#product-stack"
+          href="/services"
           className="mb-12 p-4 sm:p-5 rounded-lg border border-mc-border bg-mc-surface hover:bg-mc-surface-hover transition-colors flex items-center justify-between group cursor-pointer"
         >
           <span className="font-sans font-medium text-base text-mc-text-strong group-hover:text-mc-orange transition-colors">
@@ -153,15 +150,15 @@ export const Footer: React.FC = () => {
             <span>MONOLITH CODES © {currentYear}. ALL RIGHTS RESERVED.</span>
             <span>&bull;</span>
             <a
-              href="#privacy"
-              className="text-mc-text-secondary hover:text-mc-orange transition-colors underline-offset-4 hover:underline"
+              href="/privacy"
+              className="inline-flex min-h-11 items-center text-mc-text-secondary hover:text-mc-orange transition-colors underline-offset-4 hover:underline"
             >
               PRIVACY POLICY
             </a>
             <span>&bull;</span>
             <a
-              href="#terms"
-              className="text-mc-text-secondary hover:text-mc-orange transition-colors underline-offset-4 hover:underline"
+              href="/terms"
+              className="inline-flex min-h-11 items-center text-mc-text-secondary hover:text-mc-orange transition-colors underline-offset-4 hover:underline"
             >
               TERMS OF USE
             </a>
@@ -170,7 +167,7 @@ export const Footer: React.FC = () => {
           </div>
 
           <div className="text-center">
-            MONOLITH CODES IS A PREMIUM CUSTOM SOFTWARE ENGINEERING STUDIO.
+            CUSTOM SOFTWARE ENGINEERING STUDIO · BASED IN INDIA · SERVING CLIENTS WORLDWIDE
           </div>
 
           {/* Team Avatar Stack & Status */}

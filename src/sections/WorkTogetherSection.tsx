@@ -79,7 +79,7 @@ export const WorkTogetherSection: React.FC = () => {
         </p>
       </motion.div>
 
-      <a href="#inquiry" className="wt__cta">
+      <a href="/#inquiry" className="wt__cta">
         <span className="wt__cta-dot" aria-hidden="true" />
         Start a Project
         <ArrowUpRight className="wt__cta-icon" aria-hidden="true" />

@@ -51,8 +51,7 @@ export const HeroSection: React.FC = () => {
     mouseY.set((event.clientY - bounds.top) / bounds.height - 0.5);
   };
 
-  const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  const initial = reduceMotion ? 'visible' : 'hidden';
+    const initial = reduceMotion ? 'visible' : 'hidden';
 
   return (
     <section
@@ -85,9 +84,13 @@ export const HeroSection: React.FC = () => {
         <motion.div variants={cascade} initial={initial} animate="visible" className="gateway-hero__copy">
           <motion.p variants={rise} className="gateway-hero__chip">Our Code, Your <b>Success</b></motion.p>
           <h1 className="gateway-hero__headline" aria-label="We build software for companies that outgrew templates.">
-            <span className="gateway-hero__line"><motion.span variants={line} initial={initial} animate="visible">We build software for companies</motion.span></span>
+            <span className="gateway-hero__line"><motion.span variants={line} initial={initial} animate="visible">We build software for companies</motion.span></span>{' '}
             <span className="gateway-hero__line"><motion.span variants={line} initial={initial} animate="visible" transition={{ delay: reduceMotion ? 0 : 0.12 }}>that outgrew templates.</motion.span></span>
           </h1>
+          <motion.p variants={rise} className="gateway-hero__sub">
+            A custom software development studio based in India. We hand-code websites, web apps, SaaS platforms,
+            mobile apps and ERP/CRM systems for businesses in India and worldwide.
+          </motion.p>
           <motion.ul variants={rise} className="gateway-hero__points">
             <li><Code2 aria-hidden="true" />Hand-coded, zero WordPress</li>
             <li><Zap aria-hidden="true" />Zero bloat, pure execution</li>
@@ -95,14 +98,14 @@ export const HeroSection: React.FC = () => {
             <li><Layers aria-hidden="true" />Custom-built for your business</li>
           </motion.ul>
           <motion.div variants={rise} className="gateway-hero__actions">
-            <button onClick={() => scrollTo('inquiry')} className="vt-btn vt-btn--light">
+            <a href="#inquiry" className="vt-btn vt-btn--light">
               Start a Project <i><ArrowUpRight aria-hidden="true" /></i>
-            </button>
-            <button onClick={() => scrollTo('work')} className="vt-btn vt-btn--ghost">Explore Our Work</button>
+            </a>
+            <a href="#work" className="vt-btn vt-btn--ghost">Explore Our Work</a>
           </motion.div>
         </motion.div>
       </motion.div>
-      <span className="gateway-hero__status"><i /> Available for Q3/Q4 projects</span>
+      <span className="gateway-hero__status"><i /> Accepting projects · India &amp; worldwide</span>
       <span className="gateway-hero__scroll">Scroll to explore ↓</span>
     </section>
   );

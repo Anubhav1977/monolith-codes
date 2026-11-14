@@ -49,7 +49,7 @@ const SERVICES: ServiceItem[] = [
     index: 'SYS.06',
     title: 'Software Modernization',
     icon: <RefreshCw className="w-5 h-5" />,
-    description: 'Refactoring outdated codebases, migrating legacy databases to modern cloud stacks with zero downtime.',
+    description: 'Refactoring outdated codebases, migrating legacy databases to modern cloud stacks with planned, minimal-downtime cutovers.',
     capabilities: ['Legacy Code Refactoring', 'Cloud Migration (AWS/Cloudflare)', 'Database Schema Optimization', 'Security Hardening'],
   },
 ];

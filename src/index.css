@@ -160,7 +160,7 @@
 }
 
 .mc-loading-mark.is-risen {
-  animation: mc-load-rise 800ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: mc-load-rise 500ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .mc-loading-logo-img {
@@ -199,7 +199,7 @@
 }
 
 .mc-loading-mark.is-lit .mc-loading-edge-light {
-  animation: mc-load-edge-sweep 900ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: mc-load-edge-sweep 600ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 /* Impact glow when logo lands */
@@ -215,7 +215,7 @@
 }
 
 .mc-loading-mark.is-risen .mc-loading-impact {
-  animation: mc-load-impact 600ms ease-out 350ms forwards;
+  animation: mc-load-impact 450ms ease-out 250ms forwards;
 }
 
 /* ---------------------------------------------------------------------- */
@@ -243,11 +243,11 @@
 }
 
 .mc-loading-wordmark.is-visible .mc-loading-word--monolith {
-  animation: mc-load-word-up 500ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: mc-load-word-up 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .mc-loading-wordmark.is-visible .mc-loading-word--codes {
-  animation: mc-load-word-up 500ms cubic-bezier(0.16, 1, 0.3, 1) 100ms forwards;
+  animation: mc-load-word-up 400ms cubic-bezier(0.16, 1, 0.3, 1) 80ms forwards;
 }
 
 .mc-loading-word--monolith {
@@ -275,7 +275,7 @@
 }
 
 .mc-loading-tagline.is-visible {
-  animation: mc-load-tagline 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: mc-load-tagline 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* ---------------------------------------------------------------------- */

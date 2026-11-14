@@ -177,7 +177,7 @@ export const InquiryForm: React.FC = () => {
 
   if (status === 'success') {
     return (
-      <div className="p-6 sm:p-8 rounded-xl border border-mc-border bg-mc-surface text-center animate-in fade-in zoom-in-95 duration-200">
+      <div role="status" className="p-6 sm:p-8 rounded-xl border border-mc-border bg-mc-surface text-center animate-in fade-in zoom-in-95 duration-200">
         <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-mc-orange-10 border border-mc-orange text-mc-orange flex items-center justify-center">
           <CheckCircle2 className="w-6 h-6" />
         </div>
@@ -237,7 +237,7 @@ export const InquiryForm: React.FC = () => {
       />
 
       {status === 'error' && (
-        <div className="p-3.5 rounded-lg bg-mc-orange-10 border border-mc-orange text-mc-orange text-xs font-mono flex items-center gap-2.5">
+        <div role="alert" className="p-3.5 rounded-lg bg-mc-orange-10 border border-mc-orange text-mc-orange text-xs font-mono flex items-center gap-2.5">
           <AlertCircle className="w-4 h-4 shrink-0" />
           <span>{errorMessage}</span>
         </div>
@@ -252,7 +252,7 @@ export const InquiryForm: React.FC = () => {
               Work Email <span className="text-mc-orange">*</span>
             </label>
             {touched.email && (
-              <span className="text-[11px] font-mono">
+              <span id="email-status" aria-live="polite" className="text-[11px] font-mono">
                 {isEmailValid ? (
                   <span className="text-emerald-400 flex items-center gap-0.5"><CheckCircle2 className="w-3 h-3" /> Valid</span>
                 ) : (
@@ -269,6 +269,9 @@ export const InquiryForm: React.FC = () => {
             value={formData.email}
             onChange={handleChange}
             onBlur={() => handleBlur('email')}
+            autoComplete="email"
+            aria-invalid={touched.email ? !isEmailValid : undefined}
+            aria-describedby={touched.email ? 'email-status' : undefined}
             placeholder="jane@company.com"
             className={cn(
               'w-full h-11 sm:h-12 px-4 rounded-lg bg-mc-surface-deep border text-sm text-mc-text placeholder-mc-text-tertiary transition-all outline-none',
@@ -286,7 +289,7 @@ export const InquiryForm: React.FC = () => {
               Full Name <span className="text-mc-orange">*</span>
             </label>
             {touched.name && (
-              <span className="text-[11px] font-mono">
+              <span id="name-status" aria-live="polite" className="text-[11px] font-mono">
                 {isNameValid ? (
                   <span className="text-emerald-400 flex items-center gap-0.5"><CheckCircle2 className="w-3 h-3" /> Valid</span>
                 ) : (
@@ -303,6 +306,9 @@ export const InquiryForm: React.FC = () => {
             value={formData.name}
             onChange={handleChange}
             onBlur={() => handleBlur('name')}
+            autoComplete="name"
+            aria-invalid={touched.name ? !isNameValid : undefined}
+            aria-describedby={touched.name ? 'name-status' : undefined}
             placeholder="Jane Doe"
             className={cn(
               'w-full h-11 sm:h-12 px-4 rounded-lg bg-mc-surface-deep border text-sm text-mc-text placeholder-mc-text-tertiary transition-all outline-none',
@@ -370,7 +376,7 @@ export const InquiryForm: React.FC = () => {
             Tell us about your product and goals <span className="text-mc-orange">*</span>
           </label>
           {touched.description && (
-            <span className="text-[11px] font-mono">
+            <span id="description-status" aria-live="polite" className="text-[11px] font-mono">
               {isDescriptionValid ? (
                 <span className="text-emerald-400 flex items-center gap-0.5"><CheckCircle2 className="w-3 h-3" /> Valid</span>
               ) : (
@@ -387,6 +393,8 @@ export const InquiryForm: React.FC = () => {
           value={formData.description}
           onChange={handleChange}
           onBlur={() => handleBlur('description')}
+          aria-invalid={touched.description ? !isDescriptionValid : undefined}
+          aria-describedby={touched.description ? 'description-status' : undefined}
           placeholder="Describe your product idea, key features to build, target user roles, or key business outcomes..."
           className={cn(
             'w-full p-3.5 sm:p-4 rounded-lg bg-mc-surface-deep border text-sm text-mc-text placeholder-mc-text-tertiary transition-all outline-none min-h-25 sm:min-h-27.5',
@@ -398,15 +406,15 @@ export const InquiryForm: React.FC = () => {
       </div>
 
       {/* Row 4: How can we help you? (Multi-Select Category Chips) */}
-      <div>
-        <div className="flex items-center justify-between mb-2.5">
-          <label className="block text-xs font-mono text-mc-text-secondary uppercase">
+      <fieldset>
+        <legend className="w-full flex items-center justify-between mb-2.5">
+          <span className="text-xs font-mono text-mc-text-secondary uppercase">
             How can we help you? <span className="text-mc-text-tertiary font-normal">(Select Multiple)</span>
-          </label>
+          </span>
           <span className="text-[11px] font-mono text-mc-orange">
             {formData.selectedCategories.length} Selected
           </span>
-        </div>
+        </legend>
         <div className="flex flex-wrap gap-2">
           {CATEGORY_OPTIONS.map((category) => {
             const isSelected = formData.selectedCategories.includes(category);
@@ -415,8 +423,9 @@ export const InquiryForm: React.FC = () => {
                 type="button"
                 key={category}
                 onClick={() => toggleCategory(category)}
+                aria-pressed={isSelected}
                 className={cn(
-                  'px-3 py-1.5 sm:px-3.5 sm:py-2 text-xs font-mono rounded-lg border transition-all flex items-center gap-1.5 active:scale-95 touch-manipulation',
+                  'min-h-11 px-3 sm:px-3.5 text-xs font-mono rounded-lg border transition-all flex items-center gap-1.5 active:scale-95 touch-manipulation',
                   isSelected
                     ? 'bg-mc-orange-10 border-mc-orange text-mc-orange font-semibold shadow-sm'
                     : 'bg-mc-surface-deep border-mc-border text-mc-text-secondary hover:border-mc-border-strong hover:text-mc-text'
@@ -432,7 +441,7 @@ export const InquiryForm: React.FC = () => {
             );
           })}
         </div>
-      </div>
+      </fieldset>
 
       {/* Row 5: Action Row (Primary Button + Prefer Email link) */}
       <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">

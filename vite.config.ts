@@ -58,7 +58,7 @@ function apiDevMiddleware(): Plugin {
   };
 }
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, isSsrBuild }) => {
   // Load environment variables from .env files into Node's process.env for local development middleware
   const env = loadEnv(mode, process.cwd(), '');
   Object.assign(process.env, env);
@@ -70,5 +70,22 @@ export default defineConfig(({ mode }) => {
         '@': path.resolve(__dirname, './src'),
       },
     },
+    build: isSsrBuild
+      ? { outDir: 'dist-server', emptyOutDir: true, ssrManifest: false }
+      : {
+          // The prerender step reads the manifest to add <link rel="modulepreload"> per page.
+          manifest: true,
+          rollupOptions: {
+            output: {
+              // Long-lived vendor chunks: app deploys don't invalidate React / motion caches.
+              manualChunks(id: string) {
+                if (!id.includes('node_modules')) return undefined;
+                if (/[\/]node_modules[\/](react|react-dom|scheduler)[\/]/.test(id)) return 'vendor-react';
+                if (/[\/]node_modules[\/](framer-motion|motion-dom|motion-utils)[\/]/.test(id)) return 'vendor-motion';
+                return undefined;
+              },
+            },
+          },
+        },
   };
 });

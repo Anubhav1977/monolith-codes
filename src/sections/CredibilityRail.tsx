@@ -48,7 +48,7 @@ const CredibilityCard: React.FC<{ metric: MetricItem; index: number }> = ({ metr
     <motion.article ref={cardRef} initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 12 }} animate={isInView ? { opacity: 1, y: 0 } : undefined} transition={{ duration: shouldReduceMotion ? 0 : 0.42, ease: [0.2, 0.72, 0.24, 1] }} className={`cred-card cred-card--${index + 1} ${isInView ? 'cred-card--active' : ''}`}>
       <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.1em] text-mc-text-tertiary mb-5"><span>MC / {metric.index}</span><span className="cred-card__accent" /></div>
       <EvidenceArtifact kind={metric.kind} />
-      <h2 className="text-lg font-sans font-medium text-mc-text-strong tracking-tight mt-5 mb-2">{metric.label}</h2>
+      <h3 className="text-lg font-sans font-medium text-mc-text-strong tracking-tight mt-5 mb-2">{metric.label}</h3>
       <p className="text-sm font-sans text-mc-text-secondary leading-relaxed">{metric.description}</p>
     </motion.article>
   );

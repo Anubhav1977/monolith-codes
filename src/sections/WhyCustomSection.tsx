@@ -16,8 +16,8 @@ const COMPARISON_ROWS: ComparisonRow[] = [
     id: 'performance',
     category: 'Performance & Speed',
     icon: <Zap className="w-4 h-4 text-mc-orange" />,
-    templatePainPoint: 'Slow 3–6s load times, heavy JS bundle bloat, poor Google Web Vitals.',
-    monolithAdvantage: 'Sub-second initial paint, zero unused code, 99+ Core Web Vitals score.',
+    templatePainPoint: 'Plugin and theme bloat that slows pages down and hurts Core Web Vitals.',
+    monolithAdvantage: 'Lean, hand-written code tuned for good Core Web Vitals and a 99+ Lighthouse performance target.',
   },
   {
     id: 'security',

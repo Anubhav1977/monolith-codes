@@ -1,61 +1,61 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ThemeProvider } from '@/context/ThemeContext';
-import { LoadingScreen } from '@/components/LoadingScreen';
-import { Navigation } from '@/components/Navigation';
-import { HeroSection } from '@/sections/HeroSection';
-import { CredibilityRail } from '@/sections/CredibilityRail';
-import { WhyCustomSection } from '@/sections/WhyCustomSection';
-import { ProductStackSection } from '@/sections/ProductStackSection';
-import { SelectedWorkSection } from '@/sections/SelectedWorkSection';
-import { CapabilitiesSection } from '@/sections/CapabilitiesSection';
-import { TechnicalProofSection } from '@/sections/TechnicalProofSection';
-import { TestimonialsSection } from '@/sections/TestimonialsSection';
-import { PricingTeaser } from '@/sections/PricingTeaser';
-import { TeamSection } from '@/sections/TeamSection';
-import { FaqSection } from '@/sections/FaqSection';
-import { EditorialSection } from '@/sections/EditorialSection';
-import { InquirySection } from '@/sections/InquirySection';
-import { WorkTogetherSection } from '@/sections/WorkTogetherSection';
-import { Footer } from '@/sections/Footer';
-import { StatsScatter } from '@/components/StatsScatter';
-import { IntroSplit } from '@/components/IntroSplit';
-import { OwnershipSection } from '@/sections/OwnershipSection';
-import { WhatsAppButton } from '@/components/WhatsAppButton';
-import { PrivacyPolicy } from '@/pages/PrivacyPolicy';
-import { AboutUs } from '@/pages/AboutUs';
-import { TermsOfUse } from '@/pages/TermsOfUse';
-import { PricingPage } from '@/pages/PricingPage';
-import { applyPageMeta, PAGE_META } from '@/components/Seo';
+import { applyRouteMeta } from '@/components/Seo';
+import { matchRoute, type RouteDef } from '@/lib/routes';
+import { installLinkInterception, redirectLegacyHash, scrollToId, scrollToTopInstant, usePathname } from '@/lib/router';
+import { PAGE_LOADERS, type PageComponent } from '@/pages/registry';
 
-type Route = 'home' | 'privacy' | 'terms' | 'about' | 'pricing';
-
-/** Hash → page. Unknown hashes stay on the current page if it has that anchor, else go home. */
-function routeForHash(hash: string, current: Route): Route {
-  if (hash.startsWith('#privacy')) return 'privacy';
-  if (hash.startsWith('#terms')) return 'terms';
-  if (hash.startsWith('#about')) return 'about';
-  if (hash === '#pricing' || hash === '#process') return 'pricing';
-  const id = hash.slice(1);
-  if (id && document.getElementById(id)) return current; // in-page anchor (e.g. skip link)
-  return 'home';
+interface AppProps {
+  initialRoute: RouteDef;
+  initialPage: PageComponent;
 }
 
-export const App: React.FC = () => {
-  const [currentRoute, setCurrentRoute] = useState<Route>(() => {
-    if (typeof window === 'undefined') return 'home';
-    return routeForHash(window.location.hash, 'home');
-  });
+interface View {
+  route: RouteDef;
+  Page: PageComponent;
+}
 
+export const App: React.FC<AppProps> = ({ initialRoute, initialPage }) => {
+  const pathname = usePathname();
+  const route = matchRoute(pathname);
+  const [view, setView] = useState<View>({ route: initialRoute, Page: initialPage });
+  const firstView = useRef(true);
+
+  // Load the page chunk for the new route; keep showing the current page until it is ready.
   useEffect(() => {
-    const handleHash = () => setCurrentRoute((cur) => routeForHash(window.location.hash, cur));
-    window.addEventListener('hashchange', handleHash);
-    return () => window.removeEventListener('hashchange', handleHash);
+    if (route === view.route) return;
+    let cancelled = false;
+    PAGE_LOADERS[route.page]().then((m) => {
+      if (!cancelled) setView({ route, Page: m.default });
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [route, view.route]);
+
+  // After a page swap: update <head>, then scroll to the hash target or the top.
+  useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (firstView.current) {
+      firstView.current = false;
+      if (hash) scrollToId(hash, 'instant');
+      return;
+    }
+    applyRouteMeta(view.route);
+    if (hash) scrollToId(hash, 'instant');
+    else scrollToTopInstant();
+  }, [view]);
+
+  useEffect(() => installLinkInterception(), []);
+
+  // Old in-page links such as `/#pricing` followed while already on home → real URL.
+  useEffect(() => {
+    const onHash = () => {
+      if (redirectLegacyHash()) window.dispatchEvent(new PopStateEvent('popstate'));
+    };
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
   }, []);
-
-  // Keep <title> / description / social tags in sync with the hash "page" being shown
-  useEffect(() => {
-    applyPageMeta(PAGE_META[currentRoute]);
-  }, [currentRoute]);
 
   // On desktop, mailto: links open Gmail compose in a new tab (works without a mail app installed).
   // On touch devices the native mail app is the better target, so the link is left alone.
@@ -90,142 +90,12 @@ export const App: React.FC = () => {
     return () => window.removeEventListener('pointermove', onMove);
   }, []);
 
-  // Arriving on home / pricing via a section link (e.g. #work, #process): scroll once the page has rendered
-  useEffect(() => {
-    if (currentRoute !== 'home' && currentRoute !== 'pricing') return;
-    const id = window.location.hash.replace('#', '');
-    if (currentRoute === 'pricing') window.scrollTo({ top: 0 }); // new page starts at its top
-    if (!id || id === 'pricing') return;
-    const t = window.setTimeout(() => document.getElementById(id)?.scrollIntoView(), 400); // cross-page arrival: jump, don't scroll the whole page
-    return () => window.clearTimeout(t);
-  }, [currentRoute]);
-
-  const navigateToHome = () => {
-    window.location.hash = '';
-    setCurrentRoute('home');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const navigateToPrivacy = () => {
-    window.location.hash = '#privacy';
-    setCurrentRoute('privacy');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const navigateToTerms = () => {
-    window.location.hash = '#terms';
-    setCurrentRoute('terms');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
+  const { Page } = view;
   return (
     <ThemeProvider>
-      {/* First-load brand introduction (only on home) */}
-      {currentRoute === 'home' && <LoadingScreen />}
-
-      {currentRoute === 'privacy' && (
-        <PrivacyPolicy onBackToHome={navigateToHome} />
-      )}
-
-      {currentRoute === 'about' && <AboutUs onBackToHome={navigateToHome} />}
-
-      {currentRoute === 'pricing' && <PricingPage />}
-
-      {currentRoute === 'terms' && (
-        <TermsOfUse
-          onBackToHome={navigateToHome}
-          onNavigateToPrivacy={navigateToPrivacy}
-        />
-      )}
-
-      {currentRoute === 'home' && (
-        <>
-          {/* Accessibility Skip Link */}
-          <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-mc-orange focus:text-mc-bg focus:font-mono focus:text-xs focus:rounded-md"
-          >
-            Skip to main content
-          </a>
-
-          <div className="min-h-screen bg-mc-bg text-mc-text selection:bg-mc-orange selection:text-mc-bg relative">
-            <Navigation />
-
-            <main id="main-content">
-          {/* 01 Hero */}
-          <HeroSection />
-
-          <StatsScatter />
-
-          <IntroSplit />
-
-          {/* Trust Bar */}
-          <CredibilityRail />
-
-          {/* 02 Why Custom Engineering & What We DON'T Build With */}
-          <WhyCustomSection />
-
-          {/* Editorial Rhythm 1 */}
-          <EditorialSection
-            label="MC / CORE USP"
-            headline="Zero templates. Zero lock-in."
-            quote="“Every solution is custom engineered for your business. Never built from templates. Never assembled from pre-made themes.”"
-            author="MONOLITH CODES POSITIONING"
-            subtitle="Ground-Up Custom Architecture • Zero Vendor Lock-in"
-          />
-
-          {/* 03 Product Stack (Sticky Interactive) */}
-          <ProductStackSection />
-
-          {/* 04 Selected Work & Visual Proof */}
-          <SelectedWorkSection />
-
-          {/* Editorial Rhythm 2 */}
-          <EditorialSection
-            label="MC / OUR ENGINEERING THESIS"
-            headline="Built like architecture."
-            quote="“Serious business software should feel constructed like architecture: structural, precise, quiet, and built to perform for years without breakdown.”"
-            author="MONOLITH CODES STUDIO DIRECTIVE"
-            subtitle="Production-Grade React • Zero Superficial Hype"
-          />
-
-          {/* 05 Technical Capabilities & Integrations */}
-          {/* <CapabilitiesSection /> */}
-
-          {/* 06 Technical Proof & Dual Layer Switcher */}
-          <TechnicalProofSection />
-
-          {/* Client Testimonials */}
-          <TestimonialsSection />
-
-          {/* 07 Pricing teaser — full tiers, process and terms live on the Pricing page (#pricing) */}
-          <PricingTeaser />
-
-          {/* 08 The People Behind The Systems */}
-          <TeamSection />
-
-          {/* 09 Frequently Asked Questions */}
-          <FaqSection />
-
-          <OwnershipSection />
-
-          {/* 10 Start a Project / Inquiry */}
-          <InquirySection />
-
-          {/* 11 Closing CTA — Let's work together */}
-          <WorkTogetherSection />
-        </main>
-
-        {/* Studio Footer with Giant Wordmark */}
-        <Footer />
-
-        {/* Floating WhatsApp Engineering Chat */}
-        <WhatsAppButton />
-      </div>
-    </>
-  )}
-</ThemeProvider>
-);
+      <Page key={view.route.path} route={view.route} />
+    </ThemeProvider>
+  );
 };
 
 export default App;

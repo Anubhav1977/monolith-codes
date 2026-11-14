@@ -17,6 +17,11 @@ const CARD_H = 440;
 const MH = 380; // card height on phones/tablets
 const MG = 16; // gap between cards on phones/tablets
 
+/**
+ * Client quotes — confirmed real and approved for publication by the studio (Nov 2026).
+ * TODO(content): add the quoted person's name and role to each entry (with their permission);
+ * named attribution is a strong trust/E-E-A-T signal.
+ */
 const TESTIMONIALS: Testimonial[] = [
   {
     id: 'niketana',
@@ -125,13 +130,16 @@ export const TestimonialsSection: React.FC = () => {
             className="relative mx-auto h-175 w-full"
             onMouseEnter={() => setSpread(true)}
             onMouseLeave={() => { setSpread(false); setHovered(null); }}
+            onFocus={() => setSpread(true)}
           >
-            <motion.div
-              className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 font-mono text-[11px] uppercase tracking-widest text-mc-text-tertiary"
-              animate={{ opacity: spread ? 0 : 1 }}
+            <button
+              type="button"
+              aria-expanded={spread}
+              onClick={() => setSpread((v) => !v)}
+              className="absolute left-1/2 top-0 z-20 -translate-x-1/2 inline-flex min-h-11 items-center px-4 font-mono text-[11px] uppercase tracking-widest text-mc-text-tertiary hover:text-mc-orange focus-visible:text-mc-orange transition-colors cursor-pointer"
             >
-              Hover to open
-            </motion.div>
+              {spread ? 'Stack testimonials' : 'Hover or tap to open'}
+            </button>
 
             {TESTIMONIALS.map((t, i) => {
               // Curved fan: centre card on top, neighbours swing down and tilt outward along an arc

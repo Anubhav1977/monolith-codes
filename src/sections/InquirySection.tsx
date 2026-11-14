@@ -19,7 +19,7 @@ export const InquirySection: React.FC = () => {
                 <span>09 / START A PROJECT</span>
               </div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-sans font-medium text-mc-text-strong tracking-tight leading-[1.15] mb-4">
-                HAVE A PROJECT?<br />
+                HAVE A PROJECT?{' '}<br />
                 <span className="text-mc-text-body font-normal">LET'S TALK!</span>
               </h2>
               <p className="text-mc-text-body text-base leading-relaxed">
@@ -76,13 +76,11 @@ export const InquirySection: React.FC = () => {
 
                 {/* Founder Details */}
                 <div>
-                  <h4 className="text-base font-sans font-semibold text-mc-text-strong leading-tight">
-                    Anubhav Garg (Lead Software Architect)
-
-                  </h4>
+                  <h3 className="text-base font-sans font-semibold text-mc-text-strong leading-tight">
+                    Anubhav Garg
+                  </h3>
                   <p className="text-xs font-mono text-mc-text-secondary mt-0.5">
-                    Founder & Engineering Director
-
+                    Founder &amp; Lead Technical Engineer
                   </p>
                   <div className="flex items-center gap-1.5 mt-1 text-[11px] font-mono text-mc-orange">
                     <ShieldCheck className="w-3.5 h-3.5" />

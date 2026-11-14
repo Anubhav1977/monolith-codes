@@ -30,7 +30,7 @@ const PRICING_TIERS: PricingTier[] = [
     idealFor: 'Businesses replacing slow templates with production-grade web experiences.',
     features: [
       '100% Custom React 19 & Tailwind v4 architecture',
-      'Sub-second initial paint & 99+ Core Web Vitals score',
+      'Performance tuned for good Core Web Vitals (LCP, INP, CLS)',
       'Headless CMS or static data integration',
       'Full responsive design & dark/light theme support',
       '100% IP ownership & Git repository handoff',
@@ -258,7 +258,7 @@ export const PricingSection: React.FC = () => {
           <div className="lg:col-span-9 flex flex-col items-center gap-8">
             <div>
               <h1 className="text-3xl md:text-5xl font-sans font-medium text-mc-text-strong tracking-tight mb-2">
-                TRANSPARENT<br />ENGAGEMENT TIERS
+                TRANSPARENT{' '}<br />ENGAGEMENT TIERS
               </h1>
               <p className="text-mc-text-body text-base md:text-lg max-w-xl">
                 Bespoke engineering structured for predictability. No hidden fees, no recurring theme licenses, 100% full IP handoff.

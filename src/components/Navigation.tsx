@@ -3,7 +3,7 @@ import { BrandLockup } from './BrandLockup';
 import { ThemeToggle } from './ThemeToggle';
 import { Menu, X, ArrowUpRight, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { goToSection } from '@/lib/navigation';
+import { goToSection } from '@/lib/router';
 
 interface SubNavItem {
   label: string;
@@ -20,35 +20,36 @@ interface NavGroup {
 const NAV_GROUPS: NavGroup[] = [
   {
     label: 'Work',
-    href: '#work',
+    href: '/#work',
   },
   {
-    label: 'What We Build',
+    label: 'Services',
     children: [
-      { label: 'Websites', href: '#product-stack', desc: 'High-conversion, bespoke web experiences' },
-      { label: 'Web Apps', href: '#product-stack', desc: 'Complex web platforms with real-time logic' },
-      { label: 'Mobile Apps', href: '#product-stack', desc: 'Native iOS & Android cross-platform apps' },
-      { label: 'SaaS Platforms', href: '#product-stack', desc: 'Multi-tenant, high-scale product systems' },
-      { label: 'ERP & CRM', href: '#product-stack', desc: 'Custom enterprise software & workflows' },
-      { label: 'AI Solutions', href: '#product-stack', desc: 'Pragmatic agentic & LLM automation' },
+      { label: 'Websites', href: '/services/website-development', desc: 'Hand-coded, SEO-ready business websites' },
+      { label: 'Web Apps', href: '/services/web-application-development', desc: 'Portals, dashboards and internal tools' },
+      { label: 'SaaS Platforms', href: '/services/saas-development', desc: 'From MVP to multi-tenant production' },
+      { label: 'Mobile Apps', href: '/services/mobile-app-development', desc: 'Cross-platform iOS & Android apps' },
+      { label: 'ERP & CRM', href: '/services/erp-crm-development', desc: 'Custom operations & sales systems' },
+      { label: 'AI & Automation', href: '/services/ai-automation', desc: 'Practical LLM & workflow automation' },
+      { label: 'All services', href: '/services', desc: 'Every service, capability and starting price' },
     ],
   },
   {
     label: 'How We Work',
     children: [
-      { label: 'Process', href: '#process', desc: 'Our 4-stage engineering sprint model' },
-      { label: 'Technical Quality', href: '#proof', desc: 'Architecture, performance & security standards' },
-      { label: 'Integrations', href: '#capabilities', desc: 'API bridges, legacy migration & workflows' },
-      { label: 'Technologies', href: '#capabilities', desc: 'React, TypeScript, Vite & Cloud stack' },
+      { label: 'Process', href: '/pricing#process', desc: 'Our 7-stage delivery process' },
+      { label: 'Technical Quality', href: '/#proof', desc: 'Architecture, performance & security standards' },
+      { label: 'Integrations', href: '/services#capabilities', desc: 'API bridges, legacy migration & workflows' },
+      { label: 'Guides', href: '/guides', desc: 'Cost, build-vs-buy and project planning' },
     ],
   },
   {
     label: 'Pricing',
-    href: '#pricing',
+    href: '/pricing',
   },
   {
     label: 'About',
-    href: '#about',
+    href: '/about',
   },
 ];
 
@@ -110,7 +111,7 @@ export const Navigation: React.FC = () => {
     >
       <div className="max-w-340 mx-auto h-full px-4 sm:px-6 md:px-10 flex items-center justify-between">
         {/* Left: Brand Logo */}
-        <a href="#" className="flex items-center" aria-label="MONOLITH CODES — home">
+        <a href="/" className="flex items-center" aria-label="MONOLITH CODES — home">
           <BrandLockup variant="horizontal" size="md" interactiveHover />
         </a>
 
@@ -122,14 +123,14 @@ export const Navigation: React.FC = () => {
               return (
                 <div
                   key={group.label}
-                  className="relative group py-4"
+                  className="relative group py-3"
                   onMouseEnter={() => setActiveDropdown(group.label)}
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
                   <button
                     aria-expanded={isOpen}
                     onClick={() => setActiveDropdown(isOpen ? null : group.label)}
-                    className="flex items-center gap-1.5 text-sm font-sans font-medium text-mc-text-secondary hover:text-mc-text-strong transition-colors py-1 cursor-pointer"
+                    className="flex min-h-11 items-center gap-1.5 text-sm font-sans font-medium text-mc-text-secondary hover:text-mc-text-strong transition-colors cursor-pointer"
                   >
                     <span>{group.label}</span>
                     <ChevronDown
@@ -142,7 +143,7 @@ export const Navigation: React.FC = () => {
 
                   {/* Dropdown Menu */}
                   {isOpen && (
-                    <div className="absolute top-13 left-1/2 -translate-x-1/2 w-72 p-2 rounded-lg bg-mc-surface border border-mc-border shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-160 z-50">
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 w-72 p-2 rounded-lg bg-mc-surface border border-mc-border shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-160 z-50">
                       {group.children.map((child) => (
                         <a
                           key={child.label}
@@ -175,7 +176,7 @@ export const Navigation: React.FC = () => {
               <a
                 key={group.label}
                 href={group.href}
-                className="text-sm font-sans font-medium text-mc-text-secondary hover:text-mc-text-strong transition-colors py-1"
+                className="inline-flex min-h-11 items-center text-sm font-sans font-medium text-mc-text-secondary hover:text-mc-text-strong transition-colors"
               >
                 {group.label}
               </a>
@@ -207,7 +208,7 @@ export const Navigation: React.FC = () => {
             aria-label="Toggle Navigation Menu"
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-menu-drawer"
-            className="p-2 rounded-md bg-mc-surface border border-mc-border text-mc-text hover:text-mc-orange transition-colors cursor-pointer"
+            className="grid h-11 w-11 place-items-center rounded-md bg-mc-surface border border-mc-border text-mc-text hover:text-mc-orange transition-colors cursor-pointer"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -249,9 +250,9 @@ export const Navigation: React.FC = () => {
                             key={child.label}
                             href={child.href}
                             onClick={() => setMobileMenuOpen(false)}
-                            className="block py-2 text-sm font-sans text-mc-text-secondary hover:text-mc-orange transition-colors"
+                            className="flex min-h-11 items-center text-sm font-sans text-mc-text-secondary hover:text-mc-orange transition-colors"
                           >
-                            • {child.label}
+                            {child.label}
                           </a>
                         ))}
                       </div>

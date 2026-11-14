@@ -30,6 +30,7 @@ import {
 import { BrandLockup } from '@/components/BrandLockup';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { cn } from '@/lib/utils';
+import { navigate } from '@/lib/router';
 
 interface PrivacyPolicyProps {
   onBackToHome?: () => void;
@@ -129,7 +130,7 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBackToHome }) =>
                 if (onBackToHome) {
                   onBackToHome();
                 } else {
-                  window.location.hash = '';
+                  navigate('/');
                 }
               }}
               className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-mc-border bg-mc-surface hover:bg-mc-surface-hover text-mc-text-body hover:text-mc-text-strong text-xs font-mono transition-colors cursor-pointer group shrink-0"
@@ -142,13 +143,13 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBackToHome }) =>
 
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
               <a
-                href="#"
+                href="/"
                 onClick={(e) => {
                   e.preventDefault();
                   if (onBackToHome) {
                     onBackToHome();
                   } else {
-                    window.location.hash = '';
+                    navigate('/');
                   }
                 }}
                 className="flex items-center cursor-pointer group shrink-0"
@@ -1257,7 +1258,7 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBackToHome }) =>
                 if (onBackToHome) {
                   onBackToHome();
                 } else {
-                  window.location.hash = '';
+                  navigate('/');
                 }
               }}
               className="px-4 py-2.5 rounded-lg border border-mc-border bg-mc-surface hover:bg-mc-surface-hover text-xs font-mono text-mc-text-strong transition-colors cursor-pointer"
@@ -1268,12 +1269,9 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBackToHome }) =>
             <button
               onClick={() => {
                 if (onBackToHome) {
-                  onBackToHome();
-                  setTimeout(() => {
-                    document.getElementById('inquiry')?.scrollIntoView({ behavior: 'smooth' });
-                  }, 100);
+                  navigate('/#inquiry');
                 } else {
-                  window.location.hash = '#inquiry';
+                  navigate('/#inquiry');
                 }
               }}
               className="px-4 py-2.5 rounded-lg bg-mc-orange text-mc-bg hover:bg-mc-orange-highlight font-sans font-semibold text-xs sm:text-sm transition-colors cursor-pointer shadow-md"
@@ -1289,7 +1287,7 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBackToHome }) =>
         <div className="max-w-320 mx-auto px-6 flex flex-wrap items-center justify-center gap-3">
           <span>MONOLITH CODES DATA GOVERNANCE</span>
           <span>&bull;</span>
-          <a href="#terms" className="hover:text-mc-orange transition-colors underline-offset-4 hover:underline">
+          <a href="/terms" className="hover:text-mc-orange transition-colors underline-offset-4 hover:underline">
             WEBSITE TERMS OF USE
           </a>
           <span>&bull;</span>

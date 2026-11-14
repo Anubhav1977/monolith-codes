@@ -59,7 +59,7 @@ export const PricingTeaser: React.FC = () => {
 
         <div className="lg:col-span-3 lg:justify-self-end">
           <a
-            href="#pricing"
+            href="/pricing"
             className="inline-flex items-center gap-2 min-h-12 px-5 rounded-lg border border-mc-border text-sm font-sans font-medium text-mc-text hover:border-mc-orange hover:text-mc-orange transition-colors focus-visible:outline-2 focus-visible:outline-mc-orange focus-visible:outline-offset-2"
           >
             See pricing &amp; how we work

@@ -18,6 +18,7 @@ import {
 import { BrandLockup } from '@/components/BrandLockup';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { cn } from '@/lib/utils';
+import { navigate } from '@/lib/router';
 
 interface TermsOfUseProps {
   onBackToHome?: () => void;
@@ -122,7 +123,7 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBackToHome, onNavigate
                 if (onBackToHome) {
                   onBackToHome();
                 } else {
-                  window.location.hash = '';
+                  navigate('/');
                 }
               }}
               className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-mc-border bg-mc-surface hover:bg-mc-surface-hover text-mc-text-body hover:text-mc-text-strong text-xs font-mono transition-colors cursor-pointer group shrink-0"
@@ -135,13 +136,13 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBackToHome, onNavigate
 
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
               <a
-                href="#"
+                href="/"
                 onClick={(e) => {
                   e.preventDefault();
                   if (onBackToHome) {
                     onBackToHome();
                   } else {
-                    window.location.hash = '';
+                    navigate('/');
                   }
                 }}
                 className="flex items-center cursor-pointer group shrink-0"
@@ -427,7 +428,7 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBackToHome, onNavigate
                   if (onNavigateToPrivacy) {
                     onNavigateToPrivacy();
                   } else {
-                    window.location.hash = '#privacy';
+                    navigate('/privacy');
                   }
                 }}
                 className="w-full py-2.5 px-3 rounded-lg bg-mc-surface border border-mc-border hover:border-mc-orange text-xs font-mono text-mc-orange flex items-center justify-center gap-2 transition-colors font-medium cursor-pointer"
@@ -585,7 +586,7 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBackToHome, onNavigate
 
               <div className="space-y-4 font-sans text-[15px] sm:text-base text-mc-text-body leading-relaxed">
                 <p>
-                  When submitting inquiries through our contact forms, WhatsApp, or Cal.com, you agree to provide accurate and truthful information. Details on how we process and retain your inquiry data are set out in our <a href="#privacy" className="text-mc-orange hover:underline font-medium">Privacy Policy</a>.
+                  When submitting inquiries through our contact forms, WhatsApp, or Cal.com, you agree to provide accurate and truthful information. Details on how we process and retain your inquiry data are set out in our <a href="/privacy" className="text-mc-orange hover:underline font-medium">Privacy Policy</a>.
                 </p>
 
                 <div className="p-5 rounded-xl bg-mc-surface border border-mc-border space-y-2">
@@ -746,7 +747,7 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBackToHome, onNavigate
 
               <div className="space-y-4 font-sans text-[15px] sm:text-base text-mc-text-body leading-relaxed">
                 <p>
-                  For details regarding our data collection standards, 12-month inquiry retention schedules, and verified third-party sub-processors, please consult our <a href="#privacy" className="text-mc-orange hover:underline font-medium">Privacy Policy</a>.
+                  For details regarding our data collection standards, 12-month inquiry retention schedules, and verified third-party sub-processors, please consult our <a href="/privacy" className="text-mc-orange hover:underline font-medium">Privacy Policy</a>.
                 </p>
 
                 <div className="p-6 rounded-xl bg-mc-surface-deep border border-mc-border space-y-3">
@@ -782,7 +783,7 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBackToHome, onNavigate
                   if (onNavigateToPrivacy) {
                     onNavigateToPrivacy();
                   } else {
-                    window.location.hash = '#privacy';
+                    navigate('/privacy');
                   }
                 }}
                 className="w-full py-2.5 px-3 rounded-lg bg-mc-surface-deep border border-mc-border hover:border-mc-orange text-xs font-mono text-mc-orange flex items-center justify-center gap-2 transition-colors font-medium cursor-pointer"
@@ -812,7 +813,7 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBackToHome, onNavigate
                 if (onBackToHome) {
                   onBackToHome();
                 } else {
-                  window.location.hash = '';
+                  navigate('/');
                 }
               }}
               className="px-4 py-2.5 rounded-lg border border-mc-border bg-mc-surface hover:bg-mc-surface-hover text-xs font-mono text-mc-text-strong transition-colors cursor-pointer"
@@ -823,12 +824,9 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBackToHome, onNavigate
             <button
               onClick={() => {
                 if (onBackToHome) {
-                  onBackToHome();
-                  setTimeout(() => {
-                    document.getElementById('inquiry')?.scrollIntoView({ behavior: 'smooth' });
-                  }, 100);
+                  navigate('/#inquiry');
                 } else {
-                  window.location.hash = '#inquiry';
+                  navigate('/#inquiry');
                 }
               }}
               className="px-4 py-2.5 rounded-lg bg-mc-orange text-mc-bg hover:bg-mc-orange-highlight font-sans font-semibold text-xs sm:text-sm transition-colors cursor-pointer shadow-md"

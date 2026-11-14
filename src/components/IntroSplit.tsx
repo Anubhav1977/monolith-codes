@@ -25,7 +25,7 @@ export const IntroSplit: React.FC = () => (
     <div className="vt-intro__row">
       <motion.div className="vt-intro__left" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.4 }} transition={{ duration: 1, ease: EXPO }}>
         <Wire />
-        <h2>Our Code<br />Your Success</h2>
+        <h2>Our Code,{' '}<br />Your Success</h2>
       </motion.div>
       <motion.div className="vt-intro__right" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.4 }} transition={{ duration: 1, delay: 0.15, ease: EXPO }}>
         <span className="vt-chip">What is Monolith Codes?</span>

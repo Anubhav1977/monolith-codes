@@ -103,7 +103,7 @@ export const CapabilitiesSection: React.FC = () => {
         <div className="vt-head grid grid-cols-1 lg:grid-cols-12 gap-6 mb-16">
           <div className="lg:col-span-3 font-mono text-xs text-mc-orange uppercase tracking-wider flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-mc-orange" />
-            <span>02 / CAPABILITY ARCHITECTURE</span>
+            <span>03 / CAPABILITY ARCHITECTURE</span>
           </div>
 
           <div className="lg:col-span-9">
@@ -231,7 +231,7 @@ export const CapabilitiesSection: React.FC = () => {
               </div>
 
               <a
-                href="#inquiry"
+                href="/#inquiry"
                 className="inline-flex items-center gap-1.5 text-xs font-mono text-mc-orange hover:underline"
               >
                 Inquire about this capability →

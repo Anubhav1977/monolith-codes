@@ -240,7 +240,7 @@ export const SelectedWorkSection: React.FC = () => {
             <button
               onClick={prev}
               aria-label="Previous project"
-              className="grid h-10 w-10 place-items-center rounded-full border border-mc-border bg-mc-surface text-mc-text hover:border-mc-orange hover:text-mc-orange transition-all cursor-pointer"
+              className="grid h-11 w-11 place-items-center rounded-full border border-mc-border bg-mc-surface text-mc-text hover:border-mc-orange hover:text-mc-orange transition-all cursor-pointer"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
@@ -250,14 +250,18 @@ export const SelectedWorkSection: React.FC = () => {
                   key={c.id}
                   onClick={() => setActive(i)}
                   aria-label={`Go to project ${i + 1}`}
-                  className={cn('h-2 rounded-full transition-all cursor-pointer', i === active ? 'w-6 bg-mc-orange' : 'w-2 bg-mc-border-strong')}
-                />
+                  aria-current={i === active ? 'true' : undefined}
+                  className="grid h-11 min-w-6 place-items-center cursor-pointer"
+                >
+                  {/* Small visual dot, 44px-tall hit area */}
+                  <span className={cn('block h-2 rounded-full transition-all', i === active ? 'w-6 bg-mc-orange' : 'w-2 bg-mc-border-strong')} />
+                </button>
               ))}
             </div>
             <button
               onClick={next}
               aria-label="Next project"
-              className="grid h-10 w-10 place-items-center rounded-full border border-mc-border bg-mc-surface text-mc-text hover:border-mc-orange hover:text-mc-orange transition-all cursor-pointer"
+              className="grid h-11 w-11 place-items-center rounded-full border border-mc-border bg-mc-surface text-mc-text hover:border-mc-orange hover:text-mc-orange transition-all cursor-pointer"
             >
               <ChevronRight className="h-5 w-5" />
             </button>

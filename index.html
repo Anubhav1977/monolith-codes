@@ -4,20 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Primary SEO -->
-  <title>MONOLITH CODES | Custom Software Development Studio</title>
-  <meta name="description"
-    content="Custom software development studio. We hand-code websites, web apps, SaaS platforms, mobile apps and ERP/CRM systems with 100% IP ownership. Get a quote." />
-  <link rel="canonical" href="https://monolithcodes.com/" />
+  <!-- Per-page tags (title, description, robots, canonical, Open Graph, page JSON-LD).
+       Replaced for every route at build time by scripts/prerender.mjs; these are the home defaults. -->
+  <!--route-head-->
+  <title>MONOLITH CODES | Custom Software Development Company in India</title>
+  <meta name="description" content="Custom software development studio based in India. We hand-code websites, web apps, SaaS platforms, mobile apps and ERP/CRM systems for clients in India and worldwide — with 100% IP ownership." />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-  <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <link rel="canonical" href="https://monolithcodes.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://monolithcodes.com/" />
+  <meta property="og:title" content="MONOLITH CODES | Custom Software Development Company in India" />
+  <meta property="og:description" content="Custom software development studio based in India. We hand-code websites, web apps, SaaS platforms, mobile apps and ERP/CRM systems for clients in India and worldwide — with 100% IP ownership." />
+  <meta name="twitter:title" content="MONOLITH CODES | Custom Software Development Company in India" />
+  <meta name="twitter:description" content="Custom software development studio based in India. We hand-code websites, web apps, SaaS platforms, mobile apps and ERP/CRM systems for clients in India and worldwide — with 100% IP ownership." />
+  <!--/route-head-->
+
   <meta name="author" content="MONOLITH CODES" />
   <meta name="application-name" content="MONOLITH CODES" />
   <meta name="apple-mobile-web-app-title" content="MONOLITH CODES" />
-  <meta name="keywords"
-    content="custom software development, web application development, SaaS development, mobile app development, ERP CRM development, business automation, software engineering studio, MONOLITH CODES" />
   <meta name="format-detection" content="telephone=no" />
-  <meta name="theme-color" content="#080A0C" />
+  <meta name="theme-color" content="#080A0C" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#F4F3EE" media="(prefers-color-scheme: light)" />
   <meta name="color-scheme" content="dark light" />
 
   <!-- Icons & manifest -->
@@ -26,31 +33,27 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="alternate" type="text/plain" title="LLM summary" href="/llms.txt" />
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://monolithcodes.com/" />
+  <!-- Self-hosted primary font (latin) — preloaded to avoid late text swap -->
+  <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+  <!-- Social (site-wide) -->
   <meta property="og:site_name" content="MONOLITH CODES" />
-  <meta property="og:locale" content="en_US" />
-  <meta property="og:title" content="MONOLITH CODES | Custom Software Development Studio" />
-  <meta property="og:description"
-    content="Hand-coded websites, web apps, SaaS platforms, mobile apps and ERP/CRM systems — engineered around how your business works, with 100% IP ownership." />
+  <meta property="og:locale" content="en_IN" />
+  <meta property="og:locale:alternate" content="en_US" />
   <meta property="og:image" content="https://monolithcodes.com/og-image.jpg" />
   <meta property="og:image:secure_url" content="https://monolithcodes.com/og-image.jpg" />
   <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="MONOLITH CODES — custom software, built to outgrow templates" />
-
-  <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="MONOLITH CODES | Custom Software Development Studio" />
-  <meta name="twitter:description"
-    content="Hand-coded websites, web apps, SaaS platforms, mobile apps and ERP/CRM systems — engineered around how your business works." />
   <meta name="twitter:image" content="https://monolithcodes.com/og-image.jpg" />
   <meta name="twitter:image:alt" content="MONOLITH CODES — custom software, built to outgrow templates" />
 
-  <!-- Structured data (JSON-LD): Organization, WebSite, WebPage and service catalogue -->
+  <!-- Site-wide structured data: organization, founders, website and service catalogue.
+       Page-level WebPage / Service / Article / Breadcrumb / FAQ data is emitted per route. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -59,23 +62,29 @@
         "@type": "Organization",
         "@id": "https://monolithcodes.com/#organization",
         "name": "MONOLITH CODES",
-        "legalName": "MONOLITH CODES",
         "url": "https://monolithcodes.com/",
         "logo": {
           "@type": "ImageObject",
           "@id": "https://monolithcodes.com/#logo",
           "url": "https://monolithcodes.com/icon-512.png",
+          "contentUrl": "https://monolithcodes.com/icon-512.png",
           "width": 512,
           "height": 512,
           "caption": "MONOLITH CODES"
         },
-        "image": "https://monolithcodes.com/og-image.jpg",
-        "description": "MONOLITH CODES is a custom software engineering studio that builds websites, web applications, SaaS platforms, mobile apps, ERP/CRM systems and business workflow automation.",
+        "image": { "@id": "https://monolithcodes.com/#logo" },
+        "description": "MONOLITH CODES is a custom software development studio based in India that builds websites, web applications, SaaS platforms, mobile apps, ERP/CRM systems and business automation for clients in India and worldwide.",
         "slogan": "Custom software, built to outgrow templates.",
         "email": "studio@monolithcodes.com",
         "telephone": "+91-92172-47687",
+        "address": { "@type": "PostalAddress", "addressCountry": "IN" },
+        "areaServed": [
+          { "@type": "Country", "name": "India" },
+          { "@type": "Place", "name": "Worldwide" }
+        ],
         "knowsAbout": [
           "Custom software development",
+          "Website development",
           "Web application development",
           "SaaS platform development",
           "Mobile app development",
@@ -84,8 +93,8 @@
           "AI and LLM integration"
         ],
         "founder": [
-          { "@type": "Person", "name": "Anubhav Garg", "jobTitle": "Founder & Lead Technical Engineer" },
-          { "@type": "Person", "name": "Ankit Kumar", "jobTitle": "Co-Founder & Business Director" }
+          { "@id": "https://monolithcodes.com/#anubhav-garg" },
+          { "@id": "https://monolithcodes.com/#ankit-kumar" }
         ],
         "contactPoint": [
           {
@@ -93,6 +102,7 @@
             "contactType": "sales",
             "email": "studio@monolithcodes.com",
             "telephone": "+91-92172-47687",
+            "areaServed": ["IN", "Worldwide"],
             "availableLanguage": ["English"]
           }
         ],
@@ -102,44 +112,57 @@
         ]
       },
       {
+        "@type": "Person",
+        "@id": "https://monolithcodes.com/#anubhav-garg",
+        "name": "Anubhav Garg",
+        "jobTitle": "Founder & Lead Technical Engineer",
+        "url": "https://monolithcodes.com/about",
+        "image": "https://monolithcodes.com/assets/faces/founder_pp.webp",
+        "worksFor": { "@id": "https://monolithcodes.com/#organization" }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://monolithcodes.com/#ankit-kumar",
+        "name": "Ankit Kumar",
+        "jobTitle": "Co-Founder & Business Director",
+        "url": "https://monolithcodes.com/about",
+        "image": "https://monolithcodes.com/assets/faces/cofounder_pp.webp",
+        "worksFor": { "@id": "https://monolithcodes.com/#organization" }
+      },
+      {
         "@type": "WebSite",
         "@id": "https://monolithcodes.com/#website",
         "url": "https://monolithcodes.com/",
         "name": "MONOLITH CODES",
-        "description": "Custom software engineering studio",
+        "description": "Custom software development studio based in India",
         "inLanguage": "en",
         "publisher": { "@id": "https://monolithcodes.com/#organization" }
       },
       {
-        "@type": "WebPage",
-        "@id": "https://monolithcodes.com/#webpage",
-        "url": "https://monolithcodes.com/",
-        "name": "MONOLITH CODES | Custom Software Development Studio",
-        "isPartOf": { "@id": "https://monolithcodes.com/#website" },
-        "about": { "@id": "https://monolithcodes.com/#organization" },
-        "primaryImageOfPage": { "@type": "ImageObject", "url": "https://monolithcodes.com/og-image.jpg" },
-        "inLanguage": "en"
-      },
-      {
         "@type": "ProfessionalService",
-        "@id": "https://monolithcodes.com/#service",
-        "name": "MONOLITH CODES — Custom Software Development",
+        "@id": "https://monolithcodes.com/#professional-service",
+        "name": "MONOLITH CODES",
         "url": "https://monolithcodes.com/",
         "image": "https://monolithcodes.com/og-image.jpg",
-        "provider": { "@id": "https://monolithcodes.com/#organization" },
-        "serviceType": "Custom software development",
-        "email": "studio@monolithcodes.com",
+        "parentOrganization": { "@id": "https://monolithcodes.com/#organization" },
+        "address": { "@type": "PostalAddress", "addressCountry": "IN" },
         "telephone": "+91-92172-47687",
+        "areaServed": [
+          { "@type": "Country", "name": "India" },
+          { "@type": "Place", "name": "Worldwide" }
+        ],
+        "currenciesAccepted": "INR, USD",
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
-          "name": "Software engineering services",
+          "name": "Software development services",
+          "url": "https://monolithcodes.com/services",
           "itemListElement": [
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Web Experiences & Websites", "description": "High-conversion, hand-coded marketing sites and bespoke web experiences." } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Custom Web Applications", "description": "Complex web platforms with real-time logic, built from scratch." } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Mobile Applications", "description": "Native-quality iOS and Android cross-platform apps." } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SaaS Platforms", "description": "Multi-tenant, high-scale software-as-a-service product systems." } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "ERP & CRM Systems", "description": "Custom enterprise software and operational workflows." } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI & Automation Solutions", "description": "Pragmatic LLM integration and agentic business automation." } }
+            { "@type": "Offer", "url": "https://monolithcodes.com/services/website-development", "itemOffered": { "@type": "Service", "@id": "https://monolithcodes.com/services/website-development#service", "name": "Website Development" } },
+            { "@type": "Offer", "url": "https://monolithcodes.com/services/web-application-development", "itemOffered": { "@type": "Service", "@id": "https://monolithcodes.com/services/web-application-development#service", "name": "Web Application Development" } },
+            { "@type": "Offer", "url": "https://monolithcodes.com/services/saas-development", "itemOffered": { "@type": "Service", "@id": "https://monolithcodes.com/services/saas-development#service", "name": "SaaS Development" } },
+            { "@type": "Offer", "url": "https://monolithcodes.com/services/mobile-app-development", "itemOffered": { "@type": "Service", "@id": "https://monolithcodes.com/services/mobile-app-development#service", "name": "Mobile App Development" } },
+            { "@type": "Offer", "url": "https://monolithcodes.com/services/erp-crm-development", "itemOffered": { "@type": "Service", "@id": "https://monolithcodes.com/services/erp-crm-development#service", "name": "ERP & CRM Development" } },
+            { "@type": "Offer", "url": "https://monolithcodes.com/services/ai-automation", "itemOffered": { "@type": "Service", "@id": "https://monolithcodes.com/services/ai-automation#service", "name": "AI & Automation" } }
           ]
         }
       }
@@ -147,62 +170,20 @@
   }
   </script>
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&family=Lora:ital,wght@1,400;1,500;1,600&display=swap"
-    rel="stylesheet" />
+  <!-- First-visit home intro: keep the prerendered page hidden until the intro screen mounts (no flash).
+       Safety net: always reveal after 4s even if JavaScript fails. -->
+  <style>html.mc-intro-pending #root{visibility:hidden}</style>
 
-  <!-- Anti-Flash Theme Script -->
-  <script>
-    (function () {
-      try {
-        var stored = localStorage.getItem('monolith_theme');
-        var theme = stored || 'dark';
-        var resolved = theme;
+  <!-- Anti-flash theme script (System is the default). Its SHA-256 is pinned in the CSP (vercel.json);
+       scripts/prerender.mjs fails the build if they drift apart. -->
+  <script>(function(){try{var d=document.documentElement,s=localStorage.getItem('monolith_theme'),t=s==='light'||s==='dark'||s==='system'?s:'system',r=t==='system'?(window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'):t;d.setAttribute('data-theme',r);d.style.colorScheme=r;var p=location.pathname;if((p==='/'||p==='/index.html')&&!sessionStorage.getItem('mc_intro_played')){d.classList.add('mc-intro-pending');setTimeout(function(){d.classList.remove('mc-intro-pending')},4000)}}catch(e){}})();</script>
 
-        if (theme === 'system') {
-          resolved = window.matchMedia('(prefers-color-scheme: light)').matches
-            ? 'light'
-            : 'dark';
-        }
-
-        document.documentElement.setAttribute('data-theme', resolved);
-        document.documentElement.style.colorScheme = resolved;
-      } catch (e) { }
-    })();
-  </script>
+  <!-- No-JS visitors: animated elements are prerendered in their hidden start state — show them. -->
+  <noscript><style>#root [style*="opacity:0"]{opacity:1!important;transform:none!important;filter:none!important}</style></noscript>
 </head>
 
 <body class="bg-mc-bg text-mc-text antialiased selection:bg-mc-orange selection:text-mc-bg">
-  <div id="root"></div>
-
-  <!-- Crawler / no-JS fallback: real content for bots and users without JavaScript -->
-  <noscript>
-    <main style="max-width:860px;margin:0 auto;padding:48px 24px;font-family:system-ui,sans-serif;line-height:1.6;color:#F4F3EE;background:#080A0C">
-      <h1>MONOLITH CODES — Custom Software Development Studio</h1>
-      <p>We build software for companies that outgrew templates. MONOLITH CODES is a software engineering studio that hand-codes websites, web applications, SaaS platforms, mobile apps, ERP/CRM systems and business workflow automation — with 100% IP ownership handed to you.</p>
-      <h2>What we build</h2>
-      <ul>
-        <li>Web experiences &amp; custom websites</li>
-        <li>Custom web applications</li>
-        <li>Mobile applications (iOS &amp; Android)</li>
-        <li>SaaS platforms</li>
-        <li>ERP &amp; CRM systems</li>
-        <li>AI &amp; automation solutions</li>
-      </ul>
-      <h2>Contact</h2>
-      <p>
-        Email: <a href="mailto:studio@monolithcodes.com" style="color:#FF6B00">studio@monolithcodes.com</a><br />
-        Phone: <a href="tel:+919217247687" style="color:#FF6B00">+91 92172 47687</a><br />
-        <a href="https://www.linkedin.com/company/monolith-codes/" style="color:#FF6B00">LinkedIn</a> ·
-        <a href="https://www.instagram.com/monolithcodes_/" style="color:#FF6B00">Instagram</a>
-      </p>
-      <p>Please enable JavaScript to view the full MONOLITH CODES website.</p>
-    </main>
-  </noscript>
-
+  <div id="root"><!--app-html--></div>
   <script type="module" src="/src/main.tsx"></script>
 </body>
 

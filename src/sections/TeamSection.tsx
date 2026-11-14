@@ -100,7 +100,7 @@ export const TeamSection: React.FC = () => {
             </div>
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-sans font-medium text-mc-text-strong tracking-tight leading-[1.05]">
-              THE PEOPLE <br className="hidden sm:block" />
+              THE PEOPLE{' '}<br className="hidden sm:block" />
               BEHIND <span className="text-mc-orange">THE SYSTEMS.</span>
             </h2>
 
@@ -121,7 +121,7 @@ export const TeamSection: React.FC = () => {
               {/* Photo Frame */}
               <div className="relative h-56 lg:h-48 xl:h-56 overflow-hidden bg-mc-surface-deep shrink-0">
                 <img
-                  src={member.photo} loading="lazy" decoding="async"
+                  src={member.photo} width={900} height={599} loading="lazy" decoding="async"
                   alt={`${member.name} - ${member.role}`}
                   className="w-full h-full object-cover object-[center_15%] filter contrast-[1.02] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                   onError={(e) => {
@@ -157,9 +157,9 @@ export const TeamSection: React.FC = () => {
 
                   <hr className="border-mc-border-soft my-3" />
 
-                  {/* <p className="font-sans text-sm md:text-base text-mc-text-body leading-relaxed">
+                  <p className="font-sans text-sm md:text-base text-mc-text-body leading-relaxed">
                     {member.bio}
-                  </p> */}
+                  </p>
                 </div>
 
                 {/* 4 Pillars / Competencies Grid */}
@@ -201,7 +201,7 @@ export const TeamSection: React.FC = () => {
                 OUR COMMITMENT
               </div>
               <h3 className="text-xl sm:text-2xl font-sans font-bold text-mc-text-strong tracking-tight">
-                ONE TEAM. ONE MISSION. <br />
+                ONE TEAM. ONE MISSION.{' '}<br />
                 <span className="text-mc-orange">YOUR SUCCESS.</span>
               </h3>
             </div>
@@ -244,8 +244,8 @@ export const TeamSection: React.FC = () => {
           <div className="mt-8 pt-6 border-t border-mc-border-soft flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-mc-text-tertiary">
             <div className="flex items-center gap-2">
               <img
-                src="/assets/brand/monolith-mark.webp" loading="lazy" decoding="async"
-                alt="MONOLITH CODES"
+                src="/assets/brand/monolith-mark.webp" width={512} height={471} loading="lazy" decoding="async"
+                alt=""
                 className="h-4 w-auto object-contain opacity-80"
               />
               <span className="font-semibold text-mc-text-secondary">MONOLITH CODES</span>

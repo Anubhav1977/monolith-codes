@@ -27,3 +27,8 @@ pnpm-debug.log*
 
 # markdown files
 *.md
+# build-time SSR bundle (prerender)
+dist-server/
+
+# local SEO audit reports
+monolithcodes.com-audit/

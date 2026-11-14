@@ -122,3 +122,16 @@ header.fixed a[aria-label^="MONOLITH"], header.fixed > div > div:last-child { bo
 [data-theme="light"] .testi-cool { background: #eef4f7 !important; border-color: rgba(60,120,150,.3) !important; box-shadow: 0 24px 50px -24px rgba(30,70,95,.3) !important; }
 [data-theme="light"] .testi-warm p, [data-theme="light"] .testi-cool p, [data-theme="light"] .testi-warm div, [data-theme="light"] .testi-cool div { color: #1b1d20; }
 [data-theme="light"] .testi-warm .font-mono, [data-theme="light"] .testi-cool .font-mono { color: #62666A; }
+
+/* ── Audit fixes (Nov 2026): legibility, tap targets, hero collisions ─────────────── */
+.vt-btn { height: 44px; }
+.gateway-hero__headline { text-wrap: balance; }
+.gateway-hero__chip { position: relative; z-index: 2; padding: 6px 8px 6px 14px; border-radius: 999px; font-size: 12px; color: var(--mc-text-body); background: color-mix(in srgb, var(--mc-bg) 70%, transparent); border: 1px solid var(--mc-border); backdrop-filter: blur(8px); }
+.gateway-hero__sub { position: relative; z-index: 2; max-width: 640px; margin: 24px auto 0; padding: 12px 18px; border-radius: 14px; font-size: clamp(15px, 1.2vw, 17px); line-height: 1.55; color: var(--mc-text-strong); background: color-mix(in srgb, var(--mc-bg) 74%, transparent); border: 1px solid var(--mc-border-soft); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.gateway-hero__points li { font-size: 13px; color: var(--mc-text-body); }
+[data-theme="light"] .gateway-hero__sub { color: #1D2023; background: rgba(255,255,255,.72); }
+[data-theme="light"] .gateway-hero__chip { background: rgba(255,255,255,.7); }
+@media (max-width: 640px) {
+  .gateway-hero__scroll { display: none; }
+  .gateway-hero__status { left: 20px; bottom: 24px; max-width: calc(100% - 110px); }
+}

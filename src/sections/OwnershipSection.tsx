@@ -67,14 +67,14 @@ export const OwnershipSection: React.FC = () => {
                   style={reduce ? { scaleX: 1 } : { scaleX: strike }}
                 />
               </span>
-            </motion.span>
+            </motion.span>{' '}
             <br />
             Own your <span className="own__accent">software.</span>
           </h2>
           <p className="own__lede">
             Hand-coded systems built around your workflows, with full IP ownership from day one.
           </p>
-          <a href="#inquiry" className="own__cta">
+          <a href="/#inquiry" className="own__cta">
             Start a Project
             <ArrowUpRight aria-hidden="true" />
           </a>

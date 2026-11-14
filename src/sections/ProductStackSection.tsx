@@ -45,6 +45,26 @@ interface StackItem {
   stackItems: string[];
 }
 
+/** Intrinsic image sizes (prevents layout shift). */
+const IMAGE_DIMS: Record<string, [number, number]> = {
+  web: [1000, 545],
+  'web-apps': [977, 775],
+  mobile: [582, 670],
+  saas: [1000, 558],
+  'erp-crm': [1000, 545],
+  ai: [1000, 558],
+};
+
+/** Product-stack card id → dedicated service page. */
+const SERVICE_SLUGS: Record<string, string> = {
+  web: 'website-development',
+  'web-apps': 'web-application-development',
+  mobile: 'mobile-app-development',
+  saas: 'saas-development',
+  'erp-crm': 'erp-crm-development',
+  ai: 'ai-automation',
+};
+
 const STACK_ITEMS: StackItem[] = [
   {
     id: 'web',
@@ -54,8 +74,8 @@ const STACK_ITEMS: StackItem[] = [
     fullTitle: 'Web Experiences',
     tagline: 'High-conversion marketing engines, sub-second landing pages & bespoke digital frontends.',
     icon: <Globe className="w-5 h-5 text-mc-orange" />,
-    systemStatus: 'Verified Engine • Sub-200ms TBT',
-    image: '/assets/images/services/Modern web Experience.webp',
+    systemStatus: 'Performance • Sub-200ms TBT target',
+    image: '/assets/images/services/web-experiences.webp',
     features: [
       {
         icon: <Zap className="w-4 h-4" />,
@@ -89,7 +109,7 @@ const STACK_ITEMS: StackItem[] = [
     tagline: 'Bespoke web platforms engineered for high traffic, real-time data & complex logic.',
     icon: <Server className="w-5 h-5 text-mc-orange" />,
     systemStatus: 'Active Queue • Real-time Sync',
-    image: '/assets/images/services/complex web applications.webp',
+    image: '/assets/images/services/web-applications.webp',
     features: [
       {
         icon: <Zap className="w-4 h-4" />,
@@ -123,7 +143,7 @@ const STACK_ITEMS: StackItem[] = [
     tagline: 'Native-feel iOS & Android mobile platforms for field teams and customer access.',
     icon: <Smartphone className="w-5 h-5 text-mc-orange" />,
     systemStatus: 'Cross-Platform • 60 FPS',
-    image: '/assets/images/services/Mobile Application System.webp',
+    image: '/assets/images/services/mobile-apps.webp',
     features: [
       {
         icon: <Smartphone className="w-4 h-4" />,
@@ -157,7 +177,7 @@ const STACK_ITEMS: StackItem[] = [
     tagline: 'Multi-tenant cloud products, subscription engines & telemetry dashboards.',
     icon: <LayoutDashboard className="w-5 h-5 text-mc-orange" />,
     systemStatus: 'Multi-Tenant • 99.99% Uptime',
-    image: '/assets/images/services/Saas platform.webp',
+    image: '/assets/images/services/saas-platforms.webp',
     features: [
       {
         icon: <Layers className="w-4 h-4" />,
@@ -190,8 +210,8 @@ const STACK_ITEMS: StackItem[] = [
     fullTitle: 'ERP & CRM Systems',
     tagline: 'Custom operational software tailored strictly to your internal business rules.',
     icon: <Cpu className="w-5 h-5 text-mc-orange" />,
-    systemStatus: 'Verified Engine • Zero Bottleneck',
-    image: '/assets/images/services/ERP systems.webp',
+    systemStatus: 'Operations • Workflow-first',
+    image: '/assets/images/services/erp-crm-systems.webp',
     features: [
       {
         icon: <Box className="w-4 h-4" />,
@@ -225,7 +245,7 @@ const STACK_ITEMS: StackItem[] = [
     tagline: 'Pragmatic LLM integration, automated document triage & smart agentic workflows.',
     icon: <Bot className="w-5 h-5 text-mc-orange" />,
     systemStatus: 'Agentic Pipeline • Active LLM',
-    image: '/assets/images/services/AI and Business Automation.webp',
+    image: '/assets/images/services/ai-automation.webp',
     isFlow: true,
     features: [
       {
@@ -351,7 +371,7 @@ export const ProductStackSection: React.FC = () => {
 
                       {/* Split Two-Toned Headline */}
                       <h3 className="text-2xl sm:text-3xl md:text-5xl font-sans font-bold tracking-tight uppercase leading-[0.95] mb-3 lg:mb-4">
-                        <span className="text-mc-text-strong block">{item.titleMain}</span>
+                        <span className="text-mc-text-strong block">{item.titleMain}</span>{' '}
                         <span className="text-mc-orange block">{item.titleOrange}</span>
                       </h3>
 
@@ -375,9 +395,9 @@ export const ProductStackSection: React.FC = () => {
                                   <ArrowRight className="w-3.5 h-3.5 text-mc-text-tertiary shrink-0 hidden sm:block" />
                                 )}
                               </div>
-                              <h5 className="font-sans text-xs font-semibold text-mc-text-strong leading-snug">
+                              <h4 className="font-sans text-xs font-semibold text-mc-text-strong leading-snug">
                                 {feat.title}
-                              </h5>
+                              </h4>
                               <p className="font-sans text-[11px] text-mc-text-tertiary leading-tight line-clamp-2">
                                 {feat.description}
                               </p>
@@ -391,9 +411,9 @@ export const ProductStackSection: React.FC = () => {
                               <div className="p-2 w-fit rounded-lg bg-mc-surface-deep border border-mc-border text-mc-orange shadow-[0_0_10px_rgba(249,115,22,0.12)]">
                                 {feat.icon}
                               </div>
-                              <h5 className="font-sans text-xs font-semibold text-mc-text-strong leading-snug">
+                              <h4 className="font-sans text-xs font-semibold text-mc-text-strong leading-snug">
                                 {feat.title}
-                              </h5>
+                              </h4>
                               <p className="font-sans text-[11px] text-mc-text-tertiary leading-tight line-clamp-2">
                                 {feat.description}
                               </p>
@@ -421,7 +441,7 @@ export const ProductStackSection: React.FC = () => {
                   <div className="lg:col-span-4 flex items-center justify-center py-2 relative">
                     <div className="relative w-full max-w-115 flex items-center justify-center group/img">
                       <img
-                        src={item.image} loading="lazy" decoding="async"
+                        src={item.image} width={IMAGE_DIMS[item.id]?.[0]} height={IMAGE_DIMS[item.id]?.[1]} loading="lazy" decoding="async"
                         alt={item.fullTitle}
                         className="w-full h-auto max-h-32.5 sm:max-h-42.5 lg:max-h-75 object-contain transition-transform duration-500 group-hover/img:scale-105 filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.6)]"
                       />
@@ -455,7 +475,7 @@ export const ProductStackSection: React.FC = () => {
                       <div className="rounded-xl border border-mc-border/80 bg-mc-surface-deep/90 p-4 space-y-3 shadow-inner backdrop-blur-md">
                         <div className="flex items-center justify-between font-mono text-xs pb-2.5 border-b border-mc-border/60">
                           <span className="text-mc-text-tertiary">stack.{item.id}.ts</span>
-                          <span className="text-mc-system-green font-medium">Verified</span>
+                          <span className="text-mc-text-secondary font-medium">Typical stack</span>
                         </div>
 
                         {/* Tech Stack List Items with Orange Diamond Bullet */}
@@ -475,13 +495,20 @@ export const ProductStackSection: React.FC = () => {
                     </div>
 
                     {/* Right Bottom Action Link */}
-                    <div className="pt-1 pb-1 flex justify-start lg:pt-4 lg:justify-end">
+                    <div className="pt-1 pb-1 flex flex-wrap items-center gap-x-6 gap-y-1 justify-start lg:pt-4 lg:justify-end">
+                      <a
+                        href={`/services/${SERVICE_SLUGS[item.id]}`}
+                        className="group inline-flex min-h-11 items-center gap-2 font-sans text-xs sm:text-sm font-medium text-mc-orange hover:underline underline-offset-4"
+                      >
+                        <span>Explore {item.fullTitle}</span>
+                        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+                      </a>
                       <button
                         onClick={scrollToInquiry}
-                        className="group inline-flex items-center gap-2 font-sans text-xs sm:text-sm font-medium text-mc-text-strong hover:text-mc-orange transition-colors cursor-pointer"
+                        className="group inline-flex min-h-11 items-center gap-2 font-sans text-xs sm:text-sm font-medium text-mc-text-strong hover:text-mc-orange transition-colors cursor-pointer"
                       >
-                        <span>Inquire About {item.fullTitle}</span>
-                        <ArrowRight className="w-4 h-4 text-mc-orange transition-transform duration-300 group-hover:translate-x-1" />
+                        <span>Inquire</span>
+                        <ArrowRight className="w-4 h-4 text-mc-orange transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
                       </button>
                     </div>
                   </div>
