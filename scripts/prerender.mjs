@@ -69,11 +69,11 @@ const outFileFor = (routePath) => (routePath === '/' ? 'index.html' : `${routePa
 
 const renderRoute = async (route, file) => {
   const { html, head: rawHead, source } = await render(route);
-  // Per-page OG image (npm run seo:og). Missing → fall back to the site-wide image rather than a 404.
+  // Per-page OG image (npm run seo:assets). Missing → fall back to the site-wide image rather than a 404.
   let head = rawHead;
   const og = ogImageFor(route.path);
   if (route.meta.indexable !== false && !(await exists(path.join(DIST, og)))) {
-    console.warn(`[prerender] ⚠ ${og} missing — using /og-image.jpg (run npm run seo:og)`);
+    console.warn(`[prerender] ⚠ ${og} missing — using /og-image.jpg (run npm run seo:assets)`);
     head = head.split(`${SITE}${og}`).join(`${SITE}/og-image.jpg`);
   }
   if (route.page !== 'notFound' && !/<h1[\s>]/.test(html)) fail(`Route ${route.path} rendered without an <h1>.`);
