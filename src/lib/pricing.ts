@@ -9,3 +9,10 @@ export const STARTING_PRICES: Record<'launch' | 'grow' | 'build', Record<Currenc
   grow: { INR: '₹29,999', USD: '$2,499' },
   build: null,
 };
+
+/** USD starting prices as numbers (structured data). Keep in sync with STARTING_PRICES. */
+export const STARTING_PRICES_USD: Record<'launch' | 'grow' | 'build', number | null> = {
+  launch: 999,
+  grow: 2499,
+  build: null,
+};

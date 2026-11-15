@@ -4,6 +4,7 @@ import { applyRouteMeta } from '@/components/Seo';
 import { matchRoute, type RouteDef } from '@/lib/routes';
 import { installLinkInterception, redirectLegacyHash, scrollToId, scrollToTopInstant, usePathname } from '@/lib/router';
 import { PAGE_LOADERS, type PageComponent } from '@/pages/registry';
+import { initAnalytics } from '@/lib/analytics';
 
 interface AppProps {
   initialRoute: RouteDef;
@@ -47,6 +48,7 @@ export const App: React.FC<AppProps> = ({ initialRoute, initialPage }) => {
   }, [view]);
 
   useEffect(() => installLinkInterception(), []);
+  useEffect(() => initAnalytics(), []);
 
   // Old in-page links such as `/#pricing` followed while already on home → real URL.
   useEffect(() => {

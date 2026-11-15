@@ -2,8 +2,8 @@
  * Service landing pages (/services/<slug>).
  *
  * Content rules (AGENTS.md §23–24): no invented clients, metrics or outcomes. Prices and timelines
- * come from the published tiers (src/lib/pricing.ts, PricingSection); related work references
- * projects shown in Selected Work. Edit copy here — pages, sitemap and structured data follow.
+ * come from the published tiers (src/lib/pricing.ts, PricingSection); related case studies come
+ * from src/content/work.ts. Edit copy here — pages, sitemap and structured data follow.
  */
 
 export type PriceTier = 'launch' | 'grow' | 'build';
@@ -32,25 +32,26 @@ export interface ServiceContent {
   stack: string[];
   /** Published tier this service is usually scoped under; `null` = quoted per project. */
   tier: PriceTier | null;
+  /** Short timeline for key-facts lines, e.g. "2–4 weeks". */
+  timelineShort: string;
   timeline: string;
   pricingNote: string;
-  relatedWork: { title: string; text: string }[];
   faqs: ServiceFaq[];
   image: { src: string; width: number; height: number; alt: string };
   /** ISO date of the last meaningful content change (sitemap lastmod). */
   updated: string;
 }
 
-const UPDATED = '2026-11-14';
+const UPDATED = '2026-11-15';
 
 export const SERVICES: ServiceContent[] = [
   {
     slug: 'website-development',
     name: 'Website Development',
     serviceType: 'Custom website development',
-    metaTitle: 'Custom Website Development Company in India | MONOLITH CODES',
+    metaTitle: 'Website Development Company in India | Monolith Codes',
     metaDescription:
-      'Hand-coded business websites built in React — fast, SEO-ready and fully yours. Custom website development from India for clients in India and worldwide. From ₹12,999 / $999.',
+      'Hand-coded React websites that load fast, rank well and are 100% yours. Website development from India for clients worldwide, from $999. Get a fixed quote.',
     eyebrow: 'Service / 01 — Websites',
     h1: 'Custom website development for businesses that need more than a template',
     summary:
@@ -80,17 +81,17 @@ export const SERVICES: ServiceContent[] = [
     ],
     stack: ['React', 'TypeScript', 'Tailwind CSS', 'Vite', 'Vercel', 'Headless CMS (optional)'],
     tier: 'launch',
+    timelineShort: '2–4 weeks',
     timeline: 'Typically 2–4 weeks, depending on the number of pages and how quickly content is ready.',
     pricingNote: 'Website projects usually fall under our Launch tier. The final price depends on page count, content and integrations, and is fixed in a written proposal before work begins.',
-    relatedWork: [
-      { title: 'Niketana Modular Furniture Website', text: 'Corporate website and e-commerce presence for a modular furniture brand.' },
-      { title: 'Immersive 3D Real Estate Website', text: 'An interactive 3D property experience built for the web.' },
-    ],
     faqs: [
       { q: 'Do you build websites with WordPress?', a: 'No. Every site is hand-coded in React and TypeScript. That removes plugin bloat and theme lock-in, and gives you a codebase any competent developer can maintain.' },
       { q: 'Will I be able to edit content myself?', a: 'Yes, if you need to. We can connect a headless CMS so your team can edit text and images without touching code. Simpler sites can be edited directly in the repository.' },
       { q: 'Is SEO included?', a: 'Technical SEO foundations are included: prerendered pages, titles and meta descriptions, canonical URLs, sitemap, structured data and performance tuning. Ongoing content marketing is not part of a website build.' },
       { q: 'Do you work with clients outside India?', a: 'Yes. We are based in India and work with clients in India and internationally, quoting in INR or USD.' },
+      // REVIEW(owner): the two FAQs below were written from published pricing/process content.
+      { q: "How long does a custom website take?", a: "Most business websites take 2–4 weeks from approved scope to launch. The main variables are the number of pages and how quickly content and feedback arrive." },
+      { q: "What does a custom website cost?", a: "Website projects start from ₹12,999 for clients in India and $999 for international clients under our Launch tier. The exact price is fixed in a written proposal after a short scope call." },
     ],
     image: { src: '/assets/images/services/web-experiences.webp', width: 1000, height: 545, alt: 'Custom website interface designed and built by MONOLITH CODES' },
     updated: UPDATED,
@@ -99,9 +100,9 @@ export const SERVICES: ServiceContent[] = [
     slug: 'web-application-development',
     name: 'Web Application Development',
     serviceType: 'Custom web application development',
-    metaTitle: 'Custom Web Application Development Company in India | MONOLITH CODES',
+    metaTitle: 'Web Application Development Company | Monolith Codes',
     metaDescription:
-      'Custom web applications, portals and dashboards engineered in React, TypeScript and Node.js. Built in India for clients worldwide, with full source-code ownership. From ₹29,999 / $2,499.',
+      'Custom web apps, portals and dashboards in React and Node.js, with full code ownership. Built in India for clients worldwide from $2,499. Get a quote.',
     eyebrow: 'Service / 02 — Web Applications',
     h1: 'Custom web application development for real business workflows',
     summary:
@@ -131,17 +132,17 @@ export const SERVICES: ServiceContent[] = [
     ],
     stack: ['React', 'TypeScript', 'Node.js', 'PostgreSQL / SQL', 'REST & GraphQL', 'AWS / Cloudflare / Vercel'],
     tier: 'grow',
+    timelineShort: '6–10 weeks',
     timeline: 'Typically 6–10 weeks for a first production release, depending on scope.',
     pricingNote: 'Web applications are usually scoped under our Grow tier, which includes a full-stack backend, role-based access and a 30-day post-launch hypercare period. Larger systems move to a custom Build quote.',
-    relatedWork: [
-      { title: 'High-Throughput Financial Telemetry & Billing Dashboard', text: 'A real-time dashboard rebuilt to stay stable under heavy concurrent load.' },
-      { title: 'RentEasee Rental Property Platform', text: 'A rental platform with owner and tenant dashboards, verified listings and search.' },
-    ],
     faqs: [
       { q: 'What is the difference between a website and a web application?', a: 'A website mainly presents information. A web application lets users log in and do work — create records, process requests, view dashboards — and usually has its own database and API.' },
       { q: 'Can you integrate with the software we already use?', a: 'Yes. We regularly build API bridges to payment gateways, CRMs, ERPs and existing SQL databases so the new application fits into your current stack.' },
       { q: 'Who owns the code?', a: 'You do. You receive the full Git repository, documentation and deployment set-up, with no licence fees or lock-in.' },
       { q: 'Do you offer support after launch?', a: 'Every Grow-tier project includes a 30-day post-launch hypercare period. Ongoing maintenance can be arranged in a separate agreement.' },
+      // REVIEW(owner): the two FAQs below were written from published pricing/process content.
+      { q: "How long does it take to build a web application?", a: "A first production release typically takes 6–10 weeks, delivered in milestones you can test on a staging environment. Larger systems are planned in phases." },
+      { q: "What does a custom web application cost?", a: "Web applications usually start from ₹29,999 in India and $2,499 for international clients under our Grow tier. Larger systems move to a custom Build quote after scoping." },
     ],
     image: { src: '/assets/images/services/web-applications.webp', width: 977, height: 775, alt: 'Custom web application dashboard interface' },
     updated: UPDATED,
@@ -150,9 +151,9 @@ export const SERVICES: ServiceContent[] = [
     slug: 'saas-development',
     name: 'SaaS Development',
     serviceType: 'SaaS product development',
-    metaTitle: 'SaaS Development Company in India — MVP to Production | MONOLITH CODES',
+    metaTitle: 'SaaS Development Company in India | Monolith Codes',
     metaDescription:
-      'SaaS product development from MVP to production: multi-tenant architecture, subscriptions and billing, roles and analytics. Built in India for founders worldwide. From ₹29,999 / $2,499.',
+      'SaaS development from MVP to production: multi-tenant architecture, billing, roles and analytics. Built in India for founders worldwide, from $2,499.',
     eyebrow: 'Service / 03 — SaaS Platforms',
     h1: 'SaaS development from MVP to a production-ready platform',
     summary:
@@ -182,16 +183,17 @@ export const SERVICES: ServiceContent[] = [
     ],
     stack: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'Stripe / Razorpay', 'AWS / Cloudflare / Vercel'],
     tier: 'grow',
+    timelineShort: '6–10 weeks (MVP)',
     timeline: 'Typically 6–10 weeks for an MVP that real customers can use; larger platforms are planned in phases.',
     pricingNote: 'SaaS MVPs are usually scoped under our Grow tier, which includes subscription billing, multi-role authentication and real-time dashboards. Complex platforms move to a custom Build quote.',
-    relatedWork: [
-      { title: 'High-Throughput Financial Telemetry & Billing Dashboard', text: 'Real-time telemetry and billing dashboard engineered for high concurrency.' },
-    ],
     faqs: [
       { q: 'How long does it take to build a SaaS MVP?', a: 'A focused MVP typically takes 6–10 weeks. The timeline depends mainly on how many core workflows the first release needs and how quickly decisions are made.' },
       { q: 'Can you take over an existing codebase?', a: 'Yes. We start with a technical audit, then decide with you whether to refactor the existing product or rebuild specific parts.' },
       { q: 'Which payment providers can you integrate?', a: 'Commonly Stripe for international billing and Razorpay for India, but we integrate whichever provider fits your market.' },
       { q: 'Do I own the product and IP?', a: 'Yes — 100% of the source code and intellectual property is transferred to you.' },
+      // REVIEW(owner): the two FAQs below were written from published pricing/process content.
+      { q: "What does it cost to build a SaaS MVP?", a: "SaaS MVPs usually start from ₹29,999 in India and $2,499 for international clients under our Grow tier. Complex platforms are quoted per project after scoping." },
+      { q: "What technology do you use for SaaS products?", a: "Typically React and TypeScript on the front end, Node.js APIs, PostgreSQL, and Stripe or Razorpay for billing, deployed on AWS, Cloudflare or Vercel. The stack is confirmed per project." },
     ],
     image: { src: '/assets/images/services/saas-platforms.webp', width: 1000, height: 558, alt: 'SaaS platform interface with analytics and billing views' },
     updated: UPDATED,
@@ -200,9 +202,9 @@ export const SERVICES: ServiceContent[] = [
     slug: 'mobile-app-development',
     name: 'Mobile App Development',
     serviceType: 'Mobile application development',
-    metaTitle: 'Mobile App Development Company in India — iOS & Android | MONOLITH CODES',
+    metaTitle: 'Mobile App Development Company in India | Monolith Codes',
     metaDescription:
-      'Cross-platform iOS and Android app development with native-quality UI, offline sync and secure APIs. Built in India for businesses in India and worldwide, with full code ownership.',
+      'Cross-platform iOS and Android apps in React Native with offline sync, secure APIs and full code ownership. Built in India for clients worldwide. Get a quote.',
     eyebrow: 'Service / 04 — Mobile Apps',
     h1: 'Mobile app development for iOS and Android',
     summary:
@@ -232,16 +234,17 @@ export const SERVICES: ServiceContent[] = [
     ],
     stack: ['React Native', 'TypeScript', 'Node.js APIs', 'Push notifications', 'Offline storage', 'App Store & Google Play'],
     tier: null,
+    timelineShort: 'set in the written proposal',
     timeline: 'Depends on the number of journeys and integrations; we give a timeline in the written proposal.',
     pricingNote: 'Mobile apps are quoted per project after a scope call, because cost depends heavily on features, integrations and backend work.',
-    relatedWork: [
-      { title: 'EstatePro Real Estate Mobile App', text: 'A mobile app for browsing and managing real-estate listings.' },
-    ],
     faqs: [
       { q: 'Do you build native or cross-platform apps?', a: 'We build cross-platform apps for iOS and Android from one codebase, which keeps cost and maintenance down while delivering a native-quality experience.' },
       { q: 'Can the app share a backend with our website?', a: 'Yes. We often build the app as a companion to an existing web platform, using the same APIs and database.' },
       { q: 'Do you publish the app to the stores?', a: 'We prepare release builds and support the App Store and Google Play submission process using your developer accounts.' },
       { q: 'How much does a mobile app cost?', a: 'It depends on scope. After a short call we provide a written proposal with a fixed price and timeline.' },
+      // REVIEW(owner): the two FAQs below were written from published pricing/process content.
+      { q: "Which technology do you use for mobile apps?", a: "We build in React Native with TypeScript, so one codebase serves iOS and Android, connected to Node.js APIs or your existing backend." },
+      { q: "Do I own the app’s source code?", a: "Yes. You receive the full repository, release builds and documentation, and 100% of the intellectual property is transferred to you." },
     ],
     image: { src: '/assets/images/services/mobile-apps.webp', width: 582, height: 670, alt: 'Cross-platform mobile application screens' },
     updated: UPDATED,
@@ -250,9 +253,9 @@ export const SERVICES: ServiceContent[] = [
     slug: 'erp-crm-development',
     name: 'ERP & CRM Development',
     serviceType: 'Custom ERP and CRM software development',
-    metaTitle: 'Custom ERP & CRM Software Development Company in India | MONOLITH CODES',
+    metaTitle: 'Custom ERP & CRM Development Company | Monolith Codes',
     metaDescription:
-      'Custom ERP and CRM software built around your operations: inventory, sales pipelines, approvals and integrations with SAP, Oracle or Salesforce. Engineered in India for teams worldwide.',
+      'Custom ERP and CRM software built around your operations, with SAP, Oracle or Salesforce integration. Engineered in India for teams worldwide. Book a call.',
     eyebrow: 'Service / 05 — ERP & CRM',
     h1: 'Custom ERP and CRM software development built around your operations',
     summary:
@@ -282,16 +285,17 @@ export const SERVICES: ServiceContent[] = [
     ],
     stack: ['React', 'TypeScript', 'Node.js', 'PostgreSQL / SQL Server', 'REST & GraphQL APIs', 'SAP / Oracle / Salesforce connectors'],
     tier: 'build',
+    timelineShort: '10–16+ weeks, phased',
     timeline: 'Typically 10–16+ weeks, delivered in phases so the first modules go live earlier.',
     pricingNote: 'ERP and CRM systems are scoped under our Build tier and quoted per project after a process audit, because effort depends on modules, integrations and data migration.',
-    relatedWork: [
-      { title: 'High-Throughput Financial Telemetry & Billing Dashboard', text: 'Operational dashboard and billing system engineered for live, high-volume data.' },
-    ],
     faqs: [
       { q: 'Should we build a custom ERP or buy an off-the-shelf one?', a: 'If a standard product fits your process with little customisation, buying is usually cheaper. Custom makes sense when your workflow is a competitive advantage, licence costs are high, or you need deep integration. Our guide on custom vs off-the-shelf ERP covers the trade-offs.' },
       { q: 'Can you integrate with SAP, Oracle or Salesforce instead of replacing them?', a: 'Yes. We often build modules or API bridges that sit alongside an existing ERP or CRM, so you can modernise one area at a time.' },
       { q: 'How do you migrate our existing data?', a: 'We map your current data, clean and transform it, run test migrations and reconcile the results before go-live.' },
       { q: 'How long does a custom ERP take?', a: 'Typically 10–16+ weeks, delivered in phases. The first module can go live before the whole system is finished.' },
+      // REVIEW(owner): the two FAQs below were written from published pricing/process content.
+      { q: "How much does a custom ERP or CRM cost?", a: "ERP and CRM systems fall under our Build tier and are quoted per project after a process audit, because the effort depends on modules, integrations and data migration." },
+      { q: "Who owns the ERP once it is built?", a: "You do. You receive the complete source code, database schemas and documentation, with no per-seat licence fees." },
     ],
     image: { src: '/assets/images/services/erp-crm-systems.webp', width: 1000, height: 545, alt: 'Custom ERP and CRM system dashboard' },
     updated: UPDATED,
@@ -300,9 +304,9 @@ export const SERVICES: ServiceContent[] = [
     slug: 'ai-automation',
     name: 'AI & Automation',
     serviceType: 'AI integration and business process automation',
-    metaTitle: 'AI Integration & Business Automation Services in India | MONOLITH CODES',
+    metaTitle: 'AI Automation & AI Agent Development | Monolith Codes',
     metaDescription:
-      'Practical AI and workflow automation: LLM integration, document processing and automated hand-offs between your systems. Built in India for businesses in India and worldwide.',
+      'Practical AI automation: LLM integration, AI agents, document processing and workflow automation between your systems. Built in India for teams worldwide.',
     eyebrow: 'Service / 06 — AI & Automation',
     h1: 'AI integration and business process automation that does real work',
     summary:
@@ -332,14 +336,17 @@ export const SERVICES: ServiceContent[] = [
     ],
     stack: ['LLM APIs (OpenAI, Anthropic, Google)', 'Retrieval-augmented generation', 'Node.js', 'Python', 'Webhooks & queues', 'Your existing APIs'],
     tier: 'build',
+    timelineShort: 'first automation in weeks',
     timeline: 'A first automation is often delivered in a few weeks; broader programmes are planned in phases.',
     pricingNote: 'AI and automation work is scoped under our Build tier and quoted per project, because effort depends on data sources, integrations and review requirements.',
-    relatedWork: [],
     faqs: [
       { q: 'Which AI models do you use?', a: 'We choose per task — commercial LLM APIs from providers such as OpenAI, Anthropic or Google, or simpler rule-based automation when a model is not needed.' },
       { q: 'Is our data used to train AI models?', a: 'We use provider settings and APIs that do not train on your data where available, and we design access so the system only sees what it needs.' },
       { q: 'Can automation work with our existing software?', a: 'Yes. Most projects connect to tools you already use — email, CRM, ERP, spreadsheets or databases — through their APIs.' },
       { q: 'How do you keep AI output reliable?', a: 'With structured prompts, validation, logging and human review steps for important decisions.' },
+      // REVIEW(owner): the two FAQs below were written from published pricing/process content.
+      { q: "Do you build AI agents?", a: "Yes, where they fit the task: agent-style workflows that read inputs, call your systems through their APIs and act, with logging and human review for important decisions." },
+      { q: "How much does an AI automation project cost?", a: "AI and automation work falls under our Build tier and is quoted per project, because effort depends on data sources, integrations and review requirements." },
     ],
     image: { src: '/assets/images/services/ai-automation.webp', width: 1000, height: 558, alt: 'AI and business automation workflow' },
     updated: UPDATED,

@@ -1,12 +1,13 @@
 import React from 'react';
 import { BrandLockup } from '@/components/BrandLockup';
 import { ArrowUpRight, Instagram, Linkedin, Mail, Phone } from 'lucide-react';
+import { SITE } from '@/lib/site';
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="pt-24 pb-0 bg-mc-bg border-t border-mc-border overflow-hidden select-none">
+    <footer className="pt-24 pb-0 bg-mc-bg border-t border-mc-border overflow-hidden">
       <div className="max-w-340 mx-auto px-6 md:px-10">
         {/* Main Footer Links Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
@@ -28,27 +29,27 @@ export const Footer: React.FC = () => {
             </div>
 
             {/* Contact */}
-            <ul className="select-text space-y-2.5 pt-2 font-sans text-sm">
+            <ul className="space-y-2.5 pt-2 font-sans text-sm">
               <li>
                 <a
-                  href="tel:+919217247687"
+                  href={`tel:${SITE.phoneE164}`}
                   className="inline-flex items-center gap-3 text-mc-text-strong transition-colors hover:text-mc-orange"
                 >
                   <span className="grid h-8 w-8 place-items-center rounded-full border border-mc-border bg-mc-surface text-mc-orange">
                     <Phone className="h-4 w-4" />
                   </span>
-                  <span>+91 92172 47687</span>
+                  <span>{SITE.phoneDisplay}</span>
                 </a>
               </li>
               <li>
                 <a
-                  href="mailto:studio@monolithcodes.com"
+                  href={`mailto:${SITE.email}`}
                   className="inline-flex items-center gap-3 text-mc-text-strong transition-colors hover:text-mc-orange"
                 >
                   <span className="grid h-8 w-8 place-items-center rounded-full border border-mc-border bg-mc-surface text-mc-orange">
                     <Mail className="h-4 w-4" />
                   </span>
-                  <span>studio@monolithcodes.com</span>
+                  <span>{SITE.email}</span>
                 </a>
               </li>
             </ul>
@@ -76,7 +77,7 @@ export const Footer: React.FC = () => {
             </div>
             <ul className="text-mc-text-secondary">
               <li><a href="/#why-custom" className="inline-flex min-h-11 items-center hover:text-mc-text-strong transition-colors">Why Custom Engineering</a></li>
-              <li><a href="/#work" className="inline-flex min-h-11 items-center hover:text-mc-text-strong transition-colors">Selected Work & Proof</a></li>
+              <li><a href="/work" className="inline-flex min-h-11 items-center hover:text-mc-text-strong transition-colors">Case Studies & Work</a></li>
               <li><a href="/#proof" className="inline-flex min-h-11 items-center hover:text-mc-text-strong transition-colors">Technical Proof</a></li>
               <li><a href="/pricing#process" className="inline-flex min-h-11 items-center hover:text-mc-text-strong transition-colors">How We Work (7-Stage)</a></li>
               <li><a href="/pricing" className="inline-flex min-h-11 items-center hover:text-mc-text-strong transition-colors">Pricing & Tiers</a></li>
@@ -110,9 +111,9 @@ export const Footer: React.FC = () => {
             </div>
 
             {/* Social links */}
-            <div className="select-text flex items-center gap-3 pt-3 border-t border-mc-border-soft">
+            <div className="flex items-center gap-3 pt-3 border-t border-mc-border-soft">
               <a
-                href="https://www.linkedin.com/company/monolith-codes/"
+                href={SITE.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="MONOLITH CODES on LinkedIn"
@@ -121,7 +122,7 @@ export const Footer: React.FC = () => {
                 <Linkedin className="h-5 w-5" />
               </a>
               <a
-                href="https://www.instagram.com/monolithcodes_/"
+                href={SITE.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="MONOLITH CODES on Instagram"
@@ -147,7 +148,7 @@ export const Footer: React.FC = () => {
         {/* Legal & Studio Avatar Trust Bar (Inspired by image) */}
         <div className="pt-8 pb-10 border-t border-mc-border-soft flex flex-col lg:flex-row items-center justify-between gap-6 font-mono text-xs text-mc-text-tertiary">
           <div className="flex flex-wrap items-center gap-2.5">
-            <span>MONOLITH CODES © {currentYear}. ALL RIGHTS RESERVED.</span>
+            <span>{SITE.name} © {currentYear}. ALL RIGHTS RESERVED.</span>
             <span>&bull;</span>
             <a
               href="/privacy"
@@ -163,6 +164,7 @@ export const Footer: React.FC = () => {
               TERMS OF USE
             </a>
             <span>&bull;</span>
+            {/* TODO(owner): confirm this compliance claim (no source in the codebase) or remove it. */}
             <span className="text-mc-system-green">DPDP V2.1 ALIGNED</span>
           </div>
 

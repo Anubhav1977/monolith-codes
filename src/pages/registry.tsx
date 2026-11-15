@@ -23,6 +23,8 @@ export const PAGE_LOADERS: Record<PageKey, () => Promise<{ default: PageComponen
   service: () => import('./ServicePage'),
   guides: () => import('./GuidesPage'),
   guide: () => import('./GuidePage'),
+  work: () => import('./WorkPage'),
+  caseStudy: () => import('./CaseStudyPage'),
   notFound: () => import('./NotFoundPage'),
   privacy: () =>
     import('./PrivacyPolicy').then((m) => ({
@@ -43,6 +45,8 @@ export const PAGE_SOURCES: Record<PageKey, string> = {
   service: 'src/pages/ServicePage.tsx',
   guides: 'src/pages/GuidesPage.tsx',
   guide: 'src/pages/GuidePage.tsx',
+  work: 'src/pages/WorkPage.tsx',
+  caseStudy: 'src/pages/CaseStudyPage.tsx',
   notFound: 'src/pages/NotFoundPage.tsx',
   privacy: 'src/pages/PrivacyPolicy.tsx',
   terms: 'src/pages/TermsOfUse.tsx',

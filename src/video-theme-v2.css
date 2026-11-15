@@ -182,8 +182,9 @@ header nav[aria-label="Main Navigation"] > * { align-self: center; }
 .vt-ribbon i:nth-child(3) { animation-name: vt-ribbon-a; animation-duration: 11s; animation-delay: -4s; }
 @keyframes vt-ribbon-a { from { translate: -5% 0; rotate: -12deg; } to { translate: 5% 6%; rotate: -7deg; } }
 @keyframes vt-ribbon-b { from { translate: 4% 3%; rotate: -4deg; } to { translate: -4% -3%; rotate: -9deg; } }
-.vt-how__frame::after { content: ""; position: absolute; top: 0; bottom: 0; width: 22%; left: -30%; pointer-events: none; background: linear-gradient(100deg, transparent, rgba(255,154,31,.12), transparent); animation: vt-shimmer 6s ease-in-out infinite; }
-@keyframes vt-shimmer { to { left: 120%; } }
+.vt-how__frame::after { content: ""; position: absolute; top: 0; bottom: 0; width: 22%; left: -30%; pointer-events: none; background: linear-gradient(100deg, transparent, rgba(255,154,31,.12), transparent); animation: vt-shimmer 6s ease-in-out infinite; will-change: transform; }
+/* Perf: translateX instead of animating `left` (compositor-only; same path: left -30% → 120% of the frame). */
+@keyframes vt-shimmer { to { transform: translateX(681.818%); } }
 .vt-how__card[aria-hidden="true"] > p, .vt-how__card[aria-hidden="true"] > footer { opacity: 0; transition: opacity .4s ease; }
 .vt-how__card { background: rgba(14,16,19,.94); }
 
@@ -226,14 +227,17 @@ header nav[aria-label="Main Navigation"] a:hover, header nav[aria-label="Main Na
 .gateway-hero__logo { position: absolute; left: 50%; top: 50%; width: min(560px, 68vw); aspect-ratio: 1308 / 1202; margin: 0; translate: -50% -50%; perspective: 1000px; transform-style: preserve-3d; pointer-events: none; z-index: 1; }
 .gateway-hero__logo img { position: relative; display: block; width: 100%; height: 100%; object-fit: contain; opacity: .62; animation: hero-logo-float 7s ease-in-out infinite; filter: drop-shadow(0 30px 60px rgba(255,107,0,.35)); user-select: none; }
 .gateway-hero__logo-glow { position: absolute; inset: 8%; border-radius: 50%; background: radial-gradient(circle, rgba(255,120,20,.5), transparent 68%); filter: blur(50px); animation: hero-logo-pulse 4.5s ease-in-out infinite; }
-.gateway-hero__logo-shine { position: absolute; inset: 0; background: linear-gradient(115deg, transparent 38%, rgba(255,200,130,.35) 50%, transparent 62%); background-size: 250% 100%; mix-blend-mode: overlay; -webkit-mask: url(/assets/brand/monolith-3d-logo.webp) center / contain no-repeat; mask: url(/assets/brand/monolith-3d-logo.webp) center / contain no-repeat; animation: hero-logo-shine 5.5s ease-in-out infinite; }
+/* Perf: the sweep moves a 250%-wide gradient layer with transform instead of animating background-position
+   (no per-frame repaint of the masked logo). Identical path: bg-position 150% → -50% ≡ translateX(-90%) → 30%. */
+.gateway-hero__logo-shine { position: absolute; inset: 0; overflow: hidden; mix-blend-mode: overlay; -webkit-mask: url(/assets/brand/monolith-3d-logo.webp) center / contain no-repeat; mask: url(/assets/brand/monolith-3d-logo.webp) center / contain no-repeat; }
+.gateway-hero__logo-shine::before { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 250%; background: linear-gradient(115deg, transparent 38%, rgba(255,200,130,.35) 50%, transparent 62%); animation: hero-logo-shine 5.5s ease-in-out infinite; will-change: transform; }
 .gateway-hero__content { z-index: 4; }
 .gateway-hero__headline, .gateway-hero__points { text-shadow: 0 2px 24px rgba(0,0,0,.85), 0 0 30px rgba(255,154,31,.35); }
 @keyframes hero-logo-float { 0%, 100% { transform: translateY(0) rotateZ(-.6deg); } 50% { transform: translateY(-18px) rotateZ(.6deg); } }
 @keyframes hero-logo-pulse { 0%, 100% { opacity: .55; transform: scale(.95); } 50% { opacity: 1; transform: scale(1.08); } }
-@keyframes hero-logo-shine { 0% { background-position: 150% 0; } 60%, 100% { background-position: -50% 0; } }
+@keyframes hero-logo-shine { 0% { transform: translateX(-90%); } 60%, 100% { transform: translateX(30%); } }
 @media (max-width: 640px) { .gateway-hero__logo { width: 92vw; top: 46%; } .gateway-hero__logo img { opacity: .45; } }
-@media (prefers-reduced-motion: reduce) { .gateway-hero__logo img, .gateway-hero__logo-glow, .gateway-hero__logo-shine { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .gateway-hero__logo img, .gateway-hero__logo-glow, .gateway-hero__logo-shine, .gateway-hero__logo-shine::before { animation: none; } }
 
 /* Nav dropdown: keep hover bridge between the glass pill and the menu */
 header nav[aria-label="Main Navigation"] > div { position: relative; align-self: stretch; display: flex; align-items: center; }

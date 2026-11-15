@@ -1,4 +1,35 @@
 # MONOLITH CODES — https://monolithcodes.com
+# All public pages are open to search engines and AI assistants. Only API routes are private.
+
+# Search engines
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: Applebot
+User-agent: DuckDuckBot
+User-agent: YandexBot
+Allow: /
+Disallow: /api/
+
+# AI search / answer engines (live retrieval and citations)
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+Allow: /
+Disallow: /api/
+
+# AI model training — allowed (owner decision, Nov 2026)
+User-agent: GPTBot
+User-agent: Google-Extended
+User-agent: CCBot
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /api/
+
+# Everyone else
 User-agent: *
 Allow: /
 Disallow: /api/

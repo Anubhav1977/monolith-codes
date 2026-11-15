@@ -8,10 +8,14 @@
     "build": "tsc && vite build && vite build --ssr src/entry-server.tsx && node scripts/prerender.mjs",
     "lint": "tsc --noEmit",
     "preview": "vite preview",
-    "indexnow": "node scripts/indexnow.mjs"
+    "seo:indexnow": "node scripts/indexnow.mjs",
+    "seo:crawl": "node scripts/seo-crawl.mjs",
+    "seo:assets": "node scripts/generate-seo-assets.mjs"
   },
   "dependencies": {
     "@types/nodemailer": "^8.0.1",
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.1.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.4.7",
     "googleapis": "^174.0.1",

@@ -20,7 +20,7 @@ interface NavGroup {
 const NAV_GROUPS: NavGroup[] = [
   {
     label: 'Work',
-    href: '/#work',
+    href: '/work',
   },
   {
     label: 'Services',

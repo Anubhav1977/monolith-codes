@@ -22,6 +22,13 @@ const GuidesPage: React.FC<PageProps> = ({ route }) => (
             Straight answers to the questions we hear most from business owners and product teams — cost, build vs buy, and
             what to prepare before you start.
           </p>
+          {/* REVIEW(owner): written from existing site content. */}
+          <p className="mt-4 text-base text-mc-text-body leading-relaxed max-w-3xl">
+            Written by the founders of Monolith Codes, a custom software development studio based in India. Prices quoted are
+            our own published starting prices — see <a href="/pricing" className="text-mc-orange underline underline-offset-4">pricing</a>,{' '}
+            <a href="/services" className="text-mc-orange underline underline-offset-4">our services</a> and{' '}
+            <a href="/work" className="text-mc-orange underline underline-offset-4">recent case studies</a>.
+          </p>
         </div>
       </div>
     </header>

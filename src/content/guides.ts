@@ -26,6 +26,8 @@ export interface GuideContent {
   published: string;
   updated: string;
   readingMinutes: number;
+  /** Founder id from src/lib/site.ts (FOUNDERS) shown in the byline and Article.author. */
+  author: string;
   sections: GuideSection[];
   relatedServices: string[];
 }
@@ -34,9 +36,9 @@ export const GUIDES: GuideContent[] = [
   {
     slug: 'custom-software-development-cost-india',
     name: 'Custom software development cost',
-    metaTitle: 'Custom Software Development Cost in India (2026 Guide) | MONOLITH CODES',
+    metaTitle: 'Custom Software Development Cost in India: 2026 Guide',
     metaDescription:
-      'What custom software, websites, web apps, SaaS and ERP systems cost in India and for international clients — real starting prices in INR and USD, timelines and what drives the price.',
+      'What websites, web apps, SaaS MVPs and ERP systems cost in India and abroad: real starting prices in INR and USD, timelines and what drives the price.',
     eyebrow: 'Guide / Pricing',
     h1: 'How much does custom software development cost in India?',
     summary:
@@ -44,6 +46,8 @@ export const GUIDES: GuideContent[] = [
     published: '2026-11-14',
     updated: '2026-11-14',
     readingMinutes: 7,
+    // REVIEW(owner): confirm the author of this guide.
+    author: 'anubhav-garg',
     relatedServices: ['website-development', 'web-application-development', 'saas-development', 'erp-crm-development'],
     sections: [
       {
@@ -130,9 +134,9 @@ export const GUIDES: GuideContent[] = [
   {
     slug: 'custom-erp-vs-off-the-shelf',
     name: 'Custom ERP vs off-the-shelf ERP',
-    metaTitle: 'Custom ERP vs Off-the-Shelf ERP: Which Is Right for Your Business? | MONOLITH CODES',
+    metaTitle: 'Custom ERP vs Off-the-Shelf ERP: Which to Choose?',
     metaDescription:
-      'Custom ERP or an off-the-shelf product like SAP, Oracle NetSuite, Odoo or Zoho? A practical comparison of cost, fit, ownership, integration and time to value — and when a hybrid approach is best.',
+      'Custom ERP or SAP, NetSuite, Odoo or Zoho? Compare cost, fit, ownership, integration and time to value, and see when a hybrid approach works best.',
     eyebrow: 'Guide / ERP',
     h1: 'Custom ERP vs off-the-shelf ERP: how to choose',
     summary:
@@ -140,6 +144,8 @@ export const GUIDES: GuideContent[] = [
     published: '2026-11-14',
     updated: '2026-11-14',
     readingMinutes: 6,
+    // REVIEW(owner): confirm the author of this guide.
+    author: 'anubhav-garg',
     relatedServices: ['erp-crm-development', 'web-application-development', 'ai-automation'],
     sections: [
       {

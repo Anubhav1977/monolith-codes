@@ -30,7 +30,8 @@ export const IntroSplit: React.FC = () => (
       <motion.div className="vt-intro__right" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.4 }} transition={{ duration: 1, delay: 0.15, ease: EXPO }}>
         <span className="vt-chip">What is Monolith Codes?</span>
         <p className="vt-intro__lead">We engineer custom web applications, SaaS platforms, mobile apps, ERP systems and AI automation.</p>
-        <p className="vt-intro__body">Every solution is custom engineered for your business — never built from templates, never assembled from pre-made themes. You work directly with senior engineers and own 100% of the code.</p>
+        {/* Answer-first summary (quotable by search and AI engines). REVIEW(owner): built from published prices/timelines. */}
+        <p className="vt-intro__body">Monolith Codes is a founder-led custom software development studio based in India, working with clients in India and worldwide. Websites start from $999 (₹12,999) and take 2–4 weeks; web apps and SaaS MVPs start from $2,499 (₹29,999) and take 6–10 weeks; ERP/CRM and AI systems are quoted per project. Every solution is custom engineered — never built from templates — and you own 100% of the code.</p>
       </motion.div>
     </div>
     <div className="vt-ticker" aria-hidden="true">

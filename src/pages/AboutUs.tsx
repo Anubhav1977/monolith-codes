@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Code2, Smartphone, Layers, Database, Cpu, Globe } from 'lucide-react';
 import { PageShell } from '@/components/PageShell';
-import { SITE } from '@/lib/site';
+import { FOUNDERS, SITE } from '@/lib/site';
 
 const EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -15,20 +15,6 @@ const CAPABILITIES = [
   { icon: Cpu, label: 'AI & Automation', href: '/services/ai-automation' },
 ];
 
-const FOUNDERS = [
-  {
-    name: 'Anubhav Garg',
-    role: 'Founder & Lead Technical Engineer',
-    photo: '/assets/faces/founder_pp.webp',
-    text: 'Leads architecture, engineering and technical direction — turning complex requirements into scalable, high-performance software systems.',
-  },
-  {
-    name: 'Ankit Kumar',
-    role: 'Co-Founder & Business Director',
-    photo: '/assets/faces/cofounder_pp.webp',
-    text: 'Connects business needs with the right technical solution, manages client relationships and keeps delivery on track from first call to handover.',
-  },
-];
 
 const reveal = (delay = 0) => ({
   initial: { opacity: 0, y: 36, filter: 'blur(8px)' },
@@ -65,6 +51,13 @@ const AboutUs: React.FC = () => (
           <motion.p {...reveal()}>
             Every project starts with a <B>written scope and a fixed quote</B> before development begins. We deliver in milestones you can review on a staging link, document decisions in writing, and hand over the <B>complete source code, documentation and intellectual property</B> at the end — no licence fees and no lock-in.
           </motion.p>
+          {/* REVIEW(owner): the two paragraphs below were written from existing service/pricing content. */}
+          <motion.p {...reveal()}>
+            Our work spans <B>marketing websites, customer portals, SaaS products, mobile apps, ERP/CRM systems and AI automation.</B> Websites start from $999 (₹12,999 in India) and typically take 2–4 weeks; web applications and SaaS MVPs start from $2,499 (₹29,999) and typically take 6–10 weeks; larger ERP, CRM and AI systems are quoted per project and delivered in phases.
+          </motion.p>
+          <motion.p {...reveal()}>
+            We build with <B>React, TypeScript and Node.js,</B> PostgreSQL and the cloud platforms your team already uses, and we tune every public page for search visibility and Core Web Vitals. Where you already run SAP, Oracle, Salesforce or your own databases, we integrate with them instead of forcing a rip-and-replace.
+          </motion.p>
           <motion.p {...reveal()}>
             You work directly with the founders: the people who scope, architect and build your system. Indian clients are quoted in rupees and international clients in US dollars, with the <B>same process, quality and ownership terms</B> for both.
           </motion.p>
@@ -76,20 +69,25 @@ const AboutUs: React.FC = () => (
           </h2>
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {FOUNDERS.map((f) => (
-              <li key={f.name} className="rounded-lg border border-mc-border bg-mc-surface overflow-hidden">
+              <li key={f.id} id={f.id} className="rounded-lg border border-mc-border bg-mc-surface overflow-hidden">
                 <img
                   src={f.photo}
                   width={900}
                   height={599}
                   loading="lazy"
                   decoding="async"
-                  alt={`${f.name}, ${f.role} at MONOLITH CODES`}
+                  alt={`${f.name}, ${f.jobTitle} at MONOLITH CODES`}
                   className="w-full h-48 object-cover object-[center_15%]"
                 />
                 <div className="p-5">
                   <h3 className="text-xl font-sans font-medium text-mc-text-strong">{f.name}</h3>
-                  <p className="mt-1 font-mono text-xs text-mc-orange uppercase tracking-wider">{f.role}</p>
-                  <p className="mt-3 text-sm text-mc-text-body leading-relaxed">{f.text}</p>
+                  <p className="mt-1 font-mono text-xs text-mc-orange uppercase tracking-wider">{f.jobTitle}</p>
+                  <p className="mt-3 text-sm text-mc-text-body leading-relaxed">{f.bio}</p>
+                  {f.linkedin && (
+                    <a href={f.linkedin} target="_blank" rel="noopener noreferrer me" className="mt-3 inline-flex min-h-11 items-center text-sm text-mc-orange underline underline-offset-4">
+                      {f.name} on LinkedIn
+                    </a>
+                  )}
                 </div>
               </li>
             ))}
